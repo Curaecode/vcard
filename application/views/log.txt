@@ -1,0 +1,15 @@
+ 
+//Changes Made For IMEI Feature
+****************************************************************************
+//Config Table Query
+INSERT INTO `config` (`id`, `name`, `value`, `isVisible`, `type`, `label`) VALUES (NULL, 'is_imei', '1', '0', 'radio', 'Enable IMEI Feature');
+****************************************************************************
+//Inventry History Table Query
+ALTER TABLE `inventory_history` ADD `imei` VARCHAR(111) NULL AFTER `addedBy`, ADD `status` VARCHAR(111) NULL AFTER `imei`;
+****************************************************************************
+//Order_line_item Table Query
+ALTER TABLE `order_line_items` ADD `imei` VARCHAR(111) NULL AFTER `addedBy`;
+****************************************************************************
+//Products Table Query
+ALTER TABLE `products` ADD `is_imei` INT(111) NOT NULL DEFAULT '0' AFTER `is_unlimited`;
+****************************************************************************

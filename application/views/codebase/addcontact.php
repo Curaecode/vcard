@@ -1,0 +1,248 @@
+<div class="container">
+	<form action="" method="post"  enctype="multipart/form-data" role="form" class="viewform" data-toggle="validator">
+		<div class="form-group row less_margin">
+			<div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">First Name<span style="color: red;">*</span></label>
+					<input type="text" class="form-control" value="<?php echo isset($edit["first_name"])?$edit["first_name"]:""; ?>" name="first_name" required>
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">Last Name<span style="color: red;">*</span></label>
+					<input type="text" class="form-control" value="<?php echo isset($edit["last_name"])?$edit["last_name"]:""; ?>" name="last_name" required>
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+		</div>
+		<div class="form-group row less_margin">
+			<div class="col-sm-6">
+				<div class="form-material ">
+		 	 		<label for="name">Email Address<span style="color: red;">*</span></label>
+					<input type='email' value='<?php echo isset($edit["email"])?$edit["email"]:""; ?>' class='form-control' name='email'required>
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">Enter Phone<span style="color: red;">*</span></label>
+					<input type="text" class="form-control" value="<?php echo isset($edit["phone"])?$edit["phone"]:""; ?>" name="phone" required>
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+		</div>
+		<div class="form-group row less_margin">
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label>Company<span style="color: red;">*</span></label>
+					<select class="form-control select2 " name="company_id" required>
+						<option value="">--Select company name--</option>
+						<?php
+						foreach($companies as $val){
+						$selected=isset($edit["company_id"])&&$val->id==$edit["company_id"]?"selected":"";
+							echo "<option value='$val->id' $selected>$val->company_name </option>";
+						}
+						?>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+		  	</div>
+		  	<div class='col-sm-6'>
+				<div class='form-group'>
+					<label>Location<span style="color: red;">*</span></label>
+					<select class="form-control select2 location_select" name="location_id" required>
+					<?php foreach ($locations as $key => $singleLocation) {?>
+						<option <?php if (isset($edit['location_id']) && $edit['location_id']==$singleLocation->id) { echo "selected"; } ?> value="<?php echo $singleLocation->id; ?>"><?php echo $singleLocation->location_name; ?></option>
+					<?php } ?>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+	  		</div>
+		</div>
+		<div class="form-group row less_margin">
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label>Sales group<span style="color: red;">*</span></label>
+					<select class="form-control select2 " name="group_id" required>
+						<option value="">--Select Sales group--</option>
+						<?php
+						foreach($groups as $val){
+						$selected=isset($edit["group_id"])&&$val->id==$edit["group_id"]?"selected":"";
+							echo "<option value='$val->id' $selected>$val->group_name </option>";
+						}
+						?>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+		 	</div>
+		  	<div class='col-sm-6'>
+				<div class='form-group'>
+					<label>Country Name<span style="color: red;">*</span></label>
+					<select class="form-control select2 " name="country_id" required>
+						<option value="">--Select country name--</option>
+						<?php
+						foreach($countries as $val){
+						$selected=isset($edit["country_id"])&&$val->id==$edit["country_id"]?"selected":"";
+							echo "<option value='$val->id' $selected>$val->country_name </option>";
+						}
+						?>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+		  	</div>
+		</div>
+		<div class="form-group row less_margin">
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label>State<span style="color: red;">*</span></label>
+					<select class="form-control select2 select_state" name="state_id" required>
+						<?php foreach ($states as $key => $singleState) {?>
+							<option <?php if (isset($edit['state_id']) && $edit['state_id']==$singleState->id) { echo "selected"; } ?> value="<?php echo $singleState->id; ?>"><?php echo $singleState->state_name; ?></option>
+						<?php } ?>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+		  	</div>
+			<div class="col-sm-6">
+				<div class="form-material ">
+		 	 		<label for="name">SSN<span style="color: red;">*</span></label>
+					<input type='text' value='<?php echo isset($edit["ssn"])?$edit["ssn"]:""; ?>' class='form-control' name='ssn' required>
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+			<!-- <div class='col-sm-6'>
+				<div class='form-group'>
+					<label>Member/Spouse/Child<span style="color: red;">*</span></label>
+					<select class="form-control select2 " id="member_select" name="dependent" required>
+						<option value="">--Please Select--</option>
+						<option <?php if (isset($edit["dependent"]) && !empty($edit["dependent"]) && $edit["dependent"]=='Member') { echo "selected"; } ?> value="Member">Member</option>
+						<option <?php if (isset($edit["dependent"]) && !empty($edit["dependent"]) && $edit["dependent"]=='Spouse') { echo "selected"; } ?> value="Spouse">Spouse</option>
+						<option <?php if (isset($edit["dependent"]) && !empty($edit["dependent"]) && $edit["dependent"]=='Child') { echo "selected"; } ?> value="Child">Child</option>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+			</div> -->
+		</div>
+		<div class="form-group row less_margin">
+			<div class="col-sm-12">
+				<table class="table">
+					<thead>
+						<tr>
+							<th style="width:114px !important">Mem/Spouse/Child</th>
+							<th style="width:562px !important">Dep name</th>
+							<th style="width:686px !important">Dep F name</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="dependent_table">
+						<?php 
+							if(!empty($edit["dependent"])){
+									$dependents = json_decode($edit['dependent']);
+									foreach($dependents as $key=>$row){?>
+								<tr>
+									<td>
+										<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent[<?php echo $key ?>][dependent]" required>
+											<option value="">--Please Select--</option>
+											<option <?php echo (isset($row->dependent) && $row->dependent == 'Member') ? 'selected':''; ?> value="Member">Member</option>
+											<option <?php echo (isset($row->dependent) && $row->dependent == 'Spouse') ? 'selected':''; ?> value="Spouse">Spouse</option>
+											<option <?php echo (isset($row->dependent) && $row->dependent == 'Child') ? 'selected':''; ?> value="Child">Child</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control" value="<?php echo isset($row->dependant_name) ? $row->dependant_name:""; ?>" name="dependent[<?php echo $key ?>][dependant_name]">
+									</td>
+									<td>
+										<input type="text" class="form-control" value="<?php echo isset($row->dep_f_name) ? $row->dep_f_name:""; ?>" name="dependent[<?php echo $key ?>][dep_f_name]">
+									</td>
+									<td>
+										<?php if($key == 0){ ?>
+											<a href="javascript:void(0)" class="btn btn-info btn-xs addNewRow"><i class="fa fa-plus"></i></a>
+										<?php }else{ ?>
+											<a href="javascript:void(0)" class="btn btn-danger btn-xs delete_row"><i class="fa fa-trash"></i></a>
+										<?php } ?>
+									</td>
+								</tr>
+						<?php } } else{ ?>
+							<tr>
+								<td>
+									<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent[0][dependent]" required>
+										<option value="">--Please Select--</option>
+										<option <?php if (isset($edit["dependent"]) && !empty($edit["dependent"]) && $edit["dependent"]=='Member') { echo "selected"; } ?> value="Member">Member</option>
+										<option <?php if (isset($edit["dependent"]) && !empty($edit["dependent"]) && $edit["dependent"]=='Spouse') { echo "selected"; } ?> value="Spouse">Spouse</option>
+										<option <?php if (isset($edit["dependent"]) && !empty($edit["dependent"]) && $edit["dependent"]=='Child') { echo "selected"; } ?> value="Child">Child</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" class="form-control" value="<?php echo isset($edit["dependant_name"]) ? $edit["dependant_name"]:""; ?>" name="dependent[0][dependant_name]">
+								</td>
+								<td>
+									<input type="text" class="form-control" value="<?php echo isset($edit["dep_f_name"]) ? $edit["dep_f_name"]:""; ?>" name="dependent[0][dep_f_name]">
+								</td>
+								<td>
+									<a href="javascript:void(0)" class="btn btn-info btn-xs addNewRow"><i class="fa fa-plus"></i></a>
+								</td>
+							</tr>
+						<?php } ?>
+						
+					</tbody>
+				</table>
+			</div>
+			<!-- <div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">Dependdent name</label>
+					<input type="text" class="form-control" value="<?php echo isset($edit["dependant_name"])?$edit["dependant_name"]:""; ?>" name="dependant_name">
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">Dep F name</label>
+					<input type="text" class="form-control" value="<?php echo isset($edit["dep_f_name"])?$edit["dep_f_name"]:""; ?>" name="dep_f_name">
+				</div>
+				<div class="help-block with-errors"></div>
+			</div> -->
+		</div>
+		<div class="form-group row less_margin">
+			<div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">Active member date</label>
+					<input type="date" class="form-control" value="<?php echo isset($edit["active_member"])?$edit["active_member"]:""; ?>" name="active_member">
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+		    <div class="col-sm-6">
+				<div class="form-material ">
+					<label for="name">Enter website link</label>
+					<input type="text" class="form-control" value="<?php echo isset($edit["website"])?$edit["website"]:""; ?>" name="website">
+				</div>
+				<div class="help-block with-errors"></div>
+			</div>
+	    </div>
+	    <div class="form-group row less_margin">
+			<div class='col-sm-12'>
+				<div class='form-group'>
+					<label>Industries</label>
+					<select class="form-control select2 " name="industry_id" >
+						<option value="">--Select industry name--</option>
+						<?php
+						foreach($industries as $val){
+						$selected=isset($edit["industry_id"])&&$val->id==$edit["industry_id"]?"selected":"";
+							echo "<option value='$val->id' $selected>$val->industry_name </option>";
+						}
+						?>
+					</select>
+					<div class="help-block with-errors"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row text-center">
+		    <div class='col-sm-3'>
+				<div class='form-group'>
+					<input type='submit' style="background: #1c97a6;" class="btn btn-info form-control" value="Submit" name="submit" /> 
+				</div>
+		    </div>
+	   </div>
+	</form>
+</div>
+				
