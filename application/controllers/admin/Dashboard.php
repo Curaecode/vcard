@@ -1285,6 +1285,8 @@ function download2($filename = NULL) {
 			if(is_array($data['values']) && !empty($data['values'])){ 
 				foreach($data['values'] as $value){
 					$datas=array();
+					$phonenumber1='';
+					$phonenumber2='';
 					foreach ($value as $key => $values){
 						if($values==null){$newvalues='';}else{$newvalues=$values;}
 						
@@ -1327,7 +1329,7 @@ function download2($filename = NULL) {
 						  
 						}
 						
-						if(strtolower($data['header'][1][$key]) == 'contract number' ){
+						if(strtolower($data['header'][1][$key]) == 'contract number' || strtolower($data['header'][1][$key]) == 'contract number 1' ){
 							$datas['contract_number']=$newvalues;
 						}
 						if(strtolower($data['header'][1][$key]) == 'first name'){
@@ -1339,6 +1341,7 @@ function download2($filename = NULL) {
 						if(strtolower($data['header'][1][$key]) == 'mi'){
 							$datas['miname']=$newvalues;
 						}
+						 
 						if(strtolower($data['header'][1][$key]) == 'ssn'){
 							$datas['ssn']=$newvalues;
 							$datas['account_code']=$newvalues;
@@ -1374,8 +1377,8 @@ function download2($filename = NULL) {
 						if(strtolower($data['header'][1][$key]) == 'zip code'){
 							$datas['zipcode']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'phone' || strtolower($data['header'][1][$key]) == 'mobile (cell) number' || strtolower($data['header'][1][$key]) == 'mobile (cell) number'){
-							$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
+						if(strtolower($data['header'][1][$key]) == 'phone' || strtolower($data['header'][1][$key]) == 'mobile (cell) number' || strtolower($data['header'][1][$key]) == 'phone number'){
+							/* $newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
 							$mystring = $newvalues; 
 							$findme   = '+1';
 							$pos = strpos($mystring, $findme);
@@ -1383,13 +1386,36 @@ function download2($filename = NULL) {
 							if ($pos === false) {
 								$newvalues = '+1'.$newvalues;
 							}
-							$datas['phone']=$newvalues;
+							$datas['phone']=$newvalues; */
+							$phonenumber2=$newvalues;
+						}
+						if(strtolower($data['header'][1][$key]) == 'area code'){
+							/* $newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
+							$mystring = $newvalues; 
+							$findme   = '+1';
+							$pos = strpos($mystring, $findme);
+							
+							if ($pos === false) {
+								$newvalues = '+1'.$newvalues;
+							}
+							$datas['phone']=$newvalues; */
+							$phonenumber1=$newvalues;
 						}
 						
 						if(strtolower($data['header'][1][$key]) == 'email address' || strtolower($data['header'][1][$key]) == 'email'){
 							$datas['email']=$newvalues;
 						} 
 					} 
+					
+					$newvalues = preg_replace("/[^0-9+]/", "", $phonenumber1.''.$phonenumber2);
+					$mystring = $newvalues; 
+					$findme   = '+1';
+					$pos = strpos($mystring, $findme); 
+					if ($pos === false) {
+						$newvalues = '+1'.$newvalues;
+					}
+					$datas['phone']=$newvalues;
+					
 					if( $datas['dob'] <= MIN_DATES_DIFF) { 
 						$datas['dob']='';	
 					}else{
@@ -1428,7 +1454,7 @@ function download2($filename = NULL) {
 				}
 			}
 			
-			if(!empty($userids)){
+			if(!empty($userids)){ 
 				foreach($userids as $last_id){
 					if($last_id > 0){
 						$last_data=$this->model->getLastData2("contacts",$last_id);
@@ -1439,7 +1465,7 @@ function download2($filename = NULL) {
 							$text = $qrtext;
 							$text1= substr($text, 0,2);
 							$folder = $SERVERFILEPATH;
-							$file_name1 = $text1."-Qrcode" . rand(2,200) . ".png";
+							$file_name1 = $text1."-Qrcode" . $last_id . ".png";
 							$file_name = $folder.$file_name1;
 							QRcode::png($text,$file_name);
 							$qrimage_new_name = $file_name1;
@@ -1473,9 +1499,13 @@ function download2($filename = NULL) {
 						$watermark_qr_height = imagesy($watermark_qr);
 						imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 						$random = rand(99999,999999999);
-						imagejpeg($image,"resources/cards/itv_".$random.$last_id.".jpg");
+						if (file_exists("resources/cards/itv_".$last_id.$last_id.".jpg")) {
+							unlink("resources/cards/itv_".$last_id.$last_id.".jpg");
+						}
+						imagejpeg($image,"resources/cards/itv_".$last_id.$last_id.".jpg");
 						imagedestroy($image);
-						$image_new_name = 'itv_'.$random.$last_id.'.jpg';
+						$image_new_name = 'itv_'.$last_id.'_'.$last_id.'.jpg';
+						
 						$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id=".$last_id."");
 						if ($this->db->affected_rows() > 0) {
 							$down = get_contacts_vcard($last_id);
