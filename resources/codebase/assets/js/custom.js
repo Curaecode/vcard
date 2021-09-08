@@ -146,6 +146,15 @@ $(document).ready(function(){
             }
         }); 
 	})
+	
+	$(document).on("click",".dependant_edit_page",function(e){
+		/*  page=$(this).attr("href").split("#")[1]; 
+			e.preventDefault();
+			title=$(this).attr("data-title");
+			view.load(page,"popup",title); */
+			
+		 
+	});
 	$(document).on("change","[name='country_id']",function(e){
 		 var countryID = $(this).val();
         $.ajax({

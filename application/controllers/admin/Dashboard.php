@@ -928,6 +928,7 @@ class Dashboard extends CI_Controller {
 				"states.state_name as s_name",
 				//"country.country_name as cun_name",
 				"contacts.dependent",
+				"contacts.contract_number",
 				"contacts.account_code",
 				"contacts.image"
 				//"contacts.date"
@@ -988,15 +989,19 @@ class Dashboard extends CI_Controller {
 					// }
 					// $key->industry_id=$industry_name;
 					// $key->date=cdate($key->date);
+					$contract_number = $key->contract_number;
+					 unset($key->contract_number);  
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
 					$key->image="<img src='".res_url()."cards/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
 					$value=array_values((array)$key);
 					// print_r($key);die;
 					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
-					<a data-toggle='Send vCard' class='send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>";
-					
+					<a data-toggle='Send vCard' class='send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
+					<a data-toggle='View Dependent' class='loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> <a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-plus-square'></i></a>";
+					 
 					array_push($value,$down.addActions_contact("contacts",$id));
+					
 					$values[]=$value;
 				}
 				$output = array(
@@ -1029,6 +1034,8 @@ class Dashboard extends CI_Controller {
 							$image_new = genrate_image($last_id);
 							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
 							
+							$this->db->query("update `contacts` set contract_number= '".$last_id."' where id='".$last_id."'");
+							
 							
 							//header("Location: ".$_SERVER['PHP_SELF']);
         					$data['msg']="contact is added! successfully.";
@@ -1050,6 +1057,32 @@ class Dashboard extends CI_Controller {
 				$data['industries']=($this->model->getData("industries"));
 				$data['dependent']=($this->model->getData("dependent"));
 				generatePageView('addcontact',$data);
+				break;
+			case "dependents":
+				$contract_number=$id;  
+				$data['contactdependent']=$this->model->getLastData3("contact_dependant",$contract_number);
+				generatePageView('contactdependant',$data);
+			
+				break;
+			case "adddependent":  
+				$contract_number=$id;
+				if(isset($formData['submit'])){
+					$dependent = isset($formData['dependent']) ? $formData['dependent']:'';
+					if(!empty($dependent)){
+						foreach($dependent as $row){
+							$recdata=array();
+							$recdata['relationship']=$row['dependent'];
+							$recdata['first_name']=$row['dependant_name'];
+							$recdata['last_name']=$row['dep_f_name'];
+							$recdata['contract_number']=$contract_number;
+							$this->model->addData("contact_dependant",$recdata); 
+						}
+					}
+				}					
+				$data['dependent']=($this->model->getData("dependent"));
+				$data['contactdependent']=$this->model->getLastData3("contact_dependant",$contract_number);
+				generatePageView('addcontactdependant',$data);
+			
 				break;
 			case "edit":
 				$data['title']="Update Contact";
@@ -1077,8 +1110,11 @@ class Dashboard extends CI_Controller {
 				
 				$image_new = genrate_image($id);
 				$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$id."'");
-		
-		
+				
+				if(empty($last_data->contract_number)){
+					$this->db->query("update `contacts` set contract_number= '".$id."' where id='".$id."'");
+				}
+				
 				$data['msg']="contact updated! successfully.";
 				$data['dependent']='Child';
 				$data['return']=true;
@@ -1330,7 +1366,7 @@ function download2($filename = NULL) {
 						}
 						
 						if(strtolower($data['header'][1][$key]) == 'contract number' || strtolower($data['header'][1][$key]) == 'contract number 1' ){
-							$datas['contract_number']=$newvalues;
+							if(!empty($newvalues)){$datas['contract_number']=$newvalues;}
 						}
 						if(strtolower($data['header'][1][$key]) == 'first name'){
 							$datas['first_name']=$newvalues;
@@ -1769,4 +1805,29 @@ function download2($filename = NULL) {
         }
         return $datavcarddata;
     }
+	function getdependants(){
+		if($this->input->post('id')){
+			$contract_number=$this->input->post('id');
+		
+			$data['groups']=($this->model->getData("groups"));
+			$data['companies']=($this->model->getData("companies"));
+			$data['locations']=($this->model->getData("locations"));
+			$data['states']=($this->model->getData("states"));
+			$data['countries']=($this->model->getData("country"));
+			$data['industries']=($this->model->getData("industries"));
+			$data['dependent']=($this->model->getData("dependent"));
+			$data['contactdependent']=$this->model->getLastData3("contact_dependant",$contract_number);
+			generatePageView('contactdependant',$data);
+		
+		}
+	}
+	function deletedependent($id){
+		if($this->model->deleteData("contact_dependant",$id)){
+			$msg['success']="dependent is deleted! successfully.</div>";
+		}
+		else{
+			$msg['error']="dependent is deleted! successfully";
+		} 
+		echo json_encode($msg); 
+	}
 }

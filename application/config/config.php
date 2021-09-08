@@ -23,9 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config["base_url"] = "https://".$_SERVER["HTTP_HOST"].dirname($_SERVER["SCRIPT_NAME"])."/";
-$config["res_url"] = "https://".$_SERVER["HTTP_HOST"].dirname($_SERVER["SCRIPT_NAME"])."/resources/";
-$config["admin_url"] = "https://".$_SERVER["HTTP_HOST"].dirname($_SERVER["SCRIPT_NAME"])."/admin/";
+$config["base_url"] = "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER["SCRIPT_NAME"])."/";
+$config["res_url"] = "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER["SCRIPT_NAME"])."/resources/";
+$config["admin_url"] = "http://".$_SERVER["HTTP_HOST"].dirname($_SERVER["SCRIPT_NAME"])."/admin/";
 
 // echo $config['base_url'];
 // echo '<br>';
@@ -231,7 +231,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------
