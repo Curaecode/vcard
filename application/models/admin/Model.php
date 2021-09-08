@@ -90,6 +90,10 @@ class Model extends CI_Model {
 	{
 		return $this->db->query("select * from $table where id=$id")->row();
 	}
+	function getLastData4($table,$contract_number)
+	{
+		return $this->db->query("select * from $table where contract_number='$contract_number'")->row();
+	}
 	function getLastData3($table,$contract_number)
 	{
 		return $this->db->query("select * from $table where contract_number='$contract_number'")->result();

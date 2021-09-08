@@ -63,8 +63,8 @@
 		<div class="form-group row less_margin">
 			<div class='col-sm-6'>
 				<div class='form-group'>
-					<label>Sales group<span style="color: red;">*</span></label>
-					<select class="form-control select2 " name="group_id" required>
+					<label>Sales group</label>
+					<select class="form-control select2 " name="group_id">
 						<option value="">--Select Sales group--</option>
 						<?php
 						foreach($groups as $val){
