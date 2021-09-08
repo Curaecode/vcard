@@ -120,8 +120,7 @@ function genrate_image($id=null)
  
 	imagettftext($image, 15, 0, 98, $heightdependimg, $color,$font, $fname);
 	
-	$dependent_data = '';
-	$dependent_data2 = '';
+	
 	if(isset($dependant_data))
 	{
 		 
@@ -135,15 +134,18 @@ function genrate_image($id=null)
 			 
 			foreach($dependant_data as $key => $value) 
 			{
+				$dependent_data = '';
+				$dependent_data2 = '';
 				if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){
-				    $dependent_data.=(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
-					$dependent_data = explode(" ",$dependent_data);
-					if(count($dependent_data) > 1){
-						$dependent_data=$dependent_data[1];
+				    $dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
+					$datadependent = explode(' ',$dependent_data); 
+					if(count($datadependent) > 1){ 
+						$dependent_datas=$datadependent[1];
 					}else{
-						$dependent_data = $dependent_data[0];;
+						$dependent_datas = $datadependent[0];
 					}
-				    imagettftext($image, 11, 0, 10, ($heightdepend+$i), $color,$font, $dependent_data);
+					$dependent_datas=substr($dependent_datas,0,6).': ';
+				    imagettftext($image, 11, 0, 10, ($heightdepend+$i), $color,$font, $dependent_datas);
 				 
 				    $dependent_data = '';
 				    $dependent_data2 = '';
@@ -196,12 +198,9 @@ function genrate_image($id=null)
 	$watermark_qr_height = imagesy($watermark_qr);
 	imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 	$random = rand(99999,999999999); 
-	if (file_exists("resources/cards/cc_".$id."_".$id.".jpg")) {
-		unlink("resources/cards/cc_".$id."_".$id.".jpg");
-	}
-	imagejpeg($image,"resources/cards/cc_".$id."_".$id.".jpg", 100); 
+	imagejpeg($image,"resources/cards/cc_".$random."_".$id.".jpg", 100); 
 	imagedestroy($image);
-	$image_new_name = "cc_".$id."_".$id.".jpg";
+	$image_new_name = "cc_".$random."_".$id.".jpg";
 	return $image_new_name;
 
 }

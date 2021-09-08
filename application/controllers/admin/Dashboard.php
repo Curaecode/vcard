@@ -1444,14 +1444,15 @@ function download2($filename = NULL) {
 					} 
 					
 					$newvalues = preg_replace("/[^0-9+]/", "", $phonenumber1.''.$phonenumber2);
-					$mystring = $newvalues; 
-					$findme   = '+1';
-					$pos = strpos($mystring, $findme); 
-					if ($pos === false) {
-						$newvalues = '+1'.$newvalues;
+					if(!empty($newvalues)){
+						$mystring = $newvalues; 
+						$findme   = '+1';
+						$pos = strpos($mystring, $findme); 
+						if ($pos === false) {
+							$newvalues = '+1'.$newvalues;
+						}
+						$datas['phone']=$newvalues;
 					}
-					$datas['phone']=$newvalues;
-					
 					if( $datas['dob'] <= MIN_DATES_DIFF) { 
 						$datas['dob']='';	
 					}else{
@@ -1534,13 +1535,10 @@ function download2($filename = NULL) {
 						$watermark_qr_width = imagesx($watermark_qr);
 						$watermark_qr_height = imagesy($watermark_qr);
 						imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
-						$random = rand(99999,999999999);
-						if (file_exists("resources/cards/itv_".$last_id.$last_id.".jpg")) {
-							unlink("resources/cards/itv_".$last_id.$last_id.".jpg");
-						}
-						imagejpeg($image,"resources/cards/itv_".$last_id.$last_id.".jpg");
+						$random = rand(99999,999999999); 
+						imagejpeg($image,"resources/cards/itv_".$random.$last_id.".jpg");
 						imagedestroy($image);
-						$image_new_name = 'itv_'.$last_id.'_'.$last_id.'.jpg';
+						$image_new_name = 'itv_'.$random.'_'.$last_id.'.jpg';
 						
 						$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id=".$last_id."");
 						if ($this->db->affected_rows() > 0) {
