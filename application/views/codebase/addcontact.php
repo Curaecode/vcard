@@ -103,14 +103,7 @@
 					</select>
 					<div class="help-block with-errors"></div>
 				</div>
-		  	</div>
-			<div class="col-sm-6">
-				<div class="form-material ">
-		 	 		<label for="name">SSN</label>
-					<input type='text' value='<?php echo isset($edit["ssn"])?$edit["ssn"]:""; ?>' class='form-control' name='ssn' >
-				</div>
-				<div class="help-block with-errors"></div>
-			</div> 
+		  	</div>  
 		</div> 
 		<div class="form-group row less_margin">
 			<div class="col-sm-6">

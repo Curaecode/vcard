@@ -3,9 +3,50 @@ var url="";
 var from_datevar="";
 var to_datevar="";
 var table;
-//var id="";
+function selectall(ele){
+	var select_all = document.getElementById("select_all"); 
+	if($(ele).is(':checked')){
+		console.log('TRUE');
+	}
+	
+	var checked = $(ele).prop('checked');
+	 $(".checkbox").prop('checked',checked); 
+	/* $('.checkbox').each(function(){  
+		this.checked = status;
+			
+	}); */
+}
+function sendallcard(){
+	 if($(".checkbox:checked").length > 0) {
+		var selectedids= new Array(); 
+		$('.checkbox:checked').each(function() {
+		   console.log(this.value);
+		   selectedids.push(this.value);
+		}); 
+		$.ajax({
+            type:'POST',
+            url:base_url+'admin/dashboard/sendvcards/',
+            data:{id:selectedids},
+            type:"post",
+			dataType:"json",
+            success:function(data){
+				var result = jQuery.parseJSON(result);
+                Swal.fire({
+					title: 'Done!',
+					text: result.message,
+					type: 'success'
+				});
+            }
+        }); 
+	 }else{
+		 Swal.fire("Error!",'Please select the contact to send the vcard.', "error");   
+	 }
+	return false;
+}
 $(document).ready(function(){
-
+	
+	 
+	
 	$('body').on('click','.addNewRow',function(event){
 		event.preventDefault();
 		var element = $(this);
@@ -391,7 +432,7 @@ view.refreshJs=function(datatable,page){
 	if(datatable){
 		url=base_url+"admin/dashboard/"+page+"/ajax/";
 		table = $('.datatable').DataTable({ 
-			"lengthMenu": [[10, 25, 50,100,-1], [10, 25, 50,100,"All"]],
+			"lengthMenu": [[100, 250, 500,1000,-1], [100, 250, 500,1000,"All"]],
 			 dom: 'Blfrtip',
 			buttons: [
 				'copyHtml5',
@@ -416,6 +457,9 @@ view.refreshJs=function(datatable,page){
 					d.to_date = $('.to_date').val();
 					d.company_id = $('[name="company_id"]').val();
 					d.group_id = $('[name="group_id"]').val();
+				},
+				"initComplete": function(settings, json) {
+					 
 				}
 			},
 			"destroy" : true

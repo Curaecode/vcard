@@ -892,6 +892,7 @@ class Dashboard extends CI_Controller {
 			$data['companies']=($this->model->getData("companies"));
 			$data['groups']=($this->model->getData("groups"));
 				$coloumns=array(
+					"<label><input type='checkbox' class='form-control' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>",
 					"ID",
 					"First name",
 					"Last name",
@@ -999,7 +1000,10 @@ class Dashboard extends CI_Controller {
 					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
 					<a data-toggle='Send vCard' class='send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
 					<a data-toggle='View Dependent' class='loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> <a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-plus-square'></i></a>";
-					 
+					
+					
+					$up="<input type='checkbox' value='".$id."' class='checkbox form-control'>";
+					array_unshift($value,$up);
 					array_push($value,$down.addActions_contact("contacts",$id));
 					
 					$values[]=$value;
@@ -1896,5 +1900,29 @@ function download2($filename = NULL) {
 			$msg['error']="dependent is deleted! successfully";
 		} 
 		echo json_encode($msg); 
+	}
+	function sendvcards(){
+		/*
+		/send_contacts_email_vcard/92208
+		*/
+		if($this->input->post('id')){
+			$response['status']=1;
+			$response['message']='Sent successfully';
+			$ids=$this->input->post('id');
+			foreach($ids as $id){
+				$datavcard = $this->sendVcard($this->model->getByIdvcard("contacts",$id),$id);
+				/* if(!isset($datavcard->sid))  {
+					$response['status']=0;
+					$response['message']=$datavcard;
+				} */
+			} 
+			echo json_encode($response);exit(); 
+			
+		}else{ 
+			$response['status']=0;
+			$response['message']='Please select some contact to send card';
+			echo json_encode($response);exit(); 
+		} 
+		
 	}
 }
