@@ -11,8 +11,28 @@ class crons extends CI_Controller {
 		 
 		
 	}
+	function updateqrimages(){
+		$results = $this->db->query("select * from contacts  order by id ASC")->result();
+		if(!empty($results)){
+			foreach($results as $row){
+				$id=$row->id; 
+				$query=$this->db->query("update `contacts` set qrimage='' where id='".$id."'");
+			}
+		}
+	}
+	function updateunique(){
+		$results = $this->db->query("select * from contacts where ssn = account_code  order by id ASC LIMIT 0,1000")->result();
+		if(!empty($results)){
+			foreach($results as $row){
+				$id=$row->id;
+				$account_id = generateID($id);
+				$query=$this->db->query("update `contacts` set qrimage='', account_code= '".$account_id."' where id='".$id."'");
+			}
+		}
+	}
 	function updateimages(){
-		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id ASC LIMIT 0,100")->result();
+		 
+		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id ASC LIMIT 0,500")->result();
 		if(!empty($results)){
 			foreach($results as $row){
 				$last_id=$row->id;
@@ -59,16 +79,19 @@ class crons extends CI_Controller {
 					$watermark_qr_height = imagesy($watermark_qr);
 					imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 					$random = rand(99999,999999999); 
-					imagejpeg($image,"resources/cards/itv_".$random.$last_id.".jpg");
+					if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$last_id.$last_id.".jpg")) {
+						 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$last_id.$last_id.".jpg");
+					}
+					imagejpeg($image,"resources/cards/itv_".$last_id.$last_id.".jpg");
 					imagedestroy($image);
-					$image_new_name = 'itv_'.$random.'_'.$last_id.'.jpg';
+					$image_new_name = 'itv_'.$last_id.'_'.$last_id.'.jpg';
 					
 					$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id=".$last_id."");
 					if ($this->db->affected_rows() > 0) {
 						$down = get_contacts_vcard($last_id);
 						$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id='".$last_id."'");
 					
-						$qrimage_new = genrate_qrcode(base_url()."vcards/".$down);
+						$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 						$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
 						$image_new = genrate_image($last_id);
 						$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");

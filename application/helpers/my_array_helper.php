@@ -45,7 +45,7 @@ function generateID($id = null)
     	{
     		$generated_id.='-'.strtoupper(substr($industry_name,0,1));
     	}
-    	//$generated_id.='-A';
+    	$generated_id.='-'.$id;
     }
 	return $generated_id;
 }
@@ -83,7 +83,7 @@ function getLocationsPlace($id=null,$company_id=null)
 	}
 	return $location_id;
 }
-function genrate_qrcode($id=null)
+function genrate_qrcode($id=null,$lastid=0)
 {
 	$CI =& get_instance();
 	$CI->load->library('phpqrcode/qrlib'); 
@@ -94,7 +94,11 @@ function genrate_qrcode($id=null)
 		$text = $qrtext;
 		$text1= substr($text, 0,2);
 		$folder = $SERVERFILEPATH;
-		$file_name1 = $text1."-Qrcode" . rand(2,200) . ".png";
+		$file_name1 = "qrcode" . $lastid . ".png";
+		if (file_exists($folder.$file_name1)) {
+			 unlink($folder.$file_name1);
+		}
+		
 		$file_name = $folder.$file_name1;
 		QRcode::png($text,$file_name);
 		$qrimage_new_name = $file_name1;
@@ -108,10 +112,9 @@ function genrate_image($id=null)
 	$last_data=$CI->model->getLastData2("contacts",$id);
 	$company_id= $last_data->company_id;
 	$contract_number= $last_data->contract_number;
-	$dependant_data=$CI->model->getLastData3("contact_dependant",$contract_number);
+	$dependant_data=$CI->model->getdependents("contact_dependant",$contract_number);
 	 
 	$imagedata=$CI->model->getimageData("companies",$company_id);
-// 	$imagename=$imagedata->image; 
 	$font=realpath('resources/font/Facit Regular.otf');
 	$image=imagecreatefromjpeg("resources/img/formate.jpg");
 	$color=imagecolorallocate($image, 50, 51, 50);
@@ -145,7 +148,7 @@ function genrate_image($id=null)
 						$dependent_datas = $datadependent[0];
 					}
 					$dependent_datas=substr($dependent_datas,0,6).': ';
-				    imagettftext($image, 11, 0, 10, ($heightdepend+$i), $color,$font, $dependent_datas);
+				    imagettftext($image, 9, 0, 10, ($heightdepend+$i), $color,$font, $dependent_datas);
 				 
 				    $dependent_data = '';
 				    $dependent_data2 = '';
@@ -154,7 +157,7 @@ function genrate_image($id=null)
     				$dependent_data2.=(isset($value->last_name)  && !empty($value->last_name)) ? ' '.ucwords($value->last_name):'';
     				/* $dependent_data2.=(isset($value->ssn)  && !empty($value->ssn)) ? ' '.$value->ssn:''; */
     				
-    				imagettftext($image, 11, 0, 70, ($heightdepend+$i), $color,$font, $dependent_data2);
+    				imagettftext($image, 9, 0, 70, ($heightdepend+$i), $color,$font, $dependent_data2);
     				$i = $i+20;
 			    }
 				
@@ -163,25 +166,10 @@ function genrate_image($id=null)
 		}
 	}
 	
-	// if ($last_data->dependent == 'Member') 
-	// {
-	// 	$dependent2="Member:";
-	// 	imagettftext($image, 11, 0, 10, 390, $color,$font, $dependent2);
-	// 	$mem_name=$last_data->first_name." ".$last_data->last_name;
-	// 	imagettftext($image, 11, 0, 70, 390, $color,$font, $mem_name);
-	// }
-	// else
-	// {
-	// 	$dependent1=$last_data->dependent.":";
-	// 	imagettftext($image, 11, 0, 10, 390, $color,$font, $dependent1);
-	// 	$name=$last_data->dependant_name." ".$last_data->dep_f_name;
-	// 	imagettftext($image, 11, 0, 70, 390, $color,$font, $name);
-	// }
-	/* $account_id=(!empty($last_data->ssn)?'SSN '.$last_data->ssn:$last_data->account_code);
-	imagettftext($image, 12, 0, 115, 325, $color,$font, $account_id); */
+	$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
+	imagettftext($image, 12, 0, 115, 325, $color,$font, $account_id);  
 	$date=date("M d,Y",strtotime($last_data->active_member));
 	imagettftext($image, 9, 0, 10, 468, $color,$font, $date);
-	/* $image_url = base_url().'resources/admin/'.$imagedata->image; */
 	$image_url = 'resources/admin/'.$imagedata->image;
 	$watermark_image = imagecreatefromjpeg($image_url);
 	$margin_right = 45; 
@@ -189,7 +177,6 @@ function genrate_image($id=null)
 	$watermark_image_width = imagesx($watermark_image); 
 	$watermark_image_height = imagesy($watermark_image);  
      imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height);
-	/* $qrimage_url = base_url().'resources/qrimage/'.$last_data->qrimage; */
 	$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
 	$watermark_qr = imagecreatefrompng($qrimage_url);
 	$margin_right = 10; 
@@ -198,9 +185,13 @@ function genrate_image($id=null)
 	$watermark_qr_height = imagesy($watermark_qr);
 	imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 	$random = rand(99999,999999999); 
-	imagejpeg($image,"resources/cards/cc_".$random."_".$id.".jpg", 100); 
+	if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_".$id."_".$id.".jpg")) {
+		 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_".$id."_".$id.".jpg");
+	}
+	
+	imagejpeg($image,"resources/cards/cc_".$id."_".$id.".jpg", 100); 
 	imagedestroy($image);
-	$image_new_name = "cc_".$random."_".$id.".jpg";
+	$image_new_name = "cc_".$id."_".$id.".jpg";
 	return $image_new_name;
 
 }

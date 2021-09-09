@@ -98,6 +98,10 @@ class Model extends CI_Model {
 	{
 		return $this->db->query("select * from $table where contract_number='$contract_number'")->result();
 	}
+	function getdependents($table,$contract_number)
+	{
+		return $this->db->query("select * from contact_dependant where contract_number='$contract_number' ORDER BY CASE when relationship = 'Male Spouse' OR relationship = 'Female Spouse' THEN 1 ELSE 2 END  ASC")->result();
+	}
 	function getimageData($table,$id)
 	{
 		return $this->db->query("select * from $table where id=$id")->row();

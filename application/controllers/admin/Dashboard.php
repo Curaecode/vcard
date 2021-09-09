@@ -980,16 +980,7 @@ class Dashboard extends CI_Controller {
 						}
 					}
 					$key->dependent = $dependent_data;
-					//unset($key->id); 
 					
-					// $industryid=$key->industry_id;
-					// if($industryid > 0){
-					// 	$industry_name=getIndustryName($industryid);
-					// }else{
-					// 	$industry_name="";
-					// }
-					// $key->industry_id=$industry_name;
-					// $key->date=cdate($key->date);
 					$contract_number = $key->contract_number;
 					 unset($key->contract_number);  
 					$filename=$key->image;
@@ -1025,18 +1016,22 @@ class Dashboard extends CI_Controller {
 							$last_id = $this->db->insert_id();							
 							$account_id = generateID($last_id);
 							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
-							$qrimage_new_name = genrate_qrcode($account_id);
-								$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
+							
+							$qrimage_new_name = genrate_qrcode($account_id,$last_id);
+							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
 							$image_new_name = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id='".$last_id."'");
-							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
-							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down);
-								$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id=".$last_id."");
+							$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id='".$last_id."'"); 
+							
+							
+							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
+							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id=".$last_id."");
 								
 							
 							$image_new = genrate_image($last_id);
 							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
+							
+							$down = get_contacts_vcard($last_id);
+							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
 							
 							$this->db->query("update `contacts` set contract_number= '".$last_id."' where id='".$last_id."'");
 							
@@ -1064,7 +1059,7 @@ class Dashboard extends CI_Controller {
 				break;
 			case "dependents":
 				$contract_number=$id;  
-				$data['contactdependent']=$this->model->getLastData3("contact_dependant",$contract_number);
+				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
 				generatePageView('contactdependant',$data);
 			
 				break;
@@ -1135,16 +1130,19 @@ class Dashboard extends CI_Controller {
 							$watermark_qr_height = imagesy($watermark_qr);
 							imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 							$random = rand(99999,999999999); 
-							imagejpeg($image,"resources/cards/itv_".$random.$last_id.".jpg");
+							if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$last_id.$last_id.".jpg")) {
+								 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$last_id.$last_id.".jpg");
+							}
+							imagejpeg($image,"resources/cards/itv_".$last_id.$last_id.".jpg");
 							imagedestroy($image);
-							$image_new_name = 'itv_'.$random.'_'.$last_id.'.jpg';
+							$image_new_name = 'itv_'.$last_id.''.$last_id.'.jpg';
 							
 							$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id=".$last_id."");
 							if ($this->db->affected_rows() > 0) {
 								$down = get_contacts_vcard($last_id);
 								$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id='".$last_id."'");
 							
-								$qrimage_new = genrate_qrcode(base_url()."vcards/".$down);
+								$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 								$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
 								$image_new = genrate_image($last_id);
 								$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
@@ -1153,7 +1151,7 @@ class Dashboard extends CI_Controller {
 					}
 				}					
 				$data['dependent']=($this->model->getData("dependent"));
-				$data['contactdependent']=$this->model->getLastData3("contact_dependant",$contract_number);
+				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
 				generatePageView('addcontactdependant',$data);
 			
 				break;
@@ -1169,15 +1167,14 @@ class Dashboard extends CI_Controller {
 				$account_id = generateID($id);
 				$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id='".$id."'");
 				$last_data=$this->model->getLastData2("contacts",$id);
-				$qrimage_new_name = genrate_qrcode($account_id);
+				$qrimage_new_name = genrate_qrcode($account_id,$last_id);
 				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id='".$id."'");
-							
-				
+				 
 				$image_new_name = genrate_image($id);
 				$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id='".$id."'");
 				$down = get_contacts_vcard($id);
 				$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$id."");
-				$qrimage_new = genrate_qrcode(base_url()."vcards/".$down);
+				$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id=".$id."");
 					
 				
@@ -1412,7 +1409,8 @@ function download2($filename = NULL) {
 								$getgroupId = $this->model->add('groups',$addArray);
 							}
 							
-							$datas['group_number']=$getgroupId;
+							$datas['group_number']=$newvalues;
+							$datas['group_id']=$getgroupId;
 						}
 						if(strtolower($data['header'][1][$key]) == 'company' ){
 							$getIdQuery = $this->db->query("SELECT * from companies where company_name = '".$newvalues."'")->row(); 
@@ -1452,8 +1450,7 @@ function download2($filename = NULL) {
 						}
 						 
 						if(strtolower($data['header'][1][$key]) == 'ssn'){
-							$datas['ssn']=$newvalues;
-							$datas['account_code']=$newvalues;
+							$datas['ssn']=$newvalues; 
 						}
 						if(strtolower($data['header'][1][$key]) == 'relation'){
 							$datas['relationship']=$newvalues;
@@ -1538,11 +1535,11 @@ function download2($filename = NULL) {
 					$pos = strpos($mystring, $findme);
 					
 					if ($pos === false) { 
-						unset($datas['company_id']);
-						unset($datas['account_code']);
+						unset($datas['company_id']); 
 						unset($datas['industry_id']);
 						unset($datas['country_id']);
 						unset($datas['state_id']);
+						unset($datas['group_id']);
                       	$last_id = $this->model->add('contact_dependant',$datas); 
 					}else{
 						 
@@ -1558,6 +1555,8 @@ function download2($filename = NULL) {
 						}else{
 							$last_id = $this->model->add('contacts',$datas);
 						}
+						$account_id = generateID($last_id);
+						$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id.""); 
 						array_push($userids,$last_id);
 						 
 					}  
@@ -1608,20 +1607,29 @@ function download2($filename = NULL) {
 						$watermark_qr_width = imagesx($watermark_qr);
 						$watermark_qr_height = imagesy($watermark_qr);
 						imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
-						$random = rand(99999,999999999); 
-						imagejpeg($image,"resources/cards/itv_".$random.$last_id.".jpg");
+						$random = rand(99999,999999999);
+						if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$last_id.$last_id.".jpg")) {
+							unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$last_id.$last_id.".jpg");
+						}						
+						imagejpeg($image,"resources/cards/itv_".$last_id.$last_id.".jpg");
 						imagedestroy($image);
-						$image_new_name = 'itv_'.$random.'_'.$last_id.'.jpg';
+						$image_new_name = 'itv_'.$last_id.''.$last_id.'.jpg';
 						
 						$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id=".$last_id."");
 						if ($this->db->affected_rows() > 0) {
+							
 							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id='".$last_id."'");
-						
-							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down);
-							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
+							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
+							
+							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
+							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id=".$last_id."");
+								
+							
 							$image_new = genrate_image($last_id);
 							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
+							
+							
+							
 						}
 					}
 					
@@ -1830,9 +1838,11 @@ function download2($filename = NULL) {
         $response = '';
         foreach($dat as $data)
         {
-	        $this->load->library('twilio');
-	        $filename = isset($data->vcard_name) ? $data->vcard_name:'';
-			$response = $this->twilio->sendSMS($data->phone,$filename);
+	        if(!empty($data->phone)){
+				$this->load->library('twilio');
+				$filename = isset($data->vcard_name) ? $data->vcard_name:'';
+				$response = $this->twilio->sendSMS($data->phone,$filename);
+			}
         }
         return $response;
     }
@@ -1887,7 +1897,7 @@ function download2($filename = NULL) {
 			$data['countries']=($this->model->getData("country"));
 			$data['industries']=($this->model->getData("industries"));
 			$data['dependent']=($this->model->getData("dependent"));
-			$data['contactdependent']=$this->model->getLastData3("contact_dependant",$contract_number);
+			$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
 			generatePageView('contactdependant',$data);
 		
 		}
