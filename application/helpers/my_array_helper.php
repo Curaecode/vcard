@@ -130,10 +130,10 @@ function genrate_image($id=null)
 		if(!empty($dependant_data))
 		{
 			$i = 0; 
-			$heightdepend = 390;
-			if(count($dependant_data) > 3){
+			/* $heightdepend = 390;
+			if(count($dependant_data) > 3){ */
 				$heightdepend = 350;
-			}
+			/* } */
 			 
 			foreach($dependant_data as $key => $value) 
 			{
@@ -152,11 +152,11 @@ function genrate_image($id=null)
 					}else{
 						$dependent_datas='S';
 					} */
-					$mystring = $dependent_datas;  
-					$findme   = 'SPOUSE';
+					$mystring = strtolower($dependent_datas);  
+					$findme   = 'spouse';
 					$pos = strpos($mystring, $findme);
 					
-					if ($pos === false) {
+					if ($pos === false){
 						$dependent_datas = 'D';
 					}else{
 						$dependent_datas = 'S';

@@ -931,6 +931,7 @@ class Dashboard extends CI_Controller {
 				"contacts.dependent",
 				"contacts.contract_number",
 				"contacts.account_code",
+				"contacts.cardsend",
 				"contacts.image"
 				//"contacts.date"
 				);
@@ -986,6 +987,10 @@ class Dashboard extends CI_Controller {
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
 					$key->image="<img src='".res_url()."cards/".$key->image."?v=".time()."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					if($key->cardsend==1){
+						$key->image ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->image;
+					}
+					unset($key->cardsend);  
 					$value=array_values((array)$key);
 					// print_r($key);die;
 					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
@@ -1827,6 +1832,8 @@ function download2($filename = NULL) {
         $datavcard = $this->sendVcard($this->model->getByIdvcard("contacts",$id),$id);
         if(isset($datavcard->sid))
         {
+			
+			$query=$this->db->query("update `contacts` set cardsend= '1' where id=".$id."");
 	        $response['status']=1;
 	        $response['message']='Sent successfully';
         }
@@ -1925,10 +1932,9 @@ function download2($filename = NULL) {
 			$ids=$this->input->post('id');
 			foreach($ids as $id){
 				$datavcard = $this->sendVcard($this->model->getByIdvcard("contacts",$id),$id);
-				/* if(!isset($datavcard->sid))  {
-					$response['status']=0;
-					$response['message']=$datavcard;
-				} */
+				if(isset($datavcard->sid))  {
+					$query=$this->db->query("update `contacts` set cardsend= '1' where id=".$id."");
+				}
 			} 
 			echo json_encode($response);exit(); 
 			
