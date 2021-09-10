@@ -20,7 +20,8 @@
 					</div>
 				</div>	
 				<div class="col-md-6 col-lg-5">
-					<div class="login-wrap py-4">
+					<div class="login-wrap py-3">
+						<h3 class="vcard_title">vCard Sign up</h3>
 						<form action="detail.html" id="subscriptionform" class="login-form">
 							<div class="form-group">
 								<label>First Name</label>
@@ -36,17 +37,26 @@
 							</div> 
 							<div class="form-group row">
 								<label for="exampleInputNumer" class="col-sm-12 col-form-label ">Mobile Number</label>  
-								<div class="col-sm-4 pr-2">
+								<div class="col-sm-3 pr-2">
 								 	<input type="number" class="form-control" maxlength="3" id="area_code" name="area_code" placeholder="xxx" required>
 								</div>
-								<div class="col-sm-4 pl-2 pr-2">
+								<div class="col-sm-3 pl-2 pr-2">
 								 	<input type="number" class="form-control" maxlength="3" id="phone_first" name="phone_first" placeholder="xxx" required>
 								</div>
-								<div class="col-sm-4 pl-2">
+								<div class="col-sm-3 pl-2">
 								 	<input type="number" class="form-control" maxlength="4" id="phone_second" name="phone_second" placeholder="xxxx" required>
 								</div>
+								<div class="col-sm-3 pl-1"> 
+								<button type="button" class="btn btn-sm form-control btn-primary rounded submit px-3 ">Send Code</button>
+								</div> 
 								
 								
+							</div> 
+							<div class="form-group row">
+								<label for="exampleInputNumer" class="col-sm-12 col-form-label ">Verification Code</label>   
+								<div class="col-sm-12 pl-2 ">
+								 	<input type="number" class="form-control" maxlength="6" id="vcode" name="vcode" placeholder="xxxxxx" required>
+								</div> 
 							</div> 
 							<div class="form-group row">
 								<label class="col-sm-12 col-form-label">Date of Birth:</label>
@@ -116,7 +126,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group mb-0">
 								<button type="submit" class="btn form-control btn-primary rounded submit px-3">Get Started</button>
 							</div>
 						</form> 

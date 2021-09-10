@@ -69,6 +69,7 @@ console.log(isValidDate("2013-02-29"));  // false = not leap day
 		success: function () {
 			document.getElementById('subscriptionform').reset();
 			alert('form was submitted');
+			window.location.href='detail.php';
 		}
 	  });
 	  return false;

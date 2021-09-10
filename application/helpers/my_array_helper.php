@@ -147,12 +147,21 @@ function genrate_image($id=null)
 					}else{
 						$dependent_datas = $datadependent[0];
 					}
-					if(strtolower($dependent_datas)!='spouse'){
+					/* if(strtolower($dependent_datas)!='spouse' || $dependent_datas!='SPOUSE'){
 						$dependent_datas='D';
 					}else{
 						$dependent_datas='S';
+					} */
+					$mystring = $dependent_datas;  
+					$findme   = 'SPOUSE';
+					$pos = strpos($mystring, $findme);
+					
+					if ($pos === false) {
+						$dependent_datas = 'D';
+					}else{
+						$dependent_datas = 'S';
 					}
-					$dependent_datas=substr($dependent_datas,0,6).': ';
+					$dependent_datas=$dependent_datas.': ';
 				    imagettftext($image, 9, 0, 15, ($heightdepend+$i), $color,$font, strtoupper($dependent_datas));
 				 
 				    $dependent_data = '';
@@ -182,8 +191,8 @@ function genrate_image($id=null)
 	$margin_bottom = 290;
 	$watermark_image_width = imagesx($watermark_image); 
 	$watermark_image_height = imagesy($watermark_image);  
-     imagecopy($image, $watermark_image, 15, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height);
-    /*  imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); */
+     /* imagecopy($image, $watermark_image, 15, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); */
+      imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); 
 	$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
 	$watermark_qr = imagecreatefrompng($qrimage_url);
 	$margin_right = 10; 

@@ -2534,9 +2534,16 @@ font-size: 1.25rem;
 line-height: 1.5;
 border-radius: 0.3rem; }
 
+.btn-sm.btn-primary{
+	font-size:10px!important;
+	padding-left:0!important;
+	padding-right:0!important;
+}
+
 .btn-sm, .btn-group-sm > .btn {
 padding: 0.25rem 0.5rem;
 font-size: 0.875rem;
+	font-size:10px;
 line-height: 1.5;
 border-radius: 0.2rem; }
 
@@ -8228,7 +8235,8 @@ color: #000; }
 background: #C4C4C4 !important; }
 
 .ftco-section {
-padding: 4em 0; 
+/*padding: 4em 0; */
+padding: 2em 0; 
 height:100vh;
 }
 
@@ -8334,7 +8342,15 @@ font-weight: 400;
 font-size: 18px;
 color: #fff;
 text-transform: uppercase;
-letter-spacing: 1px; }
+letter-spacing: 1px;
+}
+.login-wrap h3.vcard_title{ 
+    font-size: 24px;
+    text-align: center;
+    font-weight: 600;
+    color: #00aced;
+	text-transform:none;
+} 
 .login-wrap p {
 color: rgba(255, 255, 255, 0.5); }
 .login-wrap .img {
@@ -8367,7 +8383,7 @@ color: #fff; }
 
 .form-control {
 /*height: 48px;*/
-height: 40px;
+height: 35px;
 background: rgba(255, 255, 255, 1);
 color: #151515 !important;
 font-size: 14px;
