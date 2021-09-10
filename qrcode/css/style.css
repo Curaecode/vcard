@@ -1759,7 +1759,8 @@ textarea.form-control {
 height: auto; }
 
 .form-group {
-margin-bottom: 1rem; }
+/*margin-bottom: 1rem;*/
+margin-bottom: 10px; }
 
 .form-text {
 display: block;
@@ -8365,7 +8366,8 @@ font-size: 18px; }
 color: #fff; }
 
 .form-control {
-height: 48px;
+/*height: 48px;*/
+height: 40px;
 background: rgba(255, 255, 255, 1);
 color: #151515 !important;
 font-size: 14px;
@@ -8384,17 +8386,21 @@ transition: all 0.2s ease-in-out; }
 -o-transition: none;
 transition: none; } }*/
 .form-control::-webkit-input-placeholder {
-/* Chrome/Opera/Safari */
-color: rgba(255, 255, 255, 0.8) !important; }
+/* Chrome/Opera/Safari 
+color: rgba(255, 255, 255, 0.8) !important;*/
+color: rgba(0, 0, 0, 0.8) !important; }
 .form-control::-moz-placeholder {
-/* Firefox 19+ */
-color: rgba(255, 255, 255, 0.8) !important; }
+/* Firefox 19+  
+color: rgba(255, 255, 255, 0.8) !important;*/
+color: rgba(0, 0, 0, 0.8) !important; }
 .form-control:-ms-input-placeholder {
-/* IE 10+ */
-color: rgba(255, 255, 255, 0.8) !important; }
+/* IE 10+  
+color: rgba(255, 255, 255, 0.8) !important; */
+color: rgba(0, 0, 0, 0.8) !important;}
 .form-control:-moz-placeholder {
-/* Firefox 18- */
-color: rgba(255, 255, 255, 0.8) !important; }
+/* Firefox 18-  
+color: rgba(255, 255, 255, 0.8) !important;*/
+color: rgba(0, 0, 0, 0.8) !important; }
 .form-control:focus, .form-control:active {
 outline: none !important;
 -webkit-box-shadow: none;
