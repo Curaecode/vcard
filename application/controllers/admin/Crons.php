@@ -12,13 +12,14 @@ class crons extends CI_Controller {
 		
 	}
 	function updateqrimages(){
-		$results = $this->db->query("select * from contacts  order by id ASC")->result();
+		$query=$this->db->query("update `contacts` set qrimage=''");
+		/* $results = $this->db->query("select * from contacts  order by id ASC")->result();
 		if(!empty($results)){
 			foreach($results as $row){
 				$id=$row->id; 
 				$query=$this->db->query("update `contacts` set qrimage='' where id='".$id."'");
 			}
-		}
+		} */
 	}
 	function updateunique(){
 		$results = $this->db->query("select * from contacts where ssn = account_code  order by id ASC LIMIT 0,1000")->result();
@@ -31,8 +32,14 @@ class crons extends CI_Controller {
 		}
 	}
 	function updateimages(){
-		 
-		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id ASC LIMIT 0,500")->result();
+		$myfile = fopen($_SERVER['DOCUMENT_ROOT'].'/resources/newfile.txt', "w");
+		 $txt = "Time: ".date('Y-m-d h:i A');
+		fwrite($myfile, $txt);
+		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id DESC LIMIT 0,500")->result();
+		$txt = "Total: ".count($results);
+		fwrite($myfile, $txt);
+		fclose($myfile);
+		
 		if(!empty($results)){
 			foreach($results as $row){
 				$last_id=$row->id;

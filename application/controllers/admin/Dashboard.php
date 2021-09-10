@@ -936,7 +936,7 @@ class Dashboard extends CI_Controller {
 				);
 				$searchFields=array(
 			    "contacts.id",
-				"contacts.ssn",
+				"contacts.account_code",
 				"contacts.contract_number",
 				"contacts.first_name",
 				"contacts.last_name",
@@ -985,7 +985,7 @@ class Dashboard extends CI_Controller {
 					 unset($key->contract_number);  
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
-					$key->image="<img src='".res_url()."cards/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					$key->image="<img src='".res_url()."cards/".$key->image."?v=".time()."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
 					$value=array_values((array)$key);
 					// print_r($key);die;
 					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
@@ -1483,7 +1483,7 @@ function download2($filename = NULL) {
 						if(strtolower($data['header'][1][$key]) == 'zip code'){
 							$datas['zipcode']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'phone' || strtolower($data['header'][1][$key]) == 'mobile (cell) number' || strtolower($data['header'][1][$key]) == 'phone number'){
+						if(strtolower($data['header'][1][$key]) == 'phone' || strtolower($data['header'][1][$key]) == 'mobile (cell) number' || strtolower($data['header'][1][$key]) == 'phone number' || strtolower($data['header'][1][$key]) == 'Phone - CELL'){
 							/* $newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
 							$mystring = $newvalues; 
 							$findme   = '+1';
@@ -1493,7 +1493,10 @@ function download2($filename = NULL) {
 								$newvalues = '+1'.$newvalues;
 							}
 							$datas['phone']=$newvalues; */
-							$phonenumber2=$newvalues;
+							if($newvalues!='DUPLICATE' || $newvalues!='duplicate'){
+								$phonenumber2=$newvalues;
+							}
+							
 						}
 						if(strtolower($data['header'][1][$key]) == 'area code'){
 							/* $newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
@@ -1544,6 +1547,7 @@ function download2($filename = NULL) {
 					}else{
 						 
 						$datas['location_id'] = 22;
+						$datas['qrimage'] = '';
 						$datas['patient_id'] = $datas['contract_number'];
 						$datas['active_member'] = date('Y-m-d');
 						$query="Select * from `contacts` WHERE patient_id='".$datas['contract_number']."'";
@@ -1563,7 +1567,7 @@ function download2($filename = NULL) {
 				}
 			}
 			
-			if(!empty($userids)){ 
+			/* if(!empty($userids)){ 
 				foreach($userids as $last_id){
 					if($last_id > 0){
 						$last_data=$this->model->getLastData2("contacts",$last_id);
@@ -1635,7 +1639,7 @@ function download2($filename = NULL) {
 					
 				}
 				
-			} 
+			} */ 
 			 
 			 
 			 

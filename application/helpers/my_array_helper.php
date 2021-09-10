@@ -121,7 +121,7 @@ function genrate_image($id=null)
 	$fname=ucwords($last_data->first_name." ".$last_data->last_name);
 	$heightdependimg = 300;
  
-	imagettftext($image, 15, 0, 98, $heightdependimg, $color,$font, $fname);
+	imagettftext($image, 15, 0, 20, $heightdependimg, $color,$font, $fname);
 	
 	
 	if(isset($dependant_data))
@@ -147,8 +147,13 @@ function genrate_image($id=null)
 					}else{
 						$dependent_datas = $datadependent[0];
 					}
+					if(strtolower($dependent_datas)!='spouse'){
+						$dependent_datas='D';
+					}else{
+						$dependent_datas='S';
+					}
 					$dependent_datas=substr($dependent_datas,0,6).': ';
-				    imagettftext($image, 9, 0, 10, ($heightdepend+$i), $color,$font, $dependent_datas);
+				    imagettftext($image, 9, 0, 15, ($heightdepend+$i), $color,$font, strtoupper($dependent_datas));
 				 
 				    $dependent_data = '';
 				    $dependent_data2 = '';
@@ -157,7 +162,7 @@ function genrate_image($id=null)
     				$dependent_data2.=(isset($value->last_name)  && !empty($value->last_name)) ? ' '.ucwords($value->last_name):'';
     				/* $dependent_data2.=(isset($value->ssn)  && !empty($value->ssn)) ? ' '.$value->ssn:''; */
     				
-    				imagettftext($image, 9, 0, 70, ($heightdepend+$i), $color,$font, $dependent_data2);
+    				imagettftext($image, 9, 0, 26, ($heightdepend+$i), $color,$font, $dependent_data2);
     				$i = $i+20;
 			    }
 				
@@ -167,16 +172,18 @@ function genrate_image($id=null)
 	}
 	
 	$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
-	imagettftext($image, 12, 0, 115, 325, $color,$font, $account_id);  
+	imagettftext($image, 12, 0, 15, 325, $color,$font, $account_id);  
 	$date=date("M d,Y",strtotime($last_data->active_member));
-	imagettftext($image, 9, 0, 10, 468, $color,$font, $date);
+	imagettftext($image, 9, 0, 15, 468, $color,$font, $date);
 	$image_url = 'resources/admin/'.$imagedata->image;
 	$watermark_image = imagecreatefromjpeg($image_url);
+	
 	$margin_right = 45; 
 	$margin_bottom = 290;
 	$watermark_image_width = imagesx($watermark_image); 
 	$watermark_image_height = imagesy($watermark_image);  
-     imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height);
+     imagecopy($image, $watermark_image, 15, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height);
+    /*  imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); */
 	$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
 	$watermark_qr = imagecreatefrompng($qrimage_url);
 	$margin_right = 10; 
