@@ -30,10 +30,39 @@ function sendallcard(){
             type:"post",
 			dataType:"json",
             success:function(data){
-				var result = jQuery.parseJSON(result);
+				console.log(data);
+				 
                 Swal.fire({
 					title: 'Done!',
-					text: result.message,
+					text: data.message,
+					type: 'success'
+				});
+            }
+        }); 
+	 }else{
+		 Swal.fire("Error!",'Please select the contact to send the vcard.', "error");   
+	 }
+	return false;
+}
+function sendallmail(){
+	 if($(".checkbox:checked").length > 0) {
+		var selectedids= new Array(); 
+		$('.checkbox:checked').each(function() {
+		   console.log(this.value);
+		   selectedids.push(this.value);
+		}); 
+		$.ajax({
+            type:'POST',
+            url:base_url+'admin/dashboard/sendemails/',
+            data:{id:selectedids},
+            type:"post",
+			dataType:"json",
+            success:function(data){
+				console.log(data);
+				 
+                Swal.fire({
+					title: 'Done!',
+					text: data.message,
 					type: 'success'
 				});
             }

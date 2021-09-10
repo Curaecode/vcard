@@ -932,6 +932,7 @@ class Dashboard extends CI_Controller {
 				"contacts.contract_number",
 				"contacts.account_code",
 				"contacts.cardsend",
+				"contacts.cardemail",
 				"contacts.image"
 				//"contacts.date"
 				);
@@ -990,7 +991,11 @@ class Dashboard extends CI_Controller {
 					if($key->cardsend==1){
 						$key->image ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->image;
 					}
-					unset($key->cardsend);  
+					if($key->cardemail==1){
+						$key->email ='<i class="fa fa-check" aria-hidden="true" style="    color: green;"></i>'.$key->email;
+					}
+					unset($key->cardsend);
+					unset($key->cardemail);  
 					$value=array_values((array)$key);
 					// print_r($key);die;
 					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
@@ -1945,4 +1950,122 @@ function download2($filename = NULL) {
 		} 
 		
 	}
+	function sendemails(){
+		 
+		if($this->input->post('id')){
+			$response['status']=1;
+			$response['message']='Sent successfully';
+			$ids=$this->input->post('id');
+			foreach($ids as $id){
+				$detail = $this->model->getByIdvcard("contacts",$id);
+				$vcard_name=$detail[0]->vcard_name;
+				$vcard_image=$detail[0]->image;
+				$email=$detail[0]->email;
+				$fullname=$detail[0]->first_name.' '.$detail[0]->last_name;
+				if(!empty($email)){
+					$returned = $this->sendmail($email,$fullname,$vcard_name,$vcard_image);
+					if($returned['status']==true){
+						$query=$this->db->query("update `contacts` set cardemail= '1' where id=".$id."");
+					}
+				} 
+			} 
+			echo json_encode($response);exit(); 
+			
+		}else{ 
+			$response['status']=0;
+			$response['message']='Please select some contact to send card';
+			echo json_encode($response);exit(); 
+		}  
+	}
+	function testmail(){
+		$detail = $this->model->getByIdvcard("contacts",16);
+		$vcard_name=$detail[0]->vcard_name;
+		$vcard_image=$detail[0]->image;
+		 /* Muhammad Sufian <sufian@ex3gen.com> */
+		 /* Harsha Hatti <Harsha.Hatti@corelinq.com> */
+		/* $returned = $this->sendmail('phyllisosby@gmail.com','phyllis osby',$vcard_name,$vcard_image);  */  
+		 $returned = $this->sendmail('haroon@ex3gen.com','Harsha Hatti',$vcard_name,$vcard_image); 
+		if($returned['status']==true){
+			
+		}
+		print_r($returned);
+	}
+	function sendmail($tomail='',$toname='',$url='',$cardimage=''){
+        $body = '<table width="100%" align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td align="center" valign="top" style="margin: 0; padding: 0;">
+							<table width="600" align="center" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0"
+								   style="font-family:Arial, Helvetica, sans-serif;">
+								
+
+								<tr>
+									<td style="text-align: left;">
+
+										<h1 style="font-weight: bold; font-size: 1.375em; color: #D1AC50; line-height: 38px;">To Our Valued Curaechoice Members,</h1>
+
+										<p style="font-size: 1.375em; color: #162C53; line-height: 28px;">Welcome to the Curaechoice program!  As most of you now know, the new Curaechoice benefits program is actively being rolled out to all team members.  As a part of this rollout, digital Curaechoice vCards are being sent to every team member that has an up to date cell number on file.</p>
+										<p style="font-size: 1.375em; color: #162C53; line-height: 28px;">If you are receiving this email, it appears your cell number is not current.  To ensure that you receive your digital vCard, we have enclosed your Curaechoice vCard as an attachment within this email.  Please open up your attached vCard and save this vCard onto your phone.  Having your vCard on your phone will provide you with immediate access to your vCard when utilizing the Curaechoice program.   If you encounter an issue in accessing your vCard, please email us at support@curaechoice.com.  <br></p>
+										<p style="font-size: 1.375em; color: #162C53; line-height: 28px;">We are excited to have you as a part of the Curaechoice member family.  We hope that you will find your participation in the Curaechoice program to be an incredibly positive and impactful experience for you and your loved ones. <br><br></p>
+										<p style="font-size: 1.375em; color: #162C53; line-height: 28px;">We thank you for the opportunity to serve you as your ally in care coordination.<br><br> </p>
+									</td>
+								</tr>
+								 
+								<tr>
+									<td align="left" valign="top" style="margin: 0; padding: 0;">
+										 <p style="font-size: 1.375em; color: #162C53; line-height: 28px;">Sincerely, <br>
+										Your Curaechoice Support Team </p>
+									</td>
+								</tr>
+								<tr>
+									<td align="center" valign="top" style="margin: 0; padding: 0;">
+										<img style="display: block;max-width:100%" src="'.base_url().'resources/img/image_logo.png" alt="" width="370" height="140">
+									</td>
+								</tr>
+								 
+								<tr>
+									<td align="center" valign="top" style="margin: 0; padding: 0;">
+										 <p style="font-size:10px;line-height:13px;letter-spacing:-0.01em;margin:0px;padding:0;color: #727272;">You are subscribed as '.$tomail.'. To ensure delivery of Curaehchoice vCard to your inbox, please add support@curaechoice.com to your address book.</p>
+									</td>
+								</tr>								
+							</table>
+						</td>
+					</tr>
+				</table>';
+		$mainsubject="CuraeChoice vcard.";
+        $message = 'This is test email.\nThis is test email.\nThis is test email.\n';
+		$this->load->library('My_PHPMailer');
+		 $mail = new PHPMailer(); 
+		$mail->IsSMTP(); 
+		$mail->SMTPAuth = true;
+        $mail->SMTPSecure = "ssl";  // prefix for secure protocol to connect to the server
+        $mail->Host       = "smtp.elasticemail.com";      // setting GMail as our SMTP server
+        $mail->Port       = 465;                   // SMTP port to connect to GMail
+		$mail->SMTPDebug = 0;
+        $mail->Username   = "support@curaechoice.com";  // user email address
+        $mail->Password   = "AFE78A029B1CC384813FCA963E1296099635";            // password in GMail
+        $mail->SetFrom('support@curaechoice.com', 'Curaechoice');  //Who is sending the email
+        $mail->AddReplyTo("support@curaechoice.com","Curaechoice");  //email address that receives the response
+        $mail->Subject    = $mainsubject;
+        $mail->Body      = $body;
+        $mail->AltBody    = strip_tags($body); 
+        $mail->AddAddress($tomail, $toname);
+        $mail->AddReplyTo('support@curaechoice.com', 'Curaechoice');
+		$mail->AddAttachment('vcards/'.$url,basename($url)); 
+		/* $mail->AddAttachment('resources/cards/'.$cardimage,basename($cardimage)); */
+		
+		
+		/* $mail->AddAttachment('resources/cards/'.$cardimage); 
+		$mail->AddAttachment =$_SERVER['DOCUMENT_ROOT'].'/vcards/'.$url;   
+		 $mail->AddAttachment = $_SERVER['DOCUMENT_ROOT'].'/resources/cards/'.$cardimage; */
+		
+		
+        if(!$mail->Send()) {
+             $data["message"] = "Error: " . $mail->ErrorInfo;
+             $data["status"] = false;
+        } else {
+             $data["message"] = "Message sent correctly!";
+			 $data["status"] = true;
+        }  
+		return $data;
+    }
 }
