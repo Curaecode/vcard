@@ -201,13 +201,13 @@ function genrate_image($id=null)
 	$watermark_qr_height = imagesy($watermark_qr);
 	imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 	$random = rand(99999,999999999); 
-	if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_".$id."_".$id.".jpg")) {
-		 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_".$id."_".$id.".jpg");
+	if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$id."_".$id.".jpg")) {
+		 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$id."_".$id.".jpg");
 	}
 	
-	imagejpeg($image,"resources/cards/cc_".$id."_".$id.".jpg", 100); 
+	imagejpeg($image,"resources/cards/itv_".$id."_".$id.".jpg", 100); 
 	imagedestroy($image);
-	$image_new_name = "cc_".$id."_".$id.".jpg";
+	$image_new_name = "itv_".$id."_".$id.".jpg";
 	return $image_new_name;
 
 }
