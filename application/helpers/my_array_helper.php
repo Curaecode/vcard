@@ -121,7 +121,7 @@ function genrate_image($id=null)
 	$fname=ucwords($last_data->first_name." ".$last_data->last_name);
 	$heightdependimg = 300;
  
-	imagettftext($image, 15, 0, 20, $heightdependimg, $color,$font, $fname);
+	imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $fname);
 	
 	
 	if(isset($dependant_data))
