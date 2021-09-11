@@ -9,8 +9,9 @@
   <head>
   	<title>Curaechoice | Your Ally in Care Coordination</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-	<link rel="stylesheet" href="css/style.css"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="css/style.css">  
+	<link href="css/bootstrap-datepicker.standalone.css" rel="stylesheet">
 	<style>
 	.btn.disabled, .btn:disabled,.btn.disabled{
 	  border: 1px solid #999999 !important;
@@ -71,86 +72,29 @@
 									<button type="button" onclick="getcode();" class="btn btn-sm form-control btn-primary rounded submit px-3 ">Send Code</button>
 									</div>  
 								</div> 
-							</div> 
+							</div>  
+							
 							<div class="form-group">
 								<div class="row">
-									<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Date of Birth:</label>
-								<div class="col-4 pr-2">
-									<select class="custom-select" name="day" id="day" required>
-										<option value="">Date</option>
-										<option value="01">1</option>
-										<option value="02">2</option>
-										<option value="03">3</option>
-										<option value="04">4</option>
-										<option value="05">5</option>
-										<option value="06">6</option>
-										<option value="07">7</option>
-										<option value="08">8</option>
-										<option value="09">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-										<option value="13">13</option>
-										<option value="14">14</option>
-										<option value="15">15</option>
-										<option value="16">16</option>
-										<option value="17">17</option>
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
-										<option value="25">25</option>
-										<option value="26">26</option>
-										<option value="27">27</option>
-										<option value="28">28</option>
-										<option value="29">29</option>
-										<option value="30">30</option>
-										<option value="31">31</option>
-									</select>
+									<div class="col-5 pr-2">
+										<div class="row">
+											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0 ">Verification Code</label>   
+											<div class="col-sm-12">
+												<input type="number" class="form-control" maxlength="6" id="vcode" name="vcode" placeholder="xxxxxx" required>
+											</div> 
+										</div>
+									</div>
+									<div class="col-7">
+										<div class="row">
+											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Date of Birth:</label> 
+											<div class="col-12 pl-2 pr-2"> 
+												<input type="text" name="dob" id="dob" class="form-control" required  type="text" data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy"> 
+											</div>
+										</div>  
+									</div>
 								</div>
-								<div class="col-4 pl-2 pr-2">
-									<select class="custom-select" name="month" id="month" required>
-										<option value="">Month</option>
-										<option value="01">January</option>
-										<option value="02">February</option>
-										<option value="03">March</option>
-										<option value="04">April</option>
-										<option value="05">May</option>
-										<option value="06">June</option>
-										<option value="07">July</option>
-										<option value="08">August</option>
-										<option value="09">September</option>
-										<option value="10">October</option>
-										<option value="11">November</option>
-										<option value="12">December</option>
-									</select>
-								</div>
-								<div class="col-4 pl-2">
-									<select class="custom-select" name="year" id="year" required>
-										<option value="">Year</option> 
-										<?php 
-											$startyr=date('Y')-80;
-											$endyr=date('Y');
-										?>
-										<?php for($yr=$startyr;$yr<=$endyr;$yr++){ ?>
-											<option value="<?php echo $yr;?>"><?php echo $yr;?></option>
-										<?php }?>
-									</select>
-								</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="row">
-								<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0 ">Verification Code</label>   
-								<div class="col-sm-12">
-								 	<input type="number" class="form-control" maxlength="6" id="vcode" name="vcode" placeholder="xxxxxx" required>
-								</div> 
-								</div> 
 							</div> 
-							<div class="form-group mb-0">
+							<div class="form-group mt-4">
 								<button id="submitbtn" type="submit" class="btn form-control btn-primary rounded submit px-3">Get Started</button>
 							</div>
 						</form> 
@@ -160,10 +104,12 @@
 		</div>
 	</section>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
-
+	  <script src="js/jquery.min.js"></script>
+	  <script src="js/popper.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
+	  <script src="js/bootstrap-datepicker.min.js"></script>
+	  <script src="js/main.js"></script>
+	  <script type="text/javascript" src="js/jquery.mask.js"></script>
+	  
 	</body>
 </html> 

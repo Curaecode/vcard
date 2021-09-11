@@ -31,7 +31,7 @@ function getcode(){
 			 if(result.returned == false) {
 				 alert('Please enter a valid phone number');
 			 }else{
-				 alert('SMS has been sent on your phone number'); 
+				 alert('A unique security code has been sent to your phone'); 
 			 }
 		}
 	});
@@ -42,36 +42,72 @@ function getcode(){
 
 	"use strict";
 	$('#submitbtn').prop('disabled', true); 
-	$("#area_code").keyup(function(){
+	$("#area_code").keydown(function(){
+		 
 		var charcters = $(this).val();
 		console.log(charcters);
-		if(charcters.length ==3){
+		if(charcters.length >=3){
 			$('#phone_first').focus();
 		}
 	});
 	
-	$("#phone_first").keyup(function(){
+	$("#phone_first").keydown(function(){ 
 		var charcters = $(this).val();
-		if(charcters.length ==3){
+		if(charcters.length >=3){
 			$('#phone_second').focus();
 		}
 	});
-	$("#phone_second").keyup(function(){
+	$("#phone_second").keydown(function(){ 
 		var charcters = $(this).val();
-		if(charcters.length ==4){
-			$('#day').focus();
+		if(charcters.length >=4){
+			$('#dob').focus();
 		}
 	});
 	
-	$("#vcode").keyup(function(){
+	$("#vcode").keydown(function(){ 
 		var charcters = $(this).val();
-		if(charcters.length ==6){
+		if(charcters.length >=6){
 			$('#submitbtn').removeProp('disabled');
 			$('#submitbtn').prop('disabled', false); 
 		}else{
 			$('#submitbtn').prop('disabled', true); 
 		}
 	});
+	
+	
+	$("#area_code").keyup(function(){
+		var charcters = $(this).val();
+		console.log(charcters);
+		if(charcters.length >=3){
+			$('#phone_first').focus();
+		}
+	});
+	
+	$("#phone_first").keyup(function(){
+		var charcters = $(this).val();
+		if(charcters.length >=3){
+			$('#phone_second').focus();
+		}
+	});
+	$("#phone_second").keyup(function(){
+		var charcters = $(this).val();
+		if(charcters.length >=4){
+			$('#dob').focus();
+		}
+	}); 
+	
+	
+	$("#vcode").keyup(function(){
+		var charcters = $(this).val();
+		if(charcters.length >=6){
+			$('#submitbtn').removeProp('disabled');
+			$('#submitbtn').prop('disabled', false); 
+		}else{
+			$('#submitbtn').prop('disabled', true); 
+		}
+	});
+	
+	
 	$('#subscriptionform').on('submit', function (e) {
 		 e.preventDefault();
 		 var userinput = $('#email').val();
@@ -87,12 +123,15 @@ function getcode(){
 			alert('not a valid Phone number');
 		  return false;
 		 }
-		 var date = $("#year").val()+'-'+$("#month").val()+'-'+$("#day").val();
+		 /* var date = $("#year").val()+'-'+$("#month").val()+'-'+$("#day").val();*/
 		 
-		 if(!isValidDate(date)){
+		 var date = $("#dob").val();
+		 var dob = date.split('/');
+		 var orgdob = dob[2]+'-'+dob[0]+'-'+dob[1];
+		 if(!isValidDate(orgdob)){
 			 alert('Date of Birth is invalid.');
 			 return false;
-		 }
+		 } 
 		
 	  $.ajax({
 		type: 'post',

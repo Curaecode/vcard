@@ -54,8 +54,13 @@ class Subscriptions extends CI_Controller {
 			if($this->input->post('area_code') && $this->input->post('phone_first') && $this->input->post('phone_second')){
 				$cols['phone']=$this->input->post('area_code').''.$this->input->post('phone_first').''.$this->input->post('phone_second');
 			}
-			if($this->input->post('day') && $this->input->post('month') && $this->input->post('year')){ 
+			/* if($this->input->post('dob') && $this->input->post('month') && $this->input->post('year')){ 
 				$cols['dob']=$this->input->post('year').'-'.$this->input->post('month').'-'.$this->input->post('day');
+			} */
+			if($this->input->post('dob')){ 
+				$dateofbirth = $this->input->post('dob');
+				$dob= explode('/',$dateofbirth);
+				$cols['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
 			}
 			if(!empty($cols)){
 				$phonecodes=$cols['phone'];
@@ -64,8 +69,16 @@ class Subscriptions extends CI_Controller {
 				$result = $this->db->query("Select * from subscription_codes where phone='$phonecodes' AND pcode='$pcode'")->row();
 				if(!empty($result)){
 					$cols['phone']='+1'.$cols['phone'];
-					$cols['addeddate']=date('Y-m-d H:i:s');
-					$this->db->insert('subscriptions', $cols);
+					$phonecodes=$cols['phone'];
+					$email=$cols['email'];
+					$result = $this->db->query("Select * from subscriptions where phone='$phonecodes' AND email='$email'")->row();
+					if(empty($result)){
+						$cols['addeddate']=date('Y-m-d H:i:s'); 
+						$this->db->insert('subscriptions', $cols);
+					}else{
+						$this->db->where('id', $result->id);	
+						$this->db->update('subscriptions', $cols);	
+					}
 					/* session_start();
 					$_SESSION["vcode"] = $pcode;
 					
