@@ -386,6 +386,268 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
+	public function locations_old($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="locations";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",
+					"Location Name",
+					"company Name",
+					"Contact person",
+					"Address",
+					"Date",
+					"Actions",
+				);
+				$data['id']=$id;
+				$data['title']="Locations";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "locations.id",
+				"locations.location_name",
+				"companies.company_name as c_name",
+				"locations.contact_person",
+				"locations.address",
+				"locations.date"
+				
+				);
+				$searchFields=array(
+			    "locations.id",
+				"locations.location_name",
+				"compaanies.company_name",
+				"locations.contact_person",
+				"locations.address"
+				
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from locations inner join companies on locations.company_id=companies.id where 1=1";
+			
+			if($id!==""){
+			$sql.=" and id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id;
+					//unset($key->id); //we cant get id in datatable cause its unset if u remove unset u can get id in datatable 
+					$key->date=cdate($key->date);
+					$value=array_values((array)$key);
+					// print_r($key);die;
+					array_push($value,addActions("locations",$id));
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				case "add":
+				$data['title']="Add Location";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					
+				if(validateData("locations",$formData,$id)){
+					if($this->model->addData("locations",$formData)){
+						$data['msg']="Location is added! successfully.";
+							$data['return']=true;
+						}
+						else{
+							$data['msg']="Location is not added successfully.";
+							$data['return']=false;
+						}
+					}
+					else{
+							//$data['msg']="User is already exist.";
+							$data['edit']=$formData;
+					}
+					echo json_encode($data);
+					die;
+				}
+				$data['companies']=($this->model->getData("companies"));
+				generatePageView('addlocation',$data);
+				break;
+			case "edit":
+				$data['title']="Update Location";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					
+			if(validateData("locations",$formData,$id)){
+				
+			if($this->model->updateData("locations",$id,$formData))
+				$data['msg']="Location updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['companies']=($this->model->getData("companies"));
+		$data['edit']=(array)$this->model->getById("locations",$id);
+		generatePageView('addlocation',$data);
+				break;
+			case "delete":
+					if($this->model->deleteData("locations",$id)){
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Location is deleted! successfully.</div>";
+					}
+					else{
+						$msg['error']="Location is not deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
+	public function subscriptions($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",
+					"First Name",
+					"Last Name", 
+					"Email",  
+					"Phone", 
+					"DOB" 
+				);
+				$data['id']=$id;
+				$data['title']="Subscriptions";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "subscriptions.id",
+				"subscriptions.first_name",
+				"subscriptions.last_name",
+				"subscriptions.email",
+				"subscriptions.phone",
+				"subscriptions.dob" 
+				
+				);
+				$searchFields=array(
+			    "subscriptions.id",
+				"subscriptions.first_name",
+				"subscriptions.last_name",
+				"subscriptions.phone",
+				"subscriptions.email"
+				
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from subscriptions where 1=1";
+			
+			if($id!==""){
+			$sql.=" and id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id;
+					//unset($key->id); //we cant get id in datatable cause its unset if u remove unset u can get id in datatable 
+					$key->dob=usadate($key->dob);
+					 
+					    
+					$value=array_values((array)$key);
+					// print_r($key);die;
+					array_push($value,addActions("subscriptions",$id));
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				 
+			case "edit":
+				$data['title']="Update company";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					 $upload_path="resources/admin";
+					
+			$admin = array(
+			'upload_path' => $upload_path,
+			'allowed_types' => "jpg|jpeg",
+			'overwrite' => TRUE,
+			'file_name' => time(),
+			'max_size' => "2048000"
+			// 'max_height' => "768",
+			// 'max_width' => "1024"
+			);
+			$this->load->library('upload', $admin);
+			if($_FILES['fileToUpload']['name']!==""){
+				if(!$this->upload->do_upload('fileToUpload')){ 
+					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+				
+				}
+				else{
+					$imageDetailArray = $this->upload->data();
+					$formData['image'] =  $imageDetailArray['file_name'];
+				}
+			}
+			if(validateData("companies",$formData,$id)){
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+						$config['create_thumb'] = TRUE;
+						//$config['thumb_marker'] = false;
+						$config['maintain_ratio'] = FALSE;
+						$config['width'] = 235;//the width to resize to;
+						$config['height'] = 125;//height to resize to;
+						// echo "<pre>";
+						// print_r ($config);
+						// echo "</pre>";
+						// die();
+		                $this->load->library('image_lib', $config);//this loads the image resize library
+		                $this->image_lib->resize();//the resize function
+		               //check if the resize succeeds
+		                $formData['image'] =   $this->upload->file_name;
+		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+			if($this->model->updateData("companies",$id,$formData))
+				$data['msg']="company updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=($this->model->getData("industries"));		
+				$data['edit']=(array)$this->model->getById("companies",$id);
+				generatePageView('addcompanies',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("companies",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Company is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="Company is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
 	public function locations($action="view",$id=""){
 		
 		$formData=escapeArray($this->input->post());

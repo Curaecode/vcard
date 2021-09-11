@@ -469,6 +469,9 @@ function cdate($date){
 function customdate($date){
 	return date('D, M d Y ', strtotime($date));
 }
+function usadate($date){
+	return date('M d, Y ', strtotime($date));
+}
 
 function isUser(){
 	$CI =& get_instance();

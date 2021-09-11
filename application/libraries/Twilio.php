@@ -35,4 +35,24 @@ class Twilio {
 	  	}
 	  	return $response;
   	}
+    public function sendCode($to=null,$vcode=null)
+    {
+		try{
+		    $response=$this->client->messages->create(
+			    // the number you'd like to send the message to
+			    $to,
+			    [
+			        // A Twilio phone number you purchased at twilio.com/console
+			        'from' => $this->from,
+			        // the body of the text message you'd like to send
+			        'body' => 'Verification code: '.$vcode 
+			    ]
+			);
+		}
+	  	catch(Exception $e)
+	  	{
+	    	$response =  $e->getMessage();
+	  	}
+	  	return $response;
+  	}
 }

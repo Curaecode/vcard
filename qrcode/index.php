@@ -5,9 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
 	<link rel="stylesheet" href="css/style.css"> 
+	<style>
+	.btn.disabled, .btn:disabled,.btn.disabled{
+	  border: 1px solid #999999 !important;
+	  background-color: #cccccc !important;
+	  color: #666666 !important;
+	}
+	</style>
 	</head>
 	<body class="login">
-	<section class="ftco-section">
+	<section class="ftco-section d-flex align-items-center">
 		<div class="container"> 
 			<div class="row d-flex align-items-center justify-content-center">
 				<div class="col-md-6 col-lg-7">
@@ -23,44 +30,46 @@
 					<div class="login-wrap py-3">
 						<h3 class="vcard_title">vCard Sign up</h3>
 						<form action="detail.html" id="subscriptionform" class="login-form">
+						
+							<div class="row"> 
+								<div class="col-6">
+									<div class="form-group">
+										<label class="pb-0">First Name</label>
+										<input type="text" class="form-control" name="first_name" placeholder="" required>
+									</div>
+								</div>
+								<div class="col-6 ">
+									<div class="form-group">
+										<label class="pb-0">Last Name</label>
+										<input type="text" class="form-control" name="last_name" placeholder="" required>
+									</div>
+								</div> 
+							</div> 
 							<div class="form-group">
-								<label>First Name</label>
-								<input type="text" class="form-control" name="first_name" placeholder="" required>
-							</div>
-							<div class="form-group">
-								<label>Last Name</label>
-								<input type="text" class="form-control" name="last_name" placeholder="" required>
-							</div>
-							<div class="form-group">
-								<label for="exampleInputPassword1">Email</label>
+								<label class="pb-0" for="exampleInputPassword1">Email</label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="" required>
 							</div> 
-							<div class="form-group row">
-								<label for="exampleInputNumer" class="col-sm-12 col-form-label ">Mobile Number</label>  
-								<div class="col-sm-3 pr-2">
-								 	<input type="number" class="form-control" maxlength="3" id="area_code" name="area_code" placeholder="xxx" required>
-								</div>
-								<div class="col-sm-3 pl-2 pr-2">
-								 	<input type="number" class="form-control" maxlength="3" id="phone_first" name="phone_first" placeholder="xxx" required>
-								</div>
-								<div class="col-sm-3 pl-2">
-								 	<input type="number" class="form-control" maxlength="4" id="phone_second" name="phone_second" placeholder="xxxx" required>
-								</div>
-								<div class="col-sm-3 pl-1"> 
-								<button type="button" class="btn btn-sm form-control btn-primary rounded submit px-3 ">Send Code</button>
-								</div> 
-								
-								
-							</div> 
-							<div class="form-group row">
-								<label for="exampleInputNumer" class="col-sm-12 col-form-label ">Verification Code</label>   
-								<div class="col-sm-12 pl-2 ">
-								 	<input type="number" class="form-control" maxlength="6" id="vcode" name="vcode" placeholder="xxxxxx" required>
+							<div class="form-group">
+								<div class="row">
+									<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Mobile Number</label>  
+									<div class="col-3 pr-2">
+										<input type="number" class="form-control" maxlength="3" id="area_code" name="area_code" placeholder="xxx" required>
+									</div>
+									<div class="col-3 pl-2 pr-2">
+										<input type="number" class="form-control" maxlength="3" id="phone_first" name="phone_first" placeholder="xxx" required>
+									</div>
+									<div class="col-3 pl-2">
+										<input type="number" class="form-control" maxlength="4" id="phone_second" name="phone_second" placeholder="xxxx" required>
+									</div>
+									<div class="col-3 pl-1"> 
+									<button type="button" onclick="getcode();" class="btn btn-sm form-control btn-primary rounded submit px-3 ">Send Code</button>
+									</div>  
 								</div> 
 							</div> 
-							<div class="form-group row">
-								<label class="col-sm-12 col-form-label">Date of Birth:</label>
-								<div class="col-sm-4 pr-2">
+							<div class="form-group">
+								<div class="row">
+									<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Date of Birth:</label>
+								<div class="col-4 pr-2">
 									<select class="custom-select" name="day" id="day" required>
 										<option value="">Date</option>
 										<option value="01">1</option>
@@ -96,7 +105,7 @@
 										<option value="31">31</option>
 									</select>
 								</div>
-								<div class="col-sm-4 pl-2 pr-2">
+								<div class="col-4 pl-2 pr-2">
 									<select class="custom-select" name="month" id="month" required>
 										<option value="">Month</option>
 										<option value="01">January</option>
@@ -113,7 +122,7 @@
 										<option value="12">December</option>
 									</select>
 								</div>
-								<div class="col-sm-4 pl-2">
+								<div class="col-4 pl-2">
 									<select class="custom-select" name="year" id="year" required>
 										<option value="">Year</option> 
 										<?php 
@@ -125,9 +134,18 @@
 										<?php }?>
 									</select>
 								</div>
+								</div>
 							</div>
+							<div class="form-group">
+								<div class="row">
+								<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0 ">Verification Code</label>   
+								<div class="col-sm-12">
+								 	<input type="number" class="form-control" maxlength="6" id="vcode" name="vcode" placeholder="xxxxxx" required>
+								</div> 
+								</div> 
+							</div> 
 							<div class="form-group mb-0">
-								<button type="submit" class="btn form-control btn-primary rounded submit px-3">Get Started</button>
+								<button id="submitbtn" type="submit" class="btn form-control btn-primary rounded submit px-3">Get Started</button>
 							</div>
 						</form> 
 					</div>

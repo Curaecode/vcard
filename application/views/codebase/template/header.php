@@ -57,8 +57,8 @@
                             <li class="<?php echo @$active=='salesgroups'?"open":"";?>">
                                 <a class="loadview" href="#salesgroups/" ><i class="fa fa-users" aria-hidden="true"></i><span class="sidebar-mini-hide">Sales Groups</span></a>
                             </li>
-                             <li class="<?php echo @$active=='states'?"open":"";?>">
-                                <a class="loadview" href="#states/" ><i class="fa fa-flag"></i><span class="sidebar-mini-hide">States</span></a>
+                             <li class="<?php echo @$active=='subscriptions'?"open":"";?>">
+                                <a class="loadview" href="#subscriptions/" ><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Subscriptions</span></a>
                             </li>
                             
                             <li class="<?php echo @$active=='settings'?"open":"";?>">

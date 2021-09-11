@@ -15,10 +15,33 @@ console.log(isValidDate("2016-02-29"));  // true = leap day
 console.log(isValidDate("2013-02-29"));  // false = not leap day
 */
 
+function getcode(){
+	var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
+	if(phone.length != 10){
+		alert('not a valid Phone number');
+	  return false;
+	}	
+	$.ajax({
+		type: 'post',
+		url: 'https://www.curaechoice.net/subscriptions/getcode',
+		data: $('#subscriptionform').serialize(),
+		dataType:"json",
+		success: function (result) {
+			 console.log(result);
+			 if(result.returned == false) {
+				 alert('Please enter a valid phone number');
+			 }else{
+				 alert('SMS has been sent on your phone number'); 
+			 }
+		}
+	});
+	
+}
+
 (function($) {
 
 	"use strict";
-	
+	$('#submitbtn').prop('disabled', true); 
 	$("#area_code").keyup(function(){
 		var charcters = $(this).val();
 		console.log(charcters);
@@ -26,6 +49,7 @@ console.log(isValidDate("2013-02-29"));  // false = not leap day
 			$('#phone_first').focus();
 		}
 	});
+	
 	$("#phone_first").keyup(function(){
 		var charcters = $(this).val();
 		if(charcters.length ==3){
@@ -39,7 +63,15 @@ console.log(isValidDate("2013-02-29"));  // false = not leap day
 		}
 	});
 	
-	
+	$("#vcode").keyup(function(){
+		var charcters = $(this).val();
+		if(charcters.length ==6){
+			$('#submitbtn').removeProp('disabled');
+			$('#submitbtn').prop('disabled', false); 
+		}else{
+			$('#submitbtn').prop('disabled', true); 
+		}
+	});
 	$('#subscriptionform').on('submit', function (e) {
 		 e.preventDefault();
 		 var userinput = $('#email').val();
@@ -56,7 +88,7 @@ console.log(isValidDate("2013-02-29"));  // false = not leap day
 		  return false;
 		 }
 		 var date = $("#year").val()+'-'+$("#month").val()+'-'+$("#day").val();
-		 console.log(date);
+		 
 		 if(!isValidDate(date)){
 			 alert('Date of Birth is invalid.');
 			 return false;
@@ -66,10 +98,15 @@ console.log(isValidDate("2013-02-29"));  // false = not leap day
 		type: 'post',
 		url: 'https://www.curaechoice.net/subscriptions/index',
 		data: $('#subscriptionform').serialize(),
-		success: function () {
-			document.getElementById('subscriptionform').reset();
-			alert('form was submitted');
-			window.location.href='detail.php';
+		dataType:"json",
+		success: function (result) {
+			if(result.returned == true) {
+				document.getElementById('subscriptionform').reset();
+				alert('your data has been saved successfully');
+				window.location.href='detail.php';
+			}else{
+				alert(result.msg);
+			}
 		}
 	  });
 	  return false;

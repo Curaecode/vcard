@@ -11,12 +11,13 @@
 				<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Email</button>
 				<button type="button"  style="margin-right:10px;" onclick='return sendallcard()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Card</button>
 			<?php }?>
+			<?php if($title != 'Subscriptions'){ ?>
 			<a class="loadview modalview" data-title='<?php echo "Add $title"; ?>' href="#<?php echo "$active/add"?>" >
 				<button type="button" class=" btn btn-sm btn-success js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Add">
 					<i class="fa fa-plus"></i> Add <?php echo ucfirst($title); ?>
 				</button>
 			</a>
-			
+			<?php }?>
 			
 			
 		</div>
