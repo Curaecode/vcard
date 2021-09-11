@@ -1,4 +1,10 @@
-<!doctype html>
+<?php 
+	 session_start();
+	if(isset($_SESSION['vcode'])){
+		header('Location: detail.php');
+		exit;
+	} 
+?><!doctype html>
 <html lang="en">
   <head>
   	<title>Curaechoice | Your Ally in Care Coordination</title>

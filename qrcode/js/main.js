@@ -101,9 +101,20 @@ function getcode(){
 		dataType:"json",
 		success: function (result) {
 			if(result.returned == true) {
+				$.ajax({
+					type: 'post',
+					url: 'session.php',
+					data: $('#subscriptionform').serialize(),
+					dataType:"json",
+					success: function (result) {
+						
+					}
+				}); 
+				
 				document.getElementById('subscriptionform').reset();
 				alert('your data has been saved successfully');
 				window.location.href='detail.php';
+				
 			}else{
 				alert(result.msg);
 			}

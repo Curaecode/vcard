@@ -66,6 +66,10 @@ class Subscriptions extends CI_Controller {
 					$cols['phone']='+1'.$cols['phone'];
 					$cols['addeddate']=date('Y-m-d H:i:s');
 					$this->db->insert('subscriptions', $cols);
+					/* session_start();
+					$_SESSION["vcode"] = $pcode;
+					
+					$data['vcode']=$_SESSION["vcode"]; */
 					$data['msg']="contact is added! successfully.";
 					$data['returned']=true;
 					
