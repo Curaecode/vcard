@@ -42,68 +42,84 @@ function getcode(){
 
 	"use strict";
 	$('#submitbtn').prop('disabled', true); 
-	$("#area_code").keydown(function(){
-		 
-		var charcters = $(this).val();
-		console.log(charcters);
-		if(charcters.length >=3){
-			$('#phone_first').focus();
+	$("#area_code").keydown(function(event){
+		if(event.which != 8){
+			var charcters = $(this).val();
+			console.log(charcters);
+			if(charcters.length >=3){
+				$('#phone_first').focus();
+			}
 		}
 	});
 	
-	$("#phone_first").keydown(function(){ 
-		var charcters = $(this).val();
-		if(charcters.length >=3){
-			$('#phone_second').focus();
+	$("#phone_first").keydown(function(event){ 
+		if(event.which != 8){
+			var charcters = $(this).val();
+			if(charcters.length >=3){
+				$('#phone_second').focus();
+			}
 		}
+		
 	});
-	$("#phone_second").keydown(function(){ 
-		var charcters = $(this).val();
-		if(charcters.length >=4){
-			$('#dob').focus();
-		}
-	});
-	
-	$("#vcode").keydown(function(){ 
-		var charcters = $(this).val();
-		if(charcters.length >=6){
-			$('#submitbtn').removeProp('disabled');
-			$('#submitbtn').prop('disabled', false); 
-		}else{
-			$('#submitbtn').prop('disabled', true); 
+	$("#phone_second").keydown(function(event){ 
+		if(event.which != 8){
+			var charcters = $(this).val();
+			if(charcters.length >=4){
+				$('#dob').focus();
+			}
 		}
 	});
 	
-	
-	$("#area_code").keyup(function(){
-		var charcters = $(this).val();
-		console.log(charcters);
-		if(charcters.length >=3){
-			$('#phone_first').focus();
+	$("#vcode").keydown(function(event){ 
+		if(event.which != 8){
+			var charcters = $(this).val();
+			if(charcters.length >=6){
+				$('#submitbtn').removeProp('disabled');
+				$('#submitbtn').prop('disabled', false); 
+			}else{
+				$('#submitbtn').prop('disabled', true); 
+			}
 		}
 	});
 	
-	$("#phone_first").keyup(function(){
-		var charcters = $(this).val();
-		if(charcters.length >=3){
-			$('#phone_second').focus();
+	
+	$("#area_code").keyup(function(event){
+		if(event.which != 8){
+			var charcters = $(this).val();
+			console.log(charcters);
+			if(charcters.length >=3){
+				$('#phone_first').focus();
+			}
 		}
 	});
-	$("#phone_second").keyup(function(){
-		var charcters = $(this).val();
-		if(charcters.length >=4){
-			$('#dob').focus();
+	
+	$("#phone_first").keyup(function(event){
+		if(event.which != 8){
+			var charcters = $(this).val();
+			if(charcters.length >=3){
+				$('#phone_second').focus();
+			}
+		}
+	});
+	$("#phone_second").keyup(function(event){
+		if(event.which != 8){
+			var charcters = $(this).val();
+			if(charcters.length >=4){
+				$('#dob').focus();
+			}
 		}
 	}); 
 	
 	
-	$("#vcode").keyup(function(){
-		var charcters = $(this).val();
-		if(charcters.length >=6){
-			$('#submitbtn').removeProp('disabled');
-			$('#submitbtn').prop('disabled', false); 
-		}else{
-			$('#submitbtn').prop('disabled', true); 
+	$("#vcode").keyup(function(event){
+		if(event.which != 8){
+			var charcters = $(this).val();
+			if(charcters.length >=6){
+				$('#submitbtn').removeProp('disabled');
+				$('#submitbtn').prop('disabled', false); 
+			}else{
+				$('#submitbtn').prop('disabled', true); 
+			}
 		}
 	});
 	
