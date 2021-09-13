@@ -94,7 +94,7 @@ function genrate_qrcode($id=null,$lastid=0)
 		$text = $qrtext;
 		$text1= substr($text, 0,2);
 		$folder = $SERVERFILEPATH;
-		$file_name1 = "qrcode" . $lastid . ".png";
+		$file_name1 = "qrcode_" . md5($lastid) . ".png";
 		if (file_exists($folder.$file_name1)) {
 			 unlink($folder.$file_name1);
 		}
@@ -201,13 +201,13 @@ function genrate_image($id=null)
 	$watermark_qr_height = imagesy($watermark_qr);
 	imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 	$random = rand(99999,999999999); 
-	if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$id."_".$id.".jpg")) {
-		 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/itv_".$id."_".$id.".jpg");
+	if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($id).".jpg")) {
+		 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($id).".jpg");
 	}
 	
-	imagejpeg($image,"resources/cards/itv_".$id."_".$id.".jpg", 100); 
+	imagejpeg($image,"resources/cards/resources/cards/cc_ex_".md5($id).".jpg", 100); 
 	imagedestroy($image);
-	$image_new_name = "itv_".$id."_".$id.".jpg";
+	$image_new_name = "cc_ex_".md5($id).".jpg";
 	return $image_new_name;
 
 }
@@ -255,7 +255,7 @@ function get_contacts_vcard($id="")
         $CI->vcard->vcard();
     }
 	$CI->vcard->downloadfile($id);
-	$newname= ($vcard_information->first_name."_".$vcard_information->last_name.'_'.$id.'.vcf');
+	$newname= (md5($vcard_information->first_name."_".$vcard_information->last_name.'_'.$id).'.vcf');
     return $newname;
 }
 function escapeArray($array)

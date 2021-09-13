@@ -25,7 +25,7 @@ class Resources extends CI_Controller {
 		$type = pathinfo($path, PATHINFO_EXTENSION);
 		$data = file_get_contents($path);
 		header("content-type: image/". $type);
-		echo file_get_contents($path); 
+		echo file_get_contents($path);  
 		
 	} 
 	public function views($filename='')
