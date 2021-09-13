@@ -1249,11 +1249,11 @@ class Dashboard extends CI_Controller {
 					 unset($key->contract_number);  
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
-					$key->image="<img src='".res_url()."cards/".$key->image."?v=".time()."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
-					if($key->cardsend==1){
+					$key->image="<img src='".res_url()."views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					if($key->cardsend>=1){
 						$key->image ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->image;
 					}
-					if($key->cardemail==1){
+					if($key->cardemail>=1){
 						$key->email ='<i class="fa fa-check" aria-hidden="true" style="    color: green;"></i>'.$key->email;
 					}
 					unset($key->cardsend);
@@ -1507,8 +1507,13 @@ class Dashboard extends CI_Controller {
 function download2($filename = NULL) {
     // load download helder
     $this->load->helper('download');
-    // read file contents
-    $data = file_get_contents(base_url('vcards/'.$filename));
+    
+	$file=explode('_',$filename);
+	$id=preg_replace('/[^0-9.]/','',$file[count($file)-1]);
+	$query=$this->db->query("update `contacts` set carddownload = carddownload+1 where id=".$id."");
+	 
+	
+    $data = file_get_contents('vcards/'.$filename);
     force_download($filename, $data);
 }
 	public function settings($action="update",$id=null){
@@ -2189,6 +2194,33 @@ function download2($filename = NULL) {
 		} 
 		echo json_encode($msg); 
 	}
+	function sendtestcards(){
+		$response['status']=1;
+		$response['message']='Sent successfully';
+		$id=15; 
+		$datavcard = $this->sendtestVcard($this->model->getByIdvcard("contacts",$id),$id);
+		if(isset($datavcard->sid))  {
+			$query=$this->db->query("update `contacts` set cardsend= cardsend+1 where id=".$id."");
+		}
+		 
+		echo json_encode($response);exit();
+	}
+	
+	
+    function sendtestVcard($dat,$id=null)
+    {
+        $response = '';
+        foreach($dat as $data)
+        {
+	        if(!empty($data->phone)){
+				$this->load->library('twilio');
+				$filename = isset($data->vcard_name) ? $data->vcard_name:'';
+				$response = $this->twilio->sendSMS('+923235696050',$filename);
+			}
+        }
+        return $response;
+    }
+	
 	function sendvcards(){
 		/*
 		/send_contacts_email_vcard/92208
@@ -2200,7 +2232,7 @@ function download2($filename = NULL) {
 			foreach($ids as $id){
 				$datavcard = $this->sendVcard($this->model->getByIdvcard("contacts",$id),$id);
 				if(isset($datavcard->sid))  {
-					$query=$this->db->query("update `contacts` set cardsend= '1' where id=".$id."");
+					$query=$this->db->query("update `contacts` set cardsend= cardsend+1 where id=".$id."");
 				}
 			} 
 			echo json_encode($response);exit(); 
@@ -2227,7 +2259,7 @@ function download2($filename = NULL) {
 				if(!empty($email)){
 					$returned = $this->sendmail($email,$fullname,$vcard_name,$vcard_image);
 					if($returned['status']==true){
-						$query=$this->db->query("update `contacts` set cardemail= '1' where id=".$id."");
+						$query=$this->db->query("update `contacts` set cardemail= cardemail+1 where id=".$id."");
 					}
 				} 
 			} 

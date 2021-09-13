@@ -4,4 +4,38 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
 
-RewriteRule /resources/cards/(.*)$ /admin/downloads/$1
+#RewriteRule resources/cards/view/(.*)$ /admin/downloads/download/$1
+#RewriteRule resources/cards/download/(.*)$ /admin/downloads/download/$1
+
+RewriteRule ^.*/cards/(.*)$ /resources/download/$1 [L,R=301] 
+RewriteRule ^.*/vcards/(.*)$ /resources/vcarddownload/$1 [L,R=301] 
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_flag display_errors Off
+   php_value max_execution_time 800000
+   php_value max_input_time 600000
+   php_value max_input_vars 100000
+   php_value memory_limit -1
+   php_value post_max_size 516M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php73"
+   php_value upload_max_filesize 512M
+   php_flag zlib.output_compression Off
+</IfModule>
+<IfModule lsapi_module>
+   php_flag display_errors Off
+   php_value max_execution_time 800000
+   php_value max_input_time 600000
+   php_value max_input_vars 100000
+   php_value memory_limit -1
+   php_value post_max_size 516M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php73"
+   php_value upload_max_filesize 512M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit

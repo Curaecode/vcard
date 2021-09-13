@@ -25,7 +25,7 @@ class Twilio {
 			        'from' => $this->from,
 			        // the body of the text message you'd like to send
 			        'body' => 'You have a new vCard.Please click to add as a contact and view your curaechoice card',
-			        'mediaUrl'=>base_url().'vcards/'.$file_path,
+			        'mediaUrl'=>base_url().'vcards/'.$file_path
 			    ]
 			);
 		}
