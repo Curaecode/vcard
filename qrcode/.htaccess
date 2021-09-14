@@ -13,7 +13,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
 
 
-DirectoryIndex index.html  /index403.php
+DirectoryIndex index.html index.php  /index403.php
 
 
 

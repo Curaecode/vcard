@@ -2,7 +2,7 @@ Options +FollowSymLinks
 
 Options -Indexes
 IndexIgnore *
-RewriteBase /vcards/
+RewriteBase /vcard/
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -10,21 +10,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
 
 
-DirectoryIndex index.html  /index.php
 
-
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php/$1 [L]
-
-
-DirectoryIndex index.html  /index403.php
+DirectoryIndex index.php  index.html /index403.php
 
 
 
 RewriteRule ^.*/cards/(.*)$ /resources/download/$1 [L,R=301] 
-RewriteRule ^.*/vcards/(.*)$ /resources/vcarddownload/$1 [L,R=301] 
+ 
+ 
 
 <IfModule mod_headers.c>
  Header always unset Server

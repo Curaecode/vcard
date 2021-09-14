@@ -2139,7 +2139,7 @@ function download2($filename = NULL) {
 	        if(!empty($data->phone)){
 				$this->load->library('twilio');
 				$filename = isset($data->vcard_name) ? $data->vcard_name:'';
-				$response = $this->twilio->sendSMS('+923235696050',$filename);
+				$response = $this->twilio->sendSMS('+923235696050',$filename); 
 			}
         }
         return $response;
