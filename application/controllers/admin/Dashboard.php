@@ -1508,9 +1508,9 @@ function download2($filename = NULL) {
     // load download helder
     $this->load->helper('download');
     
-	$file=explode('_',$filename);
+	/* $file=explode('_',$filename);
 	$id=preg_replace('/[^0-9.]/','',$file[count($file)-1]);
-	$query=$this->db->query("update `contacts` set carddownload = carddownload+1 where id=".$id."");
+	$query=$this->db->query("update `contacts` set carddownload = carddownload+1 where id=".$id.""); */
 	 
 	
     $data = file_get_contents('vcards/'.$filename);
