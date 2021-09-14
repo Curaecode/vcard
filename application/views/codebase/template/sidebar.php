@@ -61,59 +61,10 @@
             <!-- Side Overlay-->
             <!-- END Side Overlay -->
 
-            <!-- Sidebar -->
-            <!--
-                Helper classes
-
-                Adding .sidebar-mini-hide to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
-                Adding .sidebar-mini-show to an element will make it visible (opacity: 1) when the sidebar is in mini mode
-                    If you would like to disable the transition, just add the .sidebar-mini-notrans along with one of the previous 2 classes
-
-                Adding .sidebar-mini-hidden to an element will hide it when the sidebar is in mini mode
-                Adding .sidebar-mini-visible to an element will show it only when the sidebar is in mini mode
-                    - use .sidebar-mini-visible-b if you would like to be a block when visible (display: block)
-            -->
+             
             <div id="overlay"></div>
         <div id="overlayContent">
         <img id="imgBig" src="" alt="" width="400" />
         </div>
-            <!-- <nav id="sidebar">
-                <div class="sidebar-content"> -->
-                    <!-- Side Header -->
-                    
-                    <!-- END Side Header -->
-
-                    <!-- Side User -->
-                    <!-- <div class="content-side content-side-full content-side-user px-10 align-parent">
-                        <div class="sidebar-mini-visible-b align-v animated fadeIn">
-                            <img class="img-avatar img-avatar32" src="<?php echo res_url(); ?>codebase/assets/media/avatars/avatar15.jpg" alt="">
-                        </div>
-                        <div class="sidebar-mini-hidden-b text-center">
-                            <a class="img-link loadview" href="#profile">
-                                <img class="img-avatar" src="<?php echo res_url(); ?>admin/<?php echo getCurrentData()->image; ?>" alt="">
-                            </a>
-                            <ul class="list-inline mt-10">
-                                <li class="list-inline-item">
-                                    <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase loadview" href="#profile"> <?php echo getCurrentData()->Name; ?> </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a class="link-effect text-dual-primary-dark" data-toggle="layout" data-action="sidebar_style_inverse_toggle" href="javascript:void(0)">
-                                        <i class="fa fa-tint"></i>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a class="link-effect text-dual-primary-dark" href="<?php echo admin_url()."login/logout";?>">
-                                        <i class="fa fa-sign-out"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        
-                    </div> -->
-                    
-                    
-                    
-                <!-- </div>
-                
-            </nav> -->
+            
             <!-- END Sidebar -->

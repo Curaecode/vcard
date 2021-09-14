@@ -2074,7 +2074,7 @@ function download2($filename = NULL) {
 	        $datavcarddata['company'] = getcompanyById($data->company_id);
 	       	if($data->image!="")
 	       	{
-			    $getPhoto = file_get_contents(base_url('resources/cards/'.$data->image));
+			    $getPhoto = file_get_contents('resources/cards/'.$data->image);
 			    $b64vcard  = base64_encode($getPhoto);
 			    $b64mline   = chunk_split($b64vcard,74,"\n");
 			    $b64final   = preg_replace('/(.+)/', ' $1', $b64mline);

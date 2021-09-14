@@ -52,7 +52,7 @@ class crons extends CI_Controller {
 						$text = $qrtext;
 						$text1= substr($text, 0,2);
 						$folder = $SERVERFILEPATH;
-						$file_name1 = $text1."-Qrcode" . md5($last_id) . ".png";
+						$file_name1 = "qrcode" . md5($last_id) . ".png";
 						$file_name = $folder.$file_name1;
 						QRcode::png($text,$file_name);
 						$qrimage_new_name = $file_name1;
@@ -89,7 +89,7 @@ class crons extends CI_Controller {
 					if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($last_id).".jpg")) {
 						 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($last_id).".jpg");
 					}
-					imagejpeg($image,"resources/cards/cc_ex_".md5($last_id).".jpg");
+					imagejpeg($image,$_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($last_id).".jpg");
 					imagedestroy($image);
 					$image_new_name = 'cc_ex_'.md5($last_id).'.jpg';
 					

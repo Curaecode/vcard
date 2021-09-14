@@ -43,6 +43,7 @@ class Vcard
 
     $this->data = array(
       "display_name"=>null
+      ,"id"=>null
       ,"first_name"=>null
       ,"last_name"=>null
       ,"additional_name"=>null
@@ -101,6 +102,7 @@ class Vcard
 
     $this->data = array(
       "display_name"=>null
+      ,"id"=>null
       ,"first_name"=>null
       ,"last_name"=>null
       ,"additional_name"=>null

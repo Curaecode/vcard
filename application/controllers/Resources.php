@@ -17,20 +17,30 @@ class Resources extends CI_Controller {
 		
 	}
 	public function download($filename=''){
-		$file=explode('_',$filename);
-		$id=$file[1];
-		$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where id=".$id."");	
-		
-		$path= "resources/cards/".$filename;
-		$type = pathinfo($path, PATHINFO_EXTENSION);
-		$data = file_get_contents($path);
-		header("content-type: image/". $type);
-		echo file_get_contents($path);  
-		
+		if(!empty($filename)){ 
+			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$filename."'");	
+			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$filename."'")->row();
+			if(!empty($rec) && !empty($rec->image)){
+				$path= "resources/cards/".$rec->image;
+				$type = pathinfo($path, PATHINFO_EXTENSION);
+				$data = file_get_contents($path);
+				header("content-type: image/". $type);
+				echo file_get_contents($path);
+			}else{
+				header("content-type: image/jpg");
+				echo file_get_contents('resources/img/default.jpg');
+			} 
+		}else{
+			header('HTTP/1.0 403 Forbidden');
+			echo 'You are forbidden!';
+		} 
 	} 
 	public function views($filename='')
 	{
-		 
+		if(!admin())
+		{
+			redirect(base_url().'admin/login');
+		} 
 		$path= "resources/cards/".$filename;
 		$type = pathinfo($path, PATHINFO_EXTENSION);
 		$data = file_get_contents($path);

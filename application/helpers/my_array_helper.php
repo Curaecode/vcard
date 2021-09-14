@@ -205,7 +205,7 @@ function genrate_image($id=null)
 		 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($id).".jpg");
 	}
 	
-	imagejpeg($image,"resources/cards/resources/cards/cc_ex_".md5($id).".jpg", 100); 
+	imagejpeg($image,$_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($id).".jpg", 100); 
 	imagedestroy($image);
 	$image_new_name = "cc_ex_".md5($id).".jpg";
 	return $image_new_name;
@@ -220,7 +220,8 @@ function get_contacts_vcard($id="")
     $vcard_information = $CI->model->getById("vcard_information",1);
     $data = $CI->model->getById("contacts",$id);
 	$datavcarddata = [];
-    $datavcarddata['display_name'] = $vcard_information->first_name." ".$vcard_information->last_name; 
+    $datavcarddata['id'] = $id; 
+    $datavcarddata['display_name'] = md5($vcard_information->first_name."_".$vcard_information->last_name.'_'.$id); 
     $datavcarddata['first_name'] = $vcard_information->first_name; 
     $datavcarddata['last_name'] = $vcard_information->last_name;                                                 
     $datavcarddata['cell_tel'] = $vcard_information->phone;                
@@ -234,7 +235,7 @@ function get_contacts_vcard($id="")
 	    $b64mline   = chunk_split($b64vcard,74,"\n");
 	    $b64final   = preg_replace('/(.+)/', ' $1', $b64mline);
 	    $photo       = $b64final;
-	    $datavcarddata['url'] = base_url('resources/cards/'.$data->image);
+	    $datavcarddata['url'] = base_url('resources/download/'.md5($id));
 	}
 	else
 	{
@@ -255,7 +256,7 @@ function get_contacts_vcard($id="")
         $CI->vcard->vcard();
     }
 	$CI->vcard->downloadfile($id);
-	$newname= (md5($vcard_information->first_name."_".$vcard_information->last_name.'_'.$id).'.vcf');
+	$newname= (md5($vcard_information->first_name."_".$vcard_information->last_name.'_'.$id).'_'.$id.'.vcf');
     return $newname;
 }
 function escapeArray($array)

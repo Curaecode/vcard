@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-       <title><?php echo getSiteData('siteName')[0]->value; ?> | <?php echo @$title; ?></title>
+       <title><?php /* echo getSiteData('siteName')[0]->value; ?> | <?php echo @$title;  */?> CuraeChoice</title>
 
         
 
@@ -20,11 +20,7 @@
         <!-- Fonts and Codebase framework -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">
         <link rel="stylesheet" id="css-main" href="<?php echo res_url(); ?>codebase/assets/css/codebase.min.css">
-
-
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!-- <link rel="stylesheet" id="css-theme" href="<?php echo res_url(); ?>codebase/assets/css/themes/flat.min.css"> -->
-        <!-- END Stylesheets -->
+ 
         <style>
             .btn.btn-rounded {
     border-radius: 0px!important;
@@ -51,9 +47,7 @@
                         <!-- Header -->
                         <div class="py-30 px-5 text-center">
                             <a class="link-effect font-w700" href="<?php echo admin_url();?>">
-                                <img src="<?php echo res_url();?>img/image_logo.png" style="width:116px;margin-top:-9px;">
-                                <br>
-                                <span class="font-size-xl text-primary-dark"><?php echo getSiteData('siteName')[0]->value; ?></span>
+                                <img src="<?php echo res_url();?>img/image_logo.png" style="width:116px;margin-top:-9px;"> 
                             </a>
                             <h1 class="h2 font-w700 mt-50 mb-10">Welcome to Your Dashboard</h1>
                             <h2 class="h4 font-w400 text-muted mb-0">Please sign in</h2>
@@ -63,8 +57,7 @@
                         <!-- Sign In Form -->
                         <div class="row justify-content-center px-5">
                             <div class="col-sm-8 col-md-6 col-xl-4">
-                                <!-- jQuery Validation functionality is initialized with .js-validation-signin class in js/pages/op_auth_signin.min.js which was auto compiled from _es6/pages/op_auth_signin.js -->
-                                <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
+                            
 								<?php 
 								getMsg();
 								echo isset($msg)?$msg:""; 
@@ -114,31 +107,9 @@
         </div>
         <!-- END Page Container -->
 
-        <!--
-            Codebase JS Core
-
-            Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
-            to handle those dependencies through webpack. Please check out <?php echo res_url(); ?>codebase/assets/_es6/main/bootstrap.js for more info.
-
-            If you like, you could also include them separately directly from the <?php echo res_url(); ?>codebase/assets/js/core folder in the following
-            order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
-
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/bootstrap.bundle.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/simplebar.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery-scrollLock.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery.appear.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery.countTo.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/js.cookie.min.js
-        -->
+      
         <script src="<?php echo res_url(); ?>codebase/assets/js/codebase.core.min.js"></script>
-
-        <!--
-            Codebase JS
-
-            Custom functionality including Blocks/Layout API as well as other vital and optional helpers
-            webpack is putting everything together at <?php echo res_url(); ?>codebase/assets/_es6/main/app.js
-        -->
+ 
         <script src="<?php echo res_url(); ?>codebase/assets/js/codebase.app.min.js"></script>
 
         <!-- Page JS Plugins -->

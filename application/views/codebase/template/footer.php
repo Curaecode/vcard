@@ -1,11 +1,11 @@
  
 			<footer id="page-footer" class="opacity-0">
                 <div class="content py-20 font-size-xs clearfix">
-                    <div class="float-right">
+                   <?php /*  <div class="float-right">
                         Design and Developed  by <a class="font-w600" href="https://www.itvision.com.pk/" target="_blank">Itvision</a> 
-                    </div>
+                    </div> */ ?>
                     <div class="float-left">
-                        <a class="font-w600" href="https://www.itvision.com.pk/" target="_blank">Itvision</a> &copy; <span class="js-year-copy">2019</span>
+                        <a class="font-w600" href="#" target="_blank">Curaechoice</a> &copy; <span class="js-year-copy"><?php echo date('Y');?></span>
                     </div>
                 </div>
             </footer>
@@ -54,36 +54,10 @@
             <!-- END Footer -->
         </div>
         <!-- END Page Container -->
-
-        <!-- Onboarding Modal functionality is initialized in js/pages/be_pages_dashboard.min.js which was auto compiled from _es6/pages/be_pages_dashboard.js -->
-       <!-- END Onboarding Modal -->
-
-
-        <!--
-            Codebase JS Core
-
-            Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
-            to handle those dependencies through webpack. Please check out <?php echo res_url(); ?>codebase/assets/_es6/main/bootstrap.js for more info.
-
-            If you like, you could also include them separately directly from the <?php echo res_url(); ?>codebase/assets/js/core folder in the following
-            order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
-
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/bootstrap.bundle.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/simplebar.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery-scrollLock.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery.appear.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/jquery.countTo.min.js
-            <?php echo res_url(); ?>codebase/assets/js/core/js.cookie.min.js
-        -->
+ 
         <script src="<?php echo res_url(); ?>codebase/assets/js/codebase.core.min.js"></script>
 
-        <!--
-            Codebase JS
-
-            Custom functionality including Blocks/Layout API as well as other vital and optional helpers
-            webpack is putting everything together at <?php echo res_url(); ?>codebase/assets/_es6/main/app.js
-        -->
+         
         <script src="<?php echo res_url(); ?>codebase/assets/js/codebase.app.min.js"></script>
 
         <!-- kendo JS Plugins -->
