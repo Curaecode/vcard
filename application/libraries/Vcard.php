@@ -344,7 +344,7 @@ class Vcard
         {
           $this->filename=$this->filename.'_'.$id;
         }
-        header("Content-type: text/directory");
+        header("Content-type: application/vcard");
         header("Content-Disposition: attachment; filename=".$this->filename.".vcf");
         header("Pragma: public");
         return $this->card;
