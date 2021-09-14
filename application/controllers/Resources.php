@@ -18,8 +18,8 @@ class Resources extends CI_Controller {
 	}
 	public function download($filename=''){
 		if(!empty($filename)){ 
-			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$filename."'");	
-			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$filename."'")->row();
+			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
+			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
 			if(!empty($rec) && !empty($rec->image)){
 				$path= "resources/cards/".$rec->image;
 				$type = pathinfo($path, PATHINFO_EXTENSION);
