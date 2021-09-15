@@ -39,6 +39,22 @@ class Dashboard extends CI_Controller {
 			$data['contacts']=count($this->model->getData("contacts"));
 			$data['companies']=count($this->model->getData("companies"));
 			
+			$url = 'https://api.elasticemail.com/v4/statistics?from=2001-01-01T01:01:01&apikey=00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125'; 
+			/* Init cURL resource */
+			$ch = curl_init($url);
+			 /* Array Parameter Data */
+			$datakey = ['apikey'=>'00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125', 'from'=>'2001-01-01T01:01:01'];
+			 /* pass encoded JSON string to the POST fields */
+			/* curl_setopt($ch, CURLOPT_POSTFIELDS, $datakey); */ 	
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+			/* set return type json */
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+			/* execute request */
+			$result = curl_exec($ch); 
+			curl_close($ch);
+			$jsonresult=json_decode($result);
+			$data['emails']=$jsonresult;
+			 
 			generatePageView('index',$data);
 			//break;
 		//}
@@ -648,6 +664,207 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
+	
+	public function maillogs($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="Email Logs";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"Email",
+					"Subject",
+					"Status", 
+					"Date Sent",  
+					"Date Opened" 
+				);
+				$data['id']=$id;
+				$data['title']="Email Logs";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			 /*
+			 00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125
+			 */
+				$email = $formData['search']['value'];
+				$url = 'https://api.elasticemail.com/v2/log/load'; 
+				/* Init cURL resource */
+				$ch = curl_init($url);
+				 /* Array Parameter Data */
+				$datakey = ['apikey'=>'00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125', 'statuses'=>0, 'from'=>'2001-01-01T01:01:01','includeEmail'=>'true', 'email'=>$email];
+				 /* pass encoded JSON string to the POST fields */
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $datakey); 	
+				/* set return type json */
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+				/* execute request */
+				$result = curl_exec($ch); 
+				curl_close($ch);
+				$jsonresult=json_decode($result);
+				$totalrecord=count($jsonresult->data->recipients);
+				/* print_r($jsonresult->data->recipients); */
+				/*
+				$limit=$formData['length']!=-1?" limit ".$formData['start'].",".$formData['length']:"";
+				*/
+				$limit=$formData['length'];
+				$offset=$formData['start'];
+				
+				$url = 'https://api.elasticemail.com/v2/log/load'; 
+				/* Init cURL resource */
+				$ch = curl_init($url);
+				 /* Array Parameter Data */
+				if($formData['length']!=-1){
+					$datakey = ['apikey'=>'00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125', 'statuses'=>0, 'limit'=>$limit, 'offset'=>$offset,'from'=>'2001-01-01T01:01:01','includeEmail'=>'true', 'email'=>$email];
+				}else{
+					$datakey = ['apikey'=>'00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125', 'statuses'=>0,'from'=>'2001-01-01T01:01:01','includeEmail'=>'true', 'email'=>$email]; 
+				}
+				
+				 /* pass encoded JSON string to the POST fields */
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $datakey); 	
+				/* set return type json */
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+				/* execute request */
+				$result = curl_exec($ch); 
+				curl_close($ch);
+				$jsonresult=json_decode($result);
+			  
+				/*
+				bouncetype: null
+				channel: "SMTP API"
+				contactlasterror: null
+				date: "2021-09-14T11:40:10"
+				dateclicked: null
+				dateopened: "2021-09-14T11:54:15"
+				datesent: "2021-09-14T11:40:10"
+				envelopefrom: "support@curaechoice.com"
+				fromemail: "support@curaechoice.com"
+				ipaddress: null
+				issms: false
+				jobid: "f3132a3b-9de3-40bd-a03b-5e113348f29f"
+				message: ""
+				messagecategory: "Unknown"
+				messagecategoryid: 0
+				messagesid: null
+				msgid: "9MYK-ZD0f6-yGqvcdaC-5Q2"
+				nexttryon: null
+				showcategory: false
+				smsupdaterequired: false
+				status: "Opened"
+				statuschangedate: "2021-09-14T11:54:15"
+				subject: "CuraeChoice vcard."
+				textmessage: null
+				to: "sufian@ex3gen.com"
+				*/
+				
+				/*
+				"Email",
+					"Subject",
+					"Status", 
+					"Date Sent",  
+					"Date Opened" 
+				*/
+				$maillogs=array();
+			    $results=$jsonresult->data->recipients; 
+				foreach($results as $key){
+					 $maillogs=array(); 
+					$maillogs['mail']=$key->to; 
+					$maillogs['subject']=$key->subject;
+					$maillogs['status']=$key->status;
+					if($key->status == 'Bounced'){
+						$maillogs['datesent']=cdate(str_replace('T',' ',$key->date)); 
+					}else{
+						$maillogs['datesent']=cdate(str_replace('T',' ',$key->datesent)); 
+					}
+					
+					if($key->status == 'Opened'){
+						$maillogs['dateopened']=cdate(str_replace('T',' ',$key->dateopened)); 
+					}else{
+						$maillogs['dateopened']=''; 
+					}
+					$value=array_values($maillogs);
+					 
+					$values[]=$value;
+				} 
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $totalrecord,
+					"recordsFiltered" => $totalrecord,
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output); 
+				break;  
+				 
+			case "edit":
+				$data['title']="Update company";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					 $upload_path="resources/admin";
+					
+			$admin = array(
+			'upload_path' => $upload_path,
+			'allowed_types' => "jpg|jpeg",
+			'overwrite' => TRUE,
+			'file_name' => time(),
+			'max_size' => "2048000"
+			// 'max_height' => "768",
+			// 'max_width' => "1024"
+			);
+			$this->load->library('upload', $admin);
+			if($_FILES['fileToUpload']['name']!==""){
+				if(!$this->upload->do_upload('fileToUpload')){ 
+					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+				
+				}
+				else{
+					$imageDetailArray = $this->upload->data();
+					$formData['image'] =  $imageDetailArray['file_name'];
+				}
+			}
+			if(validateData("companies",$formData,$id)){
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+						$config['create_thumb'] = TRUE;
+						//$config['thumb_marker'] = false;
+						$config['maintain_ratio'] = FALSE;
+						$config['width'] = 235;//the width to resize to;
+						$config['height'] = 125;//height to resize to;
+						// echo "<pre>";
+						// print_r ($config);
+						// echo "</pre>";
+						// die();
+		                $this->load->library('image_lib', $config);//this loads the image resize library
+		                $this->image_lib->resize();//the resize function
+		               //check if the resize succeeds
+		                $formData['image'] =   $this->upload->file_name;
+		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+			if($this->model->updateData("companies",$id,$formData))
+				$data['msg']="company updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=($this->model->getData("industries"));		
+				$data['edit']=(array)$this->model->getById("companies",$id);
+				generatePageView('addcompanies',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("companies",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Company is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="Company is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
+	
 	public function locations($action="view",$id=""){
 		
 		$formData=escapeArray($this->input->post());
@@ -1289,16 +1506,13 @@ class Dashboard extends CI_Controller {
 							$account_id = generateID($last_id);
 							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
 							
-							$qrimage_new_name = genrate_qrcode($account_id,$last_id);
+							$last_data=$this->model->getLastData2("contacts",$last_id);
+							
+							$down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
+							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
-							$image_new_name = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id='".$last_id."'"); 
-							
-							
-							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
-							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id=".$last_id."");
-								
-							
+							  
+							  
 							$image_new = genrate_image($last_id);
 							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
 							
@@ -1362,62 +1576,25 @@ class Dashboard extends CI_Controller {
 						if($last_id > 0){
 							$last_data=$this->model->getLastData2("contacts",$last_id);
 							$this->load->library('phpqrcode/qrlib');
-							$qrtext = isset($last_data->ssn) ? $last_data->ssn:'';
-							if(isset($qrtext)){
-								$SERVERFILEPATH = $_SERVER['DOCUMENT_ROOT'].'/resources/qrimage/';
-								$text = $qrtext;
-								$text1= substr($text, 0,2);
-								$folder = $SERVERFILEPATH;
-								$file_name1 = "qrcode_" .md5($last_id). ".png";
-								$file_name = $folder.$file_name1;
-								QRcode::png($text,$file_name);
-								$qrimage_new_name = $file_name1;
-								$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
-							}
-							$last_data=$this->model->getLastData2("contacts",$last_id);
-							$company_id= $last_data->company_id;
-							$imagedata=$this->model->getimageData("companies",$company_id);
-							$imagename=$imagedata->image;
-							$font=realpath('resources/font/Facit Regular.otf');
-							$image=imagecreatefromjpeg("resources/img/formate.jpg");
-							$color=imagecolorallocate($image, 50, 51, 50);
-							$fname=$last_data->first_name." ".$last_data->last_name;
-							imagettftext($image, 15, 0, 102, 300, $color,$font, $fname); 
-							$account_id=$last_data->account_code;
-							imagettftext($image, 12, 0, 128, 338, $color,$font, $account_id);
-							$date="$last_data->ssn";
-							imagettftext($image, 9, 0, 60, 485, $color,$font, $date);
-							$image_url = 'resources/admin/'.$imagedata->image;
-							$watermark_image = imagecreatefromjpeg($image_url);
-							$margin_right = 70; 
-							$margin_bottom = 310;
-							$watermark_image_width = imagesx($watermark_image);
-							$watermark_image_height = imagesy($watermark_image);
-							imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height);
-							$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
-							$watermark_qr = imagecreatefrompng($qrimage_url);
-							$margin_right = 15;
-							$margin_bottom = 110;
-							$watermark_qr_width = imagesx($watermark_qr);
-							$watermark_qr_height = imagesy($watermark_qr);
-							imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
-							$random = rand(99999,999999999); 
-							if (file_exists($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($last_id).".jpg")) {
-								 unlink($_SERVER['DOCUMENT_ROOT']."/resources/cards/cc_ex_".md5($last_id).".jpg");
-							}
-							imagejpeg($image,"resources/cards/cc_ex_".md5($last_id).".jpg");
-							imagedestroy($image);
-							$image_new_name = 'cc_ex_'.md5($last_id).'.jpg';
 							
-							$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id=".$last_id."");
-							 
+							$last_data=$this->model->getLastData2("contacts",$last_id);
+							
+							$down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
+							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id);
+							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
+							  
+							  
+							$image_new = genrate_image($last_id);
+							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
+							
 							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id='".$last_id."'");
-						
+							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
+							
+							  /* 
 							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
 							$image_new = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
+							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'"); */
 							 
 						}
 					}

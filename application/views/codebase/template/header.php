@@ -61,12 +61,12 @@
                                 <a class="loadview" href="#subscriptions/" ><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Subscriptions</span></a>
                             </li>
                             
+                            <li class="<?php echo @$active=='maillogs'?"open":"";?>">
+                                <a class="loadview" href="#maillogs/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Email Logs</span></a>
+                            </li> 
                             <li class="<?php echo @$active=='settings'?"open":"";?>">
                                 <a class="loadview" href="#settings/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Settings</span></a>
-                            </li>
-                            
-                           
-                            
+                            </li> 
                         </ul>
                     </div>
 

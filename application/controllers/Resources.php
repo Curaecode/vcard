@@ -11,16 +11,35 @@ class Resources extends CI_Controller {
 		$file=explode('_',$filename);
 		$id=preg_replace('/[^0-9.]/','',$file[count($file)-1]);
 		$query=$this->db->query("update `contacts` set carddownload = carddownload+1 where id=".$id."");
+		 
 		
 		$data = file_get_contents('vcards/'.$filename);
 		force_download($filename, $data);
 		
 	}
+	
 	public function download($filename=''){
 		if(!empty($filename)){ 
 			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
 			if(!empty($rec) && !empty($rec->image)){
+				
+				$ip = get_client_ip();
+				
+				$new_arr= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+			  
+				$insert_data= array();
+				$insert_data['access_date']= date('Y-m-d H:i:s');
+				$insert_data['user_id']= $rec->id;
+				$insert_data['ipaddress']= $ip;
+				$insert_data['cardid']= $rec->image;
+				$insert_data['Latitude']= $new_arr['geoplugin_latitude'];
+				$insert_data['Longitude']= $new_arr['geoplugin_longitude'];
+				if(isset($_SERVER['HTTP_REFERER'])){
+					$insert_data['ref_url'] = $_SERVER['HTTP_REFERER'];
+				}
+				$this->db->insert('card_access_log',$insert_data);
+				  
 				$path= "resources/cards/".$rec->image;
 				$type = pathinfo($path, PATHINFO_EXTENSION);
 				$data = file_get_contents($path);
