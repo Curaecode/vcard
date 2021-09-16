@@ -95,6 +95,8 @@
 								</div>
 							</div> 
 							<div class="form-group mt-4">
+							<input type="hidden" name="longitude" id="longitude" value="" />
+							<input type="hidden" name="latitude" id="latitude" value="" />
 								<button id="submitbtn" type="submit" class="btn form-control btn-primary rounded submit px-3">Get Started</button>
 							</div>
 						</form> 
@@ -110,6 +112,16 @@
 	  <script src="js/bootstrap-datepicker.min.js"></script>
 	  <script src="js/main.js"></script>
 	  <script type="text/javascript" src="js/jquery.mask.js"></script>
-	  
+	   <script type="text/javascript">
+		 		 
+		 $(document).ready(function() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function (p) { 
+					 $('#latitude').val(p.coords.latitude);
+					 $('#longitude').val(p.coords.longitude);
+				});
+			} 
+		 });
+	   </script>
 	</body>
 </html> 

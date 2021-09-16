@@ -1683,13 +1683,7 @@ class Dashboard extends CI_Controller {
 }
 function download2($filename = NULL) {
     // load download helder
-    $this->load->helper('download');
-    
-	/* $file=explode('_',$filename);
-	$id=preg_replace('/[^0-9.]/','',$file[count($file)-1]);
-	$query=$this->db->query("update `contacts` set carddownload = carddownload+1 where id=".$id.""); */
-	 
-	
+    $this->load->helper('download'); 
     $data = file_get_contents('vcards/'.$filename);
     force_download($filename, $data);
 }

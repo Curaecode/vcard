@@ -16,6 +16,7 @@ class Subscriptions extends CI_Controller {
 			$num_str = sprintf("%06d", mt_rand(100000,999999));
 			$cols['pcode']=$num_str;
 			$this->db->insert('subscription_codes', $cols);
+			 
 			
 			$this->load->library('twilio'); 
 			$phone = $cols['phone'];
@@ -79,6 +80,15 @@ class Subscriptions extends CI_Controller {
 						$this->db->where('id', $result->id);	
 						$this->db->update('subscriptions', $cols);	
 					}
+					
+					if($this->input->post('latitude')){
+						$cols['latitude']=$this->db->escape_str($this->input->post('latitude'));
+					}
+					if($this->input->post('longitude')){
+						$cols['longitude']=$this->db->escape_str($this->input->post('longitude'));
+					} 
+					$this->db->insert('subscription_access', $cols);
+					
 					/* session_start();
 					$_SESSION["vcode"] = $pcode;
 					
