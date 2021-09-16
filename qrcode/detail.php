@@ -102,6 +102,15 @@ if(!isset($_SESSION['vcode'])){
 									</a>
 								</div>
 							</div>
+							
+							<div class="col-sm-6 col-xs-6">
+								<div class="card">
+									<a href="javascript:void(0)" onclick="return false" target="_blank"> <?php /*  openlink(10) */ ?>
+										<img src="images/Dental.png" />
+										Dentists (Coming Soon)
+									</a>
+								</div>
+							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="mailto:support@curaechoice.com" target="">

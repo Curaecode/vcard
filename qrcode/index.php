@@ -1,5 +1,7 @@
 <?php 
 	 session_start(); 
+	 /* $_SESSION['vcode']=123;
+	 $_SESSION['phone']='+923235696050'; */
 	if(isset($_SESSION['vcode'])){
 		header('Location: detail.php');
 		exit;
