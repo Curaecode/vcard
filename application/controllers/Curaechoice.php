@@ -1,28 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Resources extends CI_Controller {
+class Curaechoice extends CI_Controller {
 	public function __construct(){
 		 parent::__construct();		
 		$this->load->model("admin/model");
 	}
-	public function index(){
-	    header('HTTP/1.0 403 Forbidden');
-		echo 'You are forbidden!'; 
-	}
-	public function vcarddownload($filename='')
-	{
-		$file=explode('_',$filename);
-		$id=preg_replace('/[^0-9.]/','',$file[count($file)-1]);
-		$query=$this->db->query("update `contacts` set carddownload = carddownload+1 where id=".$id."");
-		 
+	function index(){
+		header('HTTP/1.0 403 Forbidden');
+		echo 'You are forbidden!';
 		
-		$data = file_get_contents('vcards/'.$filename);
-		force_download($filename, $data);
-		
-	}
-	
+	}  
 	public function download($filename=''){
+		
+		
 		if(!empty($filename)){ 
 			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();

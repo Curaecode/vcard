@@ -1,0 +1,25 @@
+BEGIN:VCARD
+VERSION:3.0
+CLASS:PUBLIC
+PRODID:-//Vcard Extended Class from carlos.alcala@upandrunningsoftware.com//NONSGML Version 1//EN
+REV:2021-09-16 07:27:29
+FN:5343991043f56939118e69edfa7104c9
+N:Choice;Curae;;;
+ORG:Mercedes Benz
+ADR;TYPE=work:;;4735 Melissa way Birmingham, AL 35243;;;;
+EMAIL;TYPE=internet,pref:support@curaechoice.com
+TEL;TYPE=cell,voice:1-800-646-9823
+URL;TYPE=CuraeChoiceCard:http://localhost/vcard/curaechoice_9bf31c7ff062936a96d3c8bd1f8f2ff3
+URL;TYPE=Hospital:https://tinyurl.com/choice-hospital-er
+URL;TYPE=PhysicalTherapy:https://tinyurl.com/choice-physical-therapy
+URL;TYPE=Radiology:https://tinyurl.com/choice-radiology
+URL;TYPE=Cardiovascular:https://tinyurl.com/choice-cardiovascular
+URL;TYPE=Urology:https://tinyurl.com/choice-urology
+URL;TYPE=Surgery:https://tinyurl.com/choice-surgery
+URL;TYPE=Oncology:https://tinyurl.com/choice-oncology
+URL;TYPE=OB_Gyn:https://tinyurl.com/choice-ob-gyn
+URL;TYPE=Chiropractors:https://tinyurl.com/choice-chiropractors
+PHOTO;ENCODING=b;TYPE=JPEG:
+
+TZ:+0200
+END:VCARD

@@ -254,7 +254,7 @@ function get_contacts_vcard($id="")
 	    $b64mline   = chunk_split($b64vcard,74,"\n");
 	    $b64final   = preg_replace('/(.+)/', ' $1', $b64mline);
 	    $photo       = $b64final;
-	    $datavcarddata['url'] = base_url('resources/download/'.md5($id));
+	    $datavcarddata['url'] = base_url('curaechoice_'.md5($id));
 	}
 	else
 	{

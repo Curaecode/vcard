@@ -1466,7 +1466,7 @@ class Dashboard extends CI_Controller {
 					 unset($key->contract_number);  
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
-					$key->image="<img src='".res_url()."views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					$key->image="<img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
 					if($key->cardsend>=1){
 						$key->image ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->image;
 					}
@@ -1903,9 +1903,9 @@ function download2($filename = NULL) {
 							$datas['miname']=$newvalues;
 						}
 						 
-						if(strtolower($data['header'][1][$key]) == 'ssn'){
+						/* if(strtolower($data['header'][1][$key]) == 'ssn'){
 							$datas['ssn']=$newvalues; 
-						}
+						} */
 						if(strtolower($data['header'][1][$key]) == 'relation'){
 							$datas['relationship']=$newvalues;
 						}
