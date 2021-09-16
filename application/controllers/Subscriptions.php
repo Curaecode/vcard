@@ -6,6 +6,33 @@ class Subscriptions extends CI_Controller {
 		 parent::__construct();		
 		$this->load->model("admin/model");
 	}
+	public function openlink()
+	{ 
+		if($this->input->post() && $this->input->post('linktype')){
+			$cols=array();
+			if($this->input->post('longitude')){
+				$cols['longitude']=$this->db->escape_str($this->input->post('longitude'));
+			}
+			if($this->input->post('latitude')){
+				$cols['latitude']=$this->db->escape_str($this->input->post('latitude'));
+			}
+			if($this->input->post('linktype')){
+				$cols['linktype']=$this->db->escape_str($this->input->post('linktype'));
+			}
+			if($this->input->post('phone')){
+				$cols['phone']=$this->db->escape_str($this->input->post('phone'));
+			} 
+			$ip = get_client_ip();
+			$cols['ipaddress']=$ip;
+			$cols['access_date']= date('Y-m-d H:i:s');
+			$this->db->insert('care_coordination_access', $cols);
+			
+			$result = $this->db->query("Select * from subscription_codes where id='".$cols['linktype']."'")->row();
+			redirect($result->url);
+		}else{
+			redirect(admin_url());
+		}
+	}
 	public function getcode()
 	{
 		$data=array();	

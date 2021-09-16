@@ -31,7 +31,7 @@ if(!isset($_SESSION['vcode'])){
 						<div class="row"> 
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(1)" target="_blank">
+									<a href="https://www.google.com/maps/d/edit?mid=1G8UzPewD67wneovOZwGWS2jf4Ix_FQOJ&usp=sharing" target="_blank">
 										<img src="images/Hospital.png" />
 										Hospital & ER 
 									</a>
@@ -39,7 +39,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(2)" target="_blank">
+									<a href="https://www.google.com/maps/d/edit?mid=1cbkJJ5DDSBWLalyd-UpGXd3R0iYkBq6I&usp=sharing" target="_blank">
 										<img src="images/Physical-Therapy.png" />
 										Physical Therapy 
 									</a>
@@ -47,7 +47,7 @@ if(!isset($_SESSION['vcode'])){
 							</div> 
 							<div class=" col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(3)" target="_blank">
+									<a href="https://www.google.com/maps/d/edit?mid=1liN4rua6182Pc6AyUQeqYNWP7PvVUhe_&usp=sharing" target="_blank">
 										<img src="images/Radiology.png" />
 										Radiology
 									</a>
@@ -55,7 +55,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(4)" target="_blank">
+									<a href="https://www.google.com/maps/d/viewer?mid=1mEQkvICm-Xc-4V8uP_YIFd872ly7PlSS&usp=sharing" target="_blank">
 									<img src="images/Cardiovascular.png" />
 									Cardiovascular 
 								</a>
@@ -63,7 +63,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card" >
-									<a href="javascript:void(0)" onclick="openlink(5)" target="_blank">
+									<a href="https://www.google.com/maps/d/edit?mid=1qPmiV0HX6TH4s8pqs6ir0QKpnKsHyrcA&usp=sharing" target="_blank">
 										<img src="images/Urology.png" />
 										Urology 
 									</a>
@@ -71,7 +71,7 @@ if(!isset($_SESSION['vcode'])){
 							</div> 
 							<div class=" col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(6)" target="_blank">
+									<a href="https://www.google.com/maps/d/edit?mid=1bfH3TWDUVt6qqE8Q0zObsO9ltuz3q9Tf&usp=sharing" target="_blank">
 										<img src="images/Surgery.png" />
 										Surgery
 									</a>
@@ -79,7 +79,7 @@ if(!isset($_SESSION['vcode'])){
 							</div> 
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(7)" target="_blank">
+									<a href="https://www.google.com/maps/d/edit?mid=1SYkZPSjFTUq41stL0vjVm2ijWuy0xBkm&usp=sharing" target="_blank">
 										<img src="images/Oncology.png" />
 										Oncology
 									</a>
@@ -87,7 +87,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(8)" target="_blank">
+									<a href="https://www.google.com/maps/d/u/0/viewer?mid=1kqdRfKlKE_2FRgVf21wjxr1vw9YiFlsa" target="_blank">
 										<img src="images/Obgyn.png" />
 										OB/Gyn 
 									</a>
@@ -96,7 +96,7 @@ if(!isset($_SESSION['vcode'])){
 							
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(9)" target="_blank">
+									<a href="https://www.google.com/maps/d/u/0/viewer?mid=1FA9nYaPQsvm8bmByeWNeUcmSYH8BnHhs&ll=33.33683520115639%2C-87.10714970000001&z=10" target="_blank">
 										<img src="images/Chiropractic.png" />
 										Chiropractors
 									</a>
@@ -117,11 +117,11 @@ if(!isset($_SESSION['vcode'])){
 		</div>
 	</section>
 	<div style="display:none;">
-		<form method="posst" id="linkform" action="https://www.curaechoice.net/subscriptions/openlink">
+		<form method="posst">
 			<input type="hidden" name="longitude" id="longitude" value="" />
 			<input type="hidden" name="latitude" id="latitude" value="" />
 			<input type="hidden" name="linktype" id="linktype" value="0" />
-			<input type="hidden" name="phone" id="phone" value="<?php if(isset($_SESSION['phone'])){ echo $_SESSION['phone'];}?>" /> 
+			
 		</form>
 	</div>
 	<script src="js/jquery.min.js"></script>
@@ -129,10 +129,6 @@ if(!isset($_SESSION['vcode'])){
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
 	<script type="text/javascript"> 
-		function openlink(linkid){
-			$('#linktype').val(linkid); 
-			document.getElementById("linkform").submit();
-		}
 		 $(document).ready(function() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function (p) { 
