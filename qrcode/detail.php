@@ -31,7 +31,7 @@ if(!isset($_SESSION['vcode'])){
 						<div class="row"> 
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(1)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(1)" target="_blank">
 										<img src="images/Hospital.png" />
 										Hospital & ER 
 									</a>
@@ -39,7 +39,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(2)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(2)" target="_blank">
 										<img src="images/Physical-Therapy.png" />
 										Physical Therapy 
 									</a>
@@ -47,7 +47,7 @@ if(!isset($_SESSION['vcode'])){
 							</div> 
 							<div class=" col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(3)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(3)" target="_blank">
 										<img src="images/Radiology.png" />
 										Radiology
 									</a>
@@ -55,7 +55,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(4)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(4)" target="_blank">
 									<img src="images/Cardiovascular.png" />
 									Cardiovascular 
 								</a>
@@ -63,7 +63,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card" >
-									<a href="javascript:void(0)" onclick="openlink(5)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(5)" target="_blank">
 										<img src="images/Urology.png" />
 										Urology 
 									</a>
@@ -71,7 +71,7 @@ if(!isset($_SESSION['vcode'])){
 							</div> 
 							<div class=" col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(6)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(6)" target="_blank">
 										<img src="images/Surgery.png" />
 										Surgery
 									</a>
@@ -79,7 +79,7 @@ if(!isset($_SESSION['vcode'])){
 							</div> 
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(7)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(7)" target="_blank">
 										<img src="images/Oncology.png" />
 										Oncology
 									</a>
@@ -87,7 +87,7 @@ if(!isset($_SESSION['vcode'])){
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(8)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(8)" target="_blank">
 										<img src="images/Obgyn.png" />
 										OB/Gyn 
 									</a>
@@ -96,7 +96,7 @@ if(!isset($_SESSION['vcode'])){
 							
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="openlink(9)" target="_blank">
+									<a href="javascript:void(0)" onclick="return openlink(9)" target="_blank">
 										<img src="images/Chiropractic.png" />
 										Chiropractors
 									</a>
@@ -117,7 +117,7 @@ if(!isset($_SESSION['vcode'])){
 		</div>
 	</section>
 	<div style="display:none;">
-		<form method="posst" id="linkform" action="https://www.curaechoice.net/subscriptions/openlink">
+		<form method="post" id="linkform" action="https://www.curaechoice.net/subscriptions/openlink">
 			<input type="hidden" name="longitude" id="longitude" value="" />
 			<input type="hidden" name="latitude" id="latitude" value="" />
 			<input type="hidden" name="linktype" id="linktype" value="0" />
@@ -132,6 +132,7 @@ if(!isset($_SESSION['vcode'])){
 		function openlink(linkid){
 			$('#linktype').val(linkid); 
 			document.getElementById("linkform").submit();
+			return false
 		}
 		 $(document).ready(function() {
 			if (navigator.geolocation) {
@@ -143,5 +144,4 @@ if(!isset($_SESSION['vcode'])){
 		 });
 	   </script>
 	</body>
-</html>
-
+</html> 

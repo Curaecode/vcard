@@ -8,7 +8,7 @@ class Subscriptions extends CI_Controller {
 	}
 	public function openlink()
 	{ 
-		if($this->input->post() && $this->input->post('linktype')){
+		if($this->input->post()){
 			$cols=array();
 			if($this->input->post('longitude')){
 				$cols['longitude']=$this->db->escape_str($this->input->post('longitude'));
@@ -27,8 +27,8 @@ class Subscriptions extends CI_Controller {
 			$cols['access_date']= date('Y-m-d H:i:s');
 			$this->db->insert('care_coordination_access', $cols);
 			
-			$result = $this->db->query("Select * from subscription_codes where id='".$cols['linktype']."'")->row();
-			redirect($result->url);
+			$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
+			redirect($result->url);  
 		}else{
 			redirect(admin_url());
 		}
