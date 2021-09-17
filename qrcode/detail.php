@@ -138,18 +138,49 @@ if(!isset($_SESSION['vcode'])){
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
 	<script type="text/javascript"> 
+		var returned = true;
 		function openlink(linkid){
+			if(returned==false){
+				return false;
+			}
 			$('#linktype').val(linkid); 
 			document.getElementById("linkform").submit();
 			return false
 		}
 		 $(document).ready(function() {
-			if (navigator.geolocation) {
+			 navigator.permissions.query({
+				 name: 'geolocation'
+			 }).then(function(result) {
+				 if (result.state == 'granted') {
+					 report(result.state);
+					  
+					navigator.geolocation.getCurrentPosition(function (p) { 
+						 $('#latitude').val(p.coords.latitude);
+						 $('#longitude').val(p.coords.longitude);
+					});
+				 } else if (result.state == 'prompt') {
+					 report(result.state);
+					  
+
+					 navigator.geolocation.getCurrentPosition(function (p) { 
+						 $('#latitude').val(p.coords.latitude);
+						 $('#longitude').val(p.coords.longitude);
+					});
+					returned = false;
+				 } else if (result.state == 'denied') {
+					 report(result.state);
+					 returned = false;
+				 }
+				 result.onchange = function() {
+					 report(result.state);
+				 }
+			 }); 
+			/* if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function (p) { 
 					 $('#latitude').val(p.coords.latitude);
 					 $('#longitude').val(p.coords.longitude);
 				});
-			} 
+			}  */
 		 });
 	   </script>
 	</body>

@@ -117,13 +117,48 @@
 	   <script type="text/javascript">
 		 		 
 		 $(document).ready(function() {
-			if (navigator.geolocation) {
+			navigator.permissions.query({
+				 name: 'geolocation'
+			 }).then(function(result) {
+				 if (result.state == 'granted') {
+					 report(result.state);
+					  
+					navigator.geolocation.getCurrentPosition(function (p) { 
+						 $('#latitude').val(p.coords.latitude);
+						 $('#longitude').val(p.coords.longitude);
+					});
+				 } else if (result.state == 'prompt') {
+					 report(result.state);
+					 $('#submitbtn').addClass('d-none');
+
+					 navigator.geolocation.getCurrentPosition(function (p) { 
+						 $('#latitude').val(p.coords.latitude);
+						 $('#longitude').val(p.coords.longitude);
+					});
+				 } else if (result.state == 'denied') {
+					 report(result.state);
+					 $('#submitbtn').addClass('d-none');
+				 }
+				 result.onchange = function() {
+					 report(result.state);
+				 }
+			 }); 
+			
+			
+			/* if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(function (p) { 
 					 $('#latitude').val(p.coords.latitude);
 					 $('#longitude').val(p.coords.longitude);
 				});
-			} 
+			}else{
+				alert('AAA');
+			}  */
 		 });
+		 
+		 function report(state) {
+			console.log('Permission ' + state);
+		}
+
 	   </script>
 	</body>
 </html> 
