@@ -26,9 +26,10 @@ class Subscriptions extends CI_Controller {
 			$cols['ipaddress']=$ip;
 			$cols['access_date']= date('Y-m-d H:i:s');
 			$this->db->insert('care_coordination_access', $cols);
-			
-			$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
-			redirect($result->url);  
+			if(isset($cols['linktype'])){
+				$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
+				redirect($result->url);  
+			}
 		}else{
 			redirect(admin_url());
 		}
@@ -114,6 +115,8 @@ class Subscriptions extends CI_Controller {
 					if($this->input->post('longitude')){
 						$cols['longitude']=$this->db->escape_str($this->input->post('longitude'));
 					} 
+					$ip = get_client_ip();
+					$cols['ipaddress']=$ip;
 					$this->db->insert('subscription_access', $cols);
 					
 					/* session_start();

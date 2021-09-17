@@ -15,13 +15,13 @@ class Curaechoice extends CI_Controller {
 		
 		
 		if(!empty($filename)){ 
-			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
+			
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
 			if(!empty($rec) && !empty($rec->image)){
 				
 				$ip = get_client_ip();
 				
-				$new_arr= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+				/* $new_arr= unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
 			  
 				$insert_data= array();
 				$insert_data['access_date']= date('Y-m-d H:i:s');
@@ -33,13 +33,15 @@ class Curaechoice extends CI_Controller {
 				if(isset($_SERVER['HTTP_REFERER'])){
 					$insert_data['ref_url'] = $_SERVER['HTTP_REFERER'];
 				}
-				$this->db->insert('card_access_log',$insert_data);
+				$this->db->insert('card_access_log',$insert_data); */
 				  
 				$path= "resources/cards/".$rec->image;
 				$type = pathinfo($path, PATHINFO_EXTENSION);
-				$data = file_get_contents($path);
-				header("content-type: image/". $type);
-				echo file_get_contents($path);
+				 $data['type']=$type;
+				$data['image']=file_get_contents($path);
+				$data['filename']=$filename;
+				
+				$this->load->view('codebase/cardimage',$data);
 			}else{
 				header("content-type: image/jpg");
 				echo file_get_contents('resources/img/default.jpg');
@@ -49,6 +51,40 @@ class Curaechoice extends CI_Controller {
 			echo 'You are forbidden!';
 		} 
 	} 
+	function savecardview(){
+		$filename='';
+		if($this->input->post('card')){
+			$filename=$this->db->escape_str($this->input->post('card'));
+		}
+		if(!empty($filename)){  
+			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
+			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
+			if(!empty($rec) && !empty($rec->image)){
+				
+				$ip = get_client_ip();  
+				$insert_data= array();
+				$insert_data['access_date']= date('Y-m-d H:i:s');
+				$insert_data['user_id']= $rec->id;
+				$insert_data['ipaddress']= $ip;
+				$insert_data['cardid']= $rec->image; 
+				if(isset($_SERVER['HTTP_REFERER'])){
+					$insert_data['ref_url'] = $_SERVER['HTTP_REFERER'];
+				}
+				if($this->input->post('longitude')){
+					$insert_data['longitude']=$this->db->escape_str($this->input->post('longitude'));
+				}
+				if($this->input->post('latitude')){
+					$insert_data['latitude']=$this->db->escape_str($this->input->post('latitude'));
+				}
+				$this->db->insert('card_access_log',$insert_data);
+				 
+			}else{
+				header("content-type: image/jpg");
+				echo file_get_contents('resources/img/default.jpg');
+			} 
+		}
+		
+	}
 	public function views($filename='')
 	{
 		if(!admin())

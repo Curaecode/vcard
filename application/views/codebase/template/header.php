@@ -61,9 +61,9 @@
                                 <a class="loadview" href="#subscriptions/" ><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Subscriptions</span></a>
                             </li>
                             
-                            <li class="<?php echo @$active=='maillogs'?"open":"";?>">
+                            <?php /* <li class="<?php echo @$active=='maillogs'?"open":"";?>">
                                 <a class="loadview" href="#maillogs/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Email Logs</span></a>
-                            </li> 
+                            </li>  */ ?>
                             <li class="<?php echo @$active=='settings'?"open":"";?>">
                                 <a class="loadview" href="#settings/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Settings</span></a>
                             </li> 
@@ -85,7 +85,33 @@
                        <!-- END Layout Options -->
                     </div>
                     <!-- END Left Section -->
-					
+					<!-- Right Section -->
+                   <div class="content-header-section">
+                        <!-- User Dropdown -->
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-logs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user d-sm-none"></i>
+                                <span class="d-none d-sm-inline-block">Logs</span>
+                                <i class="fa fa-angle-down ml-5"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-logs-dropdown">
+                                <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User Logs</h5>
+                                <a class="dropdown-item loadview" href="#maillogs/">
+                                    <i class="fa fa-user mr-5"></i> Email Logs
+                                </a>
+								<a class="dropdown-item loadview" href="#qrcodelogs/">
+                                    <i class="fa fa-user mr-5"></i> Subscription Logs
+                                </a>
+                                <a class="dropdown-item loadview" href="#detaillogs/">
+                                    <i class="fa fa-lock mr-5"></i>	URL Access Logs
+                                </a> 
+                                <a class="dropdown-item loadview" href="#cardlogs/">
+                                    <i class="fa fa-lock mr-5"></i>	Card Access Logs
+                                </a> 
+                            </div>
+                        </div>
+                        <!-- END User Dropdown -->
+                    </div><!-- END Right Section -->
                     <!-- Right Section -->
                    <div class="content-header-section">
                         <!-- User Dropdown -->

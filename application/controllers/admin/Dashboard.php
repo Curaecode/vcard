@@ -526,6 +526,7 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
+	
 	public function subscriptions($action="view",$id=""){
 		
 		$formData=escapeArray($this->input->post());
@@ -582,6 +583,464 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
+					array_push($value,addActions("subscriptions",$id));
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				 
+			case "edit":
+				$data['title']="Update company";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					 $upload_path="resources/admin";
+					
+			$admin = array(
+			'upload_path' => $upload_path,
+			'allowed_types' => "jpg|jpeg",
+			'overwrite' => TRUE,
+			'file_name' => time(),
+			'max_size' => "2048000"
+			// 'max_height' => "768",
+			// 'max_width' => "1024"
+			);
+			$this->load->library('upload', $admin);
+			if($_FILES['fileToUpload']['name']!==""){
+				if(!$this->upload->do_upload('fileToUpload')){ 
+					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+				
+				}
+				else{
+					$imageDetailArray = $this->upload->data();
+					$formData['image'] =  $imageDetailArray['file_name'];
+				}
+			}
+			if(validateData("companies",$formData,$id)){
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+						$config['create_thumb'] = TRUE;
+						//$config['thumb_marker'] = false;
+						$config['maintain_ratio'] = FALSE;
+						$config['width'] = 235;//the width to resize to;
+						$config['height'] = 125;//height to resize to;
+						// echo "<pre>";
+						// print_r ($config);
+						// echo "</pre>";
+						// die();
+		                $this->load->library('image_lib', $config);//this loads the image resize library
+		                $this->image_lib->resize();//the resize function
+		               //check if the resize succeeds
+		                $formData['image'] =   $this->upload->file_name;
+		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+			if($this->model->updateData("companies",$id,$formData))
+				$data['msg']="company updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=($this->model->getData("industries"));		
+				$data['edit']=(array)$this->model->getById("companies",$id);
+				generatePageView('addcompanies',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("companies",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Company is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="Company is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
+	
+	public function qrcodelogs($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",
+					"First Name",
+					"Last Name", 
+					"Email",  
+					"Phone", 
+					"DOB", 
+					"IP",   
+					"Access Date Time",
+					"Address"	
+				);
+				$data['id']=$id;
+				$data['title']="Subscriptions";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "id",
+				"first_name",
+				"last_name",
+				"email",
+				"phone",
+				"dob",
+				"ipaddress",
+				"latitude",
+				"longitude",
+				"addeddate" 
+				
+				);
+				$searchFields=array(
+			    "id",
+				"first_name",
+				"last_name",
+				"phone",
+				"email"
+				
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from subscription_access where 1=1";
+			
+			if($id!==""){
+			$sql.=" and id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id;
+					//unset($key->id); //we cant get id in datatable cause its unset if u remove unset u can get id in datatable 
+					$key->dob=usadate($key->dob);
+					
+					$key->address='<a href="https://www.google.com/maps/@'.$key->latitude.','.$key->longitude.',19z" target="_blank"> Latitude:'.$key->latitude.'  Longitude:'.$key->longitude.'</a>';
+					if($key->addeddate=='0000-00-00 00:00:00'){
+						$key->addeddate='';
+					}else{
+						$key->addeddate=cdate($key->addeddate);
+					}
+					
+					
+					unset($key->latitude);
+					unset($key->longitude);
+					 
+					    
+					$value=array_values((array)$key);
+					 
+					array_push($value,addActions("subscriptions",$id));
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				 
+			case "edit":
+				$data['title']="Update company";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					 $upload_path="resources/admin";
+					
+			$admin = array(
+			'upload_path' => $upload_path,
+			'allowed_types' => "jpg|jpeg",
+			'overwrite' => TRUE,
+			'file_name' => time(),
+			'max_size' => "2048000"
+			// 'max_height' => "768",
+			// 'max_width' => "1024"
+			);
+			$this->load->library('upload', $admin);
+			if($_FILES['fileToUpload']['name']!==""){
+				if(!$this->upload->do_upload('fileToUpload')){ 
+					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+				
+				}
+				else{
+					$imageDetailArray = $this->upload->data();
+					$formData['image'] =  $imageDetailArray['file_name'];
+				}
+			}
+			if(validateData("companies",$formData,$id)){
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+						$config['create_thumb'] = TRUE;
+						//$config['thumb_marker'] = false;
+						$config['maintain_ratio'] = FALSE;
+						$config['width'] = 235;//the width to resize to;
+						$config['height'] = 125;//height to resize to;
+						// echo "<pre>";
+						// print_r ($config);
+						// echo "</pre>";
+						// die();
+		                $this->load->library('image_lib', $config);//this loads the image resize library
+		                $this->image_lib->resize();//the resize function
+		               //check if the resize succeeds
+		                $formData['image'] =   $this->upload->file_name;
+		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+			if($this->model->updateData("companies",$id,$formData))
+				$data['msg']="company updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=($this->model->getData("industries"));		
+				$data['edit']=(array)$this->model->getById("companies",$id);
+				generatePageView('addcompanies',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("companies",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Company is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="Company is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
+	
+	
+	public function detaillogs($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",  
+					"Phone", 
+					"URL Title",  
+					"IP",   
+					"Access Date Time",
+					"Address"	
+				);
+				$data['id']=$id;
+				$data['title']="URL Access Log";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "cc.id", 
+				"cc.phone", 
+				"cd.linkname",
+				"cd.url", 
+				"cc.ipaddress",
+				"cc.latitude",
+				"cc.longitude",
+				"cc.access_date"  
+				);
+				$searchFields=array(
+			    "cc.id", 
+				"cc.phone",
+				"cd.linkname"
+				
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from care_coordination_access cc INNER JOIN care_coordination cd ON cc.linktype = cd.id where 1=1";
+			 
+			if($id!==""){
+			$sql.=" and cc.id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id; 
+					
+					$key->linkname='<a href="'.$key->url.'" target="_blank">'.$key->linkname.'</a>';
+					$key->address='<a href="https://www.google.com/maps/@'.$key->latitude.','.$key->longitude.',19z" target="_blank"> Latitude:'.$key->latitude.'  Longitude:'.$key->longitude.'</a>';
+					if($key->access_date=='0000-00-00 00:00:00'){
+						$key->access_date='';
+					}else{
+						$key->access_date=cdate($key->access_date);
+					}
+					
+					
+					unset($key->latitude);
+					unset($key->longitude);
+					unset($key->url);
+					 
+					    
+					$value=array_values((array)$key);
+					 
+					array_push($value,addActions("subscriptions",$id));
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				 
+			case "edit":
+				$data['title']="Update company";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					 $upload_path="resources/admin";
+					
+			$admin = array(
+			'upload_path' => $upload_path,
+			'allowed_types' => "jpg|jpeg",
+			'overwrite' => TRUE,
+			'file_name' => time(),
+			'max_size' => "2048000"
+			// 'max_height' => "768",
+			// 'max_width' => "1024"
+			);
+			$this->load->library('upload', $admin);
+			if($_FILES['fileToUpload']['name']!==""){
+				if(!$this->upload->do_upload('fileToUpload')){ 
+					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+				
+				}
+				else{
+					$imageDetailArray = $this->upload->data();
+					$formData['image'] =  $imageDetailArray['file_name'];
+				}
+			}
+			if(validateData("companies",$formData,$id)){
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+						$config['create_thumb'] = TRUE;
+						//$config['thumb_marker'] = false;
+						$config['maintain_ratio'] = FALSE;
+						$config['width'] = 235;//the width to resize to;
+						$config['height'] = 125;//height to resize to;
+						// echo "<pre>";
+						// print_r ($config);
+						// echo "</pre>";
+						// die();
+		                $this->load->library('image_lib', $config);//this loads the image resize library
+		                $this->image_lib->resize();//the resize function
+		               //check if the resize succeeds
+		                $formData['image'] =   $this->upload->file_name;
+		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+			if($this->model->updateData("companies",$id,$formData))
+				$data['msg']="company updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=($this->model->getData("industries"));		
+				$data['edit']=(array)$this->model->getById("companies",$id);
+				generatePageView('addcompanies',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("companies",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Company is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="Company is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
+	
+	public function cardlogs($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",  
+					"First Name", 
+					"Last Name", 
+					"Card",  
+					"IP",   
+					"Access Date Time",
+					"Address"	
+				);
+				$data['id']=$id;
+				$data['title']="URL Access Log";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "cc.id", 
+				"cd.first_name", 
+				"cd.last_name",
+				"cd.image", 
+				"cc.ipaddress",
+				"cc.latitude",
+				"cc.longitude",
+				"cc.access_date"  
+				);
+				$searchFields=array(
+			    "cc.id", 
+				"cd.first_name", 
+				"cd.last_name",
+				"cc.ipaddress"
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from card_access_log cc INNER JOIN contacts cd ON cc.user_id = cd.id where 1=1";
+	 
+			if($id!==""){
+			$sql.=" and cc.id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id; 
+					
+					$key->image="<img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					 
+					$key->address='<a href="https://www.google.com/maps/@'.$key->latitude.','.$key->longitude.',19z" target="_blank"> Latitude:'.$key->latitude.'  Longitude:'.$key->longitude.'</a>';
+					if($key->access_date=='0000-00-00 00:00:00'){
+						$key->access_date='';
+					}else{
+						$key->access_date=cdate($key->access_date);
+					}
+					
+					
+					unset($key->latitude);
+					unset($key->longitude);
+					unset($key->url);
+					 
+					    
+					$value=array_values((array)$key);
+					 
 					array_push($value,addActions("subscriptions",$id));
 					$values[]=$value;
 				}
