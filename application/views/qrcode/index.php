@@ -86,29 +86,31 @@
 	</section>
  <?php $this->load->view('qrcode/widgets/footer'); ?>
  <script type="text/javascript">
-		 		 
+		 	var locationenable = false; 	 
 		 $(document).ready(function() {
 			navigator.permissions.query({
 				 name: 'geolocation'
 			 }).then(function(result) {
 				 if (result.state == 'granted') {
 					 report(result.state);
-					  
+					   locationenable = true; 
 					navigator.geolocation.getCurrentPosition(function (p) { 
 						 $('#latitude').val(p.coords.latitude);
 						 $('#longitude').val(p.coords.longitude);
 					});
 				 } else if (result.state == 'prompt') {
 					 report(result.state);
-					 $('#submitbtn').addClass('d-none');
-
+					 /* $('#submitbtn').addClass('d-none'); */
+					locationenable = false; 
 					 navigator.geolocation.getCurrentPosition(function (p) { 
 						 $('#latitude').val(p.coords.latitude);
 						 $('#longitude').val(p.coords.longitude);
+						 locationenable = true; 
 					});
 				 } else if (result.state == 'denied') {
 					 report(result.state);
-					 $('#submitbtn').addClass('d-none');
+					 /* $('#submitbtn').addClass('d-none'); */
+					 locationenable = true; 
 				 }
 				 result.onchange = function() {
 					 report(result.state);

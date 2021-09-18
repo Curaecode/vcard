@@ -127,6 +127,11 @@
 		var returned = true;
 		function openlink(linkid){
 			if(returned==false){
+				 Swal.fire({
+					title: 'CuraeChoiceCard',
+					text: 'Please enable your location to view detail.',
+					type: 'error'
+				});
 				return false;
 			}
 			$('#linktype').val(linkid); 

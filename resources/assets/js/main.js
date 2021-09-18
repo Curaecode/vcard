@@ -18,7 +18,12 @@ console.log(isValidDate("2013-02-29"));  // false = not leap day
 function getcode(){
 	var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
 	if(phone.length != 10){
-		alert('not a valid Phone number');
+		/* alert('not a valid Phone number'); */
+		Swal.fire({
+			title: 'CuraeChoiceCard',
+			html: 'Please enter a valid phone number',
+			type: 'error'
+		});
 	  return false;
 	}	
 	$.ajax({
@@ -29,9 +34,19 @@ function getcode(){
 		success: function (result) {
 			 console.log(result);
 			 if(result.returned == false) {
-				 alert('Please enter a valid phone number');
+				/*  alert('Please enter a valid phone number'); */
+				Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Please enter a valid phone number',
+						type: 'error'
+					});
 			 }else{
-				 alert('A unique security code has been sent to your phone'); 
+				 /* alert('A unique security code has been sent to your phone');  */
+				Swal.fire({
+					title: 'CuraeChoiceCard',
+					html: 'A unique security code has been sent to your phone',
+					type: 'success'
+				});
 			 }
 		}
 	}); 
@@ -50,9 +65,19 @@ function getimagecode(){
 		success: function (result) {
 			 console.log(result);
 			 if(result.returned == false) {
-				 alert('Please enter a valid phone number');
+				 /* alert('Please enter a valid phone number'); */
+				 Swal.fire({
+					title: 'CuraeChoiceCard',
+					html: 'Please enter a valid phone number',
+					type: 'error'
+				});
 			 }else{
-				 alert('A unique security code has been sent to your phone'); 
+				/*  alert('A unique security code has been sent to your phone');  */
+				Swal.fire({
+					title: 'CuraeChoiceCard',
+					html: 'A unique security code has been sent to your phone',
+					type: 'success'
+				});
 			 }
 		}
 	}); 
@@ -158,14 +183,23 @@ function getimagecode(){
 			 var userinput = $('#email').val();
 			var pattern = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
 
-			if(!pattern.test(userinput)){
-			  alert('not a valid e-mail address');
+			if(!pattern.test(userinput)){ 
+			  Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Please enter a valid e-mail address.',
+						type: 'error'
+					});
 			  return false;
 			}
 			
 			var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
 			 if(phone.length != 10){
-				alert('not a valid Phone number');
+				/* alert('not a valid Phone number'); */
+				Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Please enter a valid  Phone number.',
+						type: 'error'
+					});
 			  return false;
 			 }
 			 /* var date = $("#year").val()+'-'+$("#month").val()+'-'+$("#day").val();*/
@@ -174,10 +208,24 @@ function getimagecode(){
 			 var dob = date.split('/');
 			 var orgdob = dob[2]+'-'+dob[0]+'-'+dob[1];
 			 if(!isValidDate(orgdob)){
-				 alert('Date of Birth is invalid.');
+				 /* alert('Date of Birth is invalid.'); */
+				 Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Date of Birth is invalid.',
+						type: 'error'
+					});
 				 return false;
 			 } 
-			
+			var longitude = $("#longitude").val();
+			var latitude = $("#latitude").val();
+			if(locationenable==false){
+				 Swal.fire({
+					title: 'CuraeChoiceCard',
+					text: 'Please enable your location to view your card.',
+					type: 'error'
+				});
+				return false;	
+			}
 		  $.ajax({
 			type: 'post',
 			url: MAINURL+'subscriptions/index',
@@ -186,10 +234,20 @@ function getimagecode(){
 			success: function (result) {
 				if(result.returned == true) {
 					 document.getElementById('subscriptionform').reset();
-					alert('your data has been saved successfully');
+					 
+					Swal.fire({
+						title: 'CuraeChoiceCard',
+						text: "your data has been saved successfully",
+						type: 'success'
+					});
 					window.location.href=MAINURL+'qrcode/detail'; 
 				}else{
-					alert(result.msg);
+					 
+					Swal.fire({
+						title: 'CuraeChoiceCard',
+						text:result.msg,
+						type: 'error'
+					});
 				}
 			}
 		  });
@@ -204,11 +262,23 @@ function getimagecode(){
 			
 			var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
 			 if(phone.length != 10){
-				alert('not a valid Phone number');
+				/* alert('not a valid Phone number'); */
+				 Swal.fire({
+					title: 'CuraeChoiceCard',
+					text: 'Please enter a valid phone number.',
+					type: 'error'
+				});
 			  return false;
 			 }
 			  
-			
+			if(locationenable==false){
+				 Swal.fire({
+					title: 'CuraeChoiceCard',
+					text: 'Please enable your location to view your card.',
+					type: 'error'
+				});
+				return false;	
+			}
 		  $.ajax({
 			type: 'post',
 			url: MAINURL+'curaechoice/card',
@@ -217,10 +287,15 @@ function getimagecode(){
 			success: function (result) {
 				if(result.returned == true) {
 					 document.getElementById('cardform').reset();
-					alert('your data has been saved successfully');
+					/* alert('your data has been saved successfully'); */
 					window.location.href=MAINURL+''+result.path; 
 				}else{
-					alert(result.msg);
+					/* alert(result.msg); */
+					Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Sorry your number does not exist. Please contact <a href="mailto:support@curaechoice.com">support</a>',
+						type: 'error'
+					});
 				}
 			}
 		  });

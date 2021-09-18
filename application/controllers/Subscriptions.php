@@ -41,6 +41,7 @@ class Subscriptions extends CI_Controller {
 			if($this->input->post('area_code') && $this->input->post('phone_first') && $this->input->post('phone_second')){
 				$cols['phone']=$this->db->escape_str($this->input->post('area_code')).''.$this->db->escape_str($this->input->post('phone_first')).''.$this->db->escape_str($this->input->post('phone_second'));
 			}
+			
 			$num_str = sprintf("%06d", mt_rand(100000,999999));
 			$cols['pcode']=$num_str;
 			$this->db->insert('subscription_codes', $cols);
@@ -76,6 +77,14 @@ class Subscriptions extends CI_Controller {
 			if($this->input->post('card')){
 				$cols['filename']=$this->db->escape_str($this->input->post('card'));
 			}
+			if($this->input->post('longitude')){
+				$cols['longitude']=$this->db->escape_str($this->input->post('longitude'));
+			}
+			if($this->input->post('latitude')){
+				$cols['latitude']=$this->db->escape_str($this->input->post('latitude'));
+			}
+			$ip = get_client_ip();  
+			$insert_data['ipaddress']= $ip;
 			if(isset($cols['phone'])){
 				$num_str = sprintf("%06d", mt_rand(100000,999999));
 				$cols['pcode']=$num_str;
