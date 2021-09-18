@@ -13,9 +13,7 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 
 DirectoryIndex index.php  index.html /index403.php
 
-
-
-RewriteRule ^.*/cards/(.*)$ /resources/download/$1 [L,R=301] 
+ 
  
  
 

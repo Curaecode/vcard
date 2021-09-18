@@ -1,17 +1,4 @@
-<?php 
-session_start();
-if(!isset($_SESSION['vcode'])){
-	header('Location: index.php');
-	exit;
-}
-?><!doctype html>
-<html lang="en">
-  <head>
-  	<title>Curaechoice | Your Ally in Care Coordination</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-	<link rel="stylesheet" href="css/style.css"> 
-	</head>
+<?php $this->load->view('qrcode/widgets/header'); ?>
 	<body class="detail">
 	<section class="ftco-section">
 		<div class="container"> 
@@ -19,7 +6,7 @@ if(!isset($_SESSION['vcode'])){
 				<div class="col-md-6 col-lg-7">
 					<div class="detail-left-wrap py-5">
 						<!--<img src="images/curae-logo.png" class="logo"/> -->
-						<img src="images/curae-logo.svg" class="logo"/> 
+						<img src="<?php echo base_url();?>resources/assets/images/curae-logo.svg" class="logo"/> 
 						<h3 class="logo_text">Your Ally in Care Coordination</h3>
 						<h1 class="hide-mobile">Welcome!</h1>
 						<div class="sapp hide-mobile"></div>
@@ -32,7 +19,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(1)" target="_blank">
-										<img src="images/Hospital.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Hospital.png" />
 										Hospital & ER 
 									</a>
 								</div>
@@ -40,7 +27,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(2)" target="_blank">
-										<img src="images/Physical-Therapy.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Physical-Therapy.png" />
 										Physical Therapy 
 									</a>
 								</div>
@@ -48,7 +35,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class=" col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(3)" target="_blank">
-										<img src="images/Radiology.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Radiology.png" />
 										Radiology
 									</a>
 								</div>
@@ -56,7 +43,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(4)" target="_blank">
-									<img src="images/Cardiovascular.png" />
+									<img src="<?php echo base_url();?>resources/assets/images/Cardiovascular.png" />
 									Cardiovascular 
 								</a>
 								</div>
@@ -64,7 +51,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card" >
 									<a href="javascript:void(0)" onclick="return openlink(5)" target="_blank">
-										<img src="images/Urology.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Urology.png" />
 										Urology 
 									</a>
 								</div>
@@ -72,7 +59,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class=" col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(6)" target="_blank">
-										<img src="images/Surgery.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Surgery.png" />
 										Surgery
 									</a>
 								</div>
@@ -80,7 +67,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(7)" target="_blank">
-										<img src="images/Oncology.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Oncology.png" />
 										Oncology
 									</a>
 								</div>
@@ -88,7 +75,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(8)" target="_blank">
-										<img src="images/Obgyn.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Obgyn.png" />
 										OB/Gyn 
 									</a>
 								</div>
@@ -97,7 +84,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(9)" target="_blank">
-										<img src="images/Chiropractic.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Chiropractic.png" />
 										Chiropractors
 									</a>
 								</div>
@@ -106,7 +93,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return false" target="_blank"> <?php /*  openlink(10) */ ?>
-										<img src="images/Dental.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/Dental.png" />
 										Dentists (Coming Soon)
 									</a>
 								</div>
@@ -114,7 +101,7 @@ if(!isset($_SESSION['vcode'])){
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="mailto:support@curaechoice.com" target="">
-										<img src="images/customer-support.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/customer-support.png" />
 										Customer Service
 									</a>
 								</div>
@@ -126,17 +113,16 @@ if(!isset($_SESSION['vcode'])){
 		</div>
 	</section>
 	<div style="display:none;">
-		<form method="post" id="linkform" action="https://www.curaechoice.net/subscriptions/openlink">
+		<form method="post" id="linkform" action="<?php echo base_url();?>subscriptions/openlink">
 			<input type="hidden" name="longitude" id="longitude" value="" />
 			<input type="hidden" name="latitude" id="latitude" value="" />
 			<input type="hidden" name="linktype" id="linktype" value="0" />
-			<input type="hidden" name="phone" id="phone" value="<?php if(isset($_SESSION['phone'])){ echo $_SESSION['phone'];}?>" /> 
+			<input type="hidden" name="phone" id="phone" value="<?php if($this->session->userdata('phone')){ echo $this->session->userdata('phone');}?>" /> 
 		</form>
 	</div>
-	<script src="js/jquery.min.js"></script>
-  <script src="js/popper.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+
+<?php $this->load->view('qrcode/widgets/footer'); ?>
+
 	<script type="text/javascript"> 
 		var returned = true;
 		function openlink(linkid){
@@ -183,5 +169,14 @@ if(!isset($_SESSION['vcode'])){
 			}  */
 		 });
 	   </script>
+	   <!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-G9E7HV7G7R"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-G9E7HV7G7R');
+		</script>
 	</body>
 </html> 

@@ -66,6 +66,45 @@ class Subscriptions extends CI_Controller {
 			die;
 		}
 	}
+	public function getimagecode()
+	{
+		$data=array();	
+		if($this->input->post()){
+			if($this->input->post('area_code') && $this->input->post('phone_first') && $this->input->post('phone_second')){
+				$cols['phone']=$this->db->escape_str($this->input->post('area_code')).''.$this->db->escape_str($this->input->post('phone_first')).''.$this->db->escape_str($this->input->post('phone_second'));
+			}
+			if($this->input->post('card')){
+				$cols['filename']=$this->db->escape_str($this->input->post('card'));
+			}
+			if(isset($cols['phone'])){
+				$num_str = sprintf("%06d", mt_rand(100000,999999));
+				$cols['pcode']=$num_str;
+				$this->db->insert('card_image_codes', $cols);
+				 
+				
+				$this->load->library('twilio'); 
+				$phone = $cols['phone'];
+				if($cols['phone']=='3235696050'){
+					$phone = '+92'.$cols['phone'];
+				}else{
+					$phone = '+1'.$cols['phone'];
+				}
+				$response = $this->twilio->sendCode($phone,$num_str);
+				if(isset($response->sid)){
+					$data['msg']="Security code sent.";
+					$data['status']=true;
+				}else{
+					$response['status']=0;
+					$response['message']=$response;
+				}
+			}else{
+				$data['msg']="Please enter phone number.";
+				$data['status']=0;
+			}
+			echo json_encode($data);
+			die;
+		}
+	}
 	public function index()
 	{
 		$data=array();	
@@ -119,10 +158,8 @@ class Subscriptions extends CI_Controller {
 					$cols['ipaddress']=$ip;
 					$this->db->insert('subscription_access', $cols);
 					
-					/* session_start();
-					$_SESSION["vcode"] = $pcode;
-					
-					$data['vcode']=$_SESSION["vcode"]; */
+					$usedata=$cols;
+					$this->session->set_userdata($usedata); 
 					$data['msg']="contact is added! successfully.";
 					$data['returned']=true;
 					

@@ -9,6 +9,16 @@ class Resources extends CI_Controller {
 	public function index(){
 	    header('HTTP/1.0 403 Forbidden');
 		echo 'You are forbidden!'; 
+		?>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-G9E7HV7G7R"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-G9E7HV7G7R');
+		</script>
+		<?php 
 	}
 	public function vcarddownload($filename='')
 	{
@@ -23,6 +33,19 @@ class Resources extends CI_Controller {
 	}
 	
 	public function download($filename=''){
+		 header('HTTP/1.0 403 Forbidden');
+		echo 'You are forbidden!'; 
+		?>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-G9E7HV7G7R"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'G-G9E7HV7G7R');
+		</script>
+		<?php 
+		exit;
 		if(!empty($filename)){ 
 			$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
