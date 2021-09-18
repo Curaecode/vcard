@@ -674,3 +674,5 @@ function sendEmail($to,$msg,$subject,$attach="") {
 
   // print_r($CI->email->print_debugger());  
 }
+
+?>

@@ -29,9 +29,11 @@ class Curaechoice extends CI_Controller {
 				}
 				$pcode=$this->db->escape_str($this->input->post('vcode'));
 				$cols['vcode']=$pcode;
-				$results = $this->db->query("Select * from card_image_codes where phone='$phonecodes' AND pcode='$pcode'")->row();
+				$results = $this->db->query("Select * from card_image_codes where phone='$phonecodes' AND pcode='$pcode' AND isused= 0")->row();
 				 
 				if(!empty($results)){
+					$query=$this->db->query("update `card_image_codes` set isused= 1 where id ='".$results->id."'");	
+					
 					$query=$this->db->query("update `contacts` set imagecounts= imagecounts+1 where md5(id) ='".$this->db->escape_str($filename)."'");	
 					$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
 					if(!empty($rec) && !empty($rec->image)){

@@ -143,8 +143,10 @@ class Subscriptions extends CI_Controller {
 				$phonecodes=$cols['phone'];
 				$pcode=$this->db->escape_str($this->input->post('vcode'));
 				$cols['vcode']=$pcode;
-				$result = $this->db->query("Select * from subscription_codes where phone='$phonecodes' AND pcode='$pcode'")->row();
+				$result = $this->db->query("Select * from subscription_codes where phone='$phonecodes' AND pcode='$pcode'  AND isused= 0")->row();
 				if(!empty($result)){
+					$this->db->query("update `subscription_codes` set isused= 1 where id ='".$result->id."'");
+					
 					$cols['phone']='+1'.$cols['phone'];
 					$phonecodes=$cols['phone'];
 					$email=$cols['email'];

@@ -2071,23 +2071,31 @@ class Dashboard extends CI_Controller {
 					 // print_r($formData);die;
 				$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
 			//if(validateData("contacts",$formData,$id)){
+				$formData['update_date'] = date('Y-m-d H:i:s');
 			if($this->model->updateData("contacts",$id,$formData)){
+				$last_id=$id;
+				
 				$account_id = generateID($id);
 				$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id='".$id."'");
 				$last_data=$this->model->getLastData2("contacts",$id);
-				$qrimage_new_name = genrate_qrcode($account_id,$last_id);
-				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id='".$id."'");
+				
+				
+				$last_data=$this->model->getLastData2("contacts",$id);
+					
+					
+				$down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$id).'_'.$id.'.vcf');
+				$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$id);
+				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$id."");
 				 
+				
+				
 				$image_new_name = genrate_image($id);
 				$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id='".$id."'");
+				
 				$down = get_contacts_vcard($id);
 				$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$id."");
-				$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
-				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id=".$id."");
-					
 				
-				$image_new = genrate_image($id);
-				$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$id."'");
+				  
 				
 				if(empty($last_data->contract_number)){
 					$this->db->query("update `contacts` set contract_number= '".$id."' where id='".$id."'");
