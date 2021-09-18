@@ -54,7 +54,11 @@ function getcode(){
 function getimagecode(){
 	var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
 	if(phone.length != 10){
-		alert('not a valid Phone number');
+		Swal.fire({
+			title: 'CuraeChoiceCard',
+			html: 'Please enter a valid phone number',
+			type: 'error'
+		});
 	  return false;
 	}	
 	$.ajax({

@@ -63,12 +63,15 @@ class Curaechoice extends CI_Controller {
 						$pcode=$this->db->escape_str($this->input->post('vcode'));
 						$insert_data['vcode']=$pcode;
 						$this->db->insert('card_access_log',$insert_data);
-						
+						 $insert_id = $this->db->insert_id();
 						$phonecodes = $insert_data['phone'];
 						 
 						$result = $this->db->query("Select * from contacts where phone='$phonecodes' AND md5(id)='$filename'")->row();
 						
 						if(!empty($result)){
+							$this->db->where('id',$insert_id);
+							$this->db->update('card_access_log',array('visible'=>1));
+							
 							$this->session->set_userdata(array('cardimage'=>$filename)); 
 							echo json_encode(array('returned'=>true,'path'=>'curaechoice_'.$filename));
 							exit;
