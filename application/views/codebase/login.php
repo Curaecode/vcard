@@ -86,13 +86,7 @@
                                             <button type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
                                                 <i class="si si-login mr-10"></i> Sign In
                                             </button>
-                                        </div>
-                                       
-                                        <div class="col-sm-6 mb-5">
-                                            <a class="btn btn-block btn-noborder btn-rounded btn-alt-secondary"  href="<?php echo admin_url()."login/forgetPassword"; ?>">
-                                                <i class="fa fa-warning text-muted mr-5"></i> Forgot password
-                                            </a>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </form>
                             </div>

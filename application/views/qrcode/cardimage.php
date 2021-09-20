@@ -12,7 +12,4 @@ echo $image;
   gtag('js', new Date());
 
   gtag('config', 'G-G9E7HV7G7R');
-</script>	 
-<?php 
-$this->session->unset_userdata('cardimage');
-?>  
+</script> 

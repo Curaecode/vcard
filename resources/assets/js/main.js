@@ -222,14 +222,14 @@ function getimagecode(){
 			 } 
 			var longitude = $("#longitude").val();
 			var latitude = $("#latitude").val();
-			if(locationenable==false){
+			/* if(locationenable==false){
 				 Swal.fire({
 					title: 'CuraeChoiceCard',
 					text: 'Please enable your location to view your card.',
 					type: 'error'
 				});
 				return false;	
-			}
+			} */
 		  $.ajax({
 			type: 'post',
 			url: MAINURL+'subscriptions/index',
@@ -275,14 +275,14 @@ function getimagecode(){
 			  return false;
 			 }
 			  
-			if(locationenable==false){
+			/* if(locationenable==false){
 				 Swal.fire({
 					title: 'CuraeChoiceCard',
 					text: 'Please enable your location to view your card.',
 					type: 'error'
 				});
 				return false;	
-			}
+			} */
 		  $.ajax({
 			type: 'post',
 			url: MAINURL+'curaechoice/card',

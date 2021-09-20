@@ -96,7 +96,7 @@ class Curaechoice extends CI_Controller {
 				 $data['type']=$type;
 				$data['image']=file_get_contents($path);
 				$data['filename']=$filename;
-				
+				$this->session->unset_userdata('cardimage');
 				$this->load->view('qrcode/cardimage',$data);
 			}else{
 				header("content-type: image/jpg");

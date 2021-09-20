@@ -40,7 +40,7 @@ class Login extends CI_Controller {
 		redirect(base_url().'admin/login');
 	
 	}
-	public function forgetPassword(){
+	/* public function forgetPassword(){
 		if(admin())
 			redirect(base_url().'admin/dashboard');
 	
@@ -88,5 +88,5 @@ class Login extends CI_Controller {
 			
 		}
 		$this->load->view('codebase/resetPassword',$data);
-	}
+	} */
 }
