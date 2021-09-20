@@ -1,48 +1,24 @@
+<style>
+.modal-content {
+	width:700px;
+}
+</style>
 <div class="container">
 	<form action="" method="post"  enctype="multipart/form-data" role="form" class="viewform" data-toggle="validator">
 		  
 		<div class="form-group row less_margin">
 			<div class="col-sm-12">
-				<table class="table">
+				<table class="table" style="width:650px;">
 					<thead>
 						<tr>
 							<th style="width:114px !important">Mem/Spouse/Child</th>
 							<th style="width:562px !important">First Name</th>
 							<th style="width:686px !important">Last name</th>
-							<th></th>
+							<th style="width:686px !important">Phone</th>
+							<th style="width:686px !important">Date of Birth</th> 
 						</tr>
 					</thead>
-					<tbody id="dependent_table">
-						<?php 
-							if(!empty($edit["dependent"])){
-									$dependents = json_decode($edit['dependent']);
-									foreach($dependents as $key=>$row){ ?>
-								<tr>
-									<td>
-										<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent[<?php echo $key ?>][dependent]" required>
-											<option value="">--Please Select--</option>
-											<?php if(!empty($dependent)){ ?>
-											<?php foreach($dependent as $rows){?> 
-												<option <?php if (isset($row->dependent)&& $rows->dependent_type == $row->dependent) { echo "selected"; } ?> value="<?php echo $rows->dependent_type;?>"><?php echo $rows->dependent_type;?></option>
-											<?php } ?>
-										<?php }?> 
-										</select>
-									</td>
-									<td>
-										<input type="text" class="form-control" value="<?php echo isset($row->dependant_name) ? $row->dependant_name:""; ?>" name="dependent[<?php echo $key ?>][dependant_name]">
-									</td>
-									<td>
-										<input type="text" class="form-control" value="<?php echo isset($row->dep_f_name) ? $row->dep_f_name:""; ?>" name="dependent[<?php echo $key ?>][dep_f_name]">
-									</td>
-									<td>
-										<?php if($key == 0){ ?>
-											<a href="javascript:void(0)" class="btn btn-info btn-xs addNewRow"><i class="fa fa-plus"></i></a>
-										<?php }else{ ?>
-											<a href="javascript:void(0)" class="btn btn-danger btn-xs delete_row"><i class="fa fa-trash"></i></a>
-										<?php } ?>
-									</td>
-								</tr>
-						<?php } } else{ ?>
+					<tbody id="dependent_table"> 
 							<tr>
 								<td>
 									<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent[0][dependent]" required>
@@ -61,10 +37,12 @@
 									<input type="text" class="form-control" value="" name="dependent[0][dep_f_name]">
 								</td>
 								<td>
-									<a href="javascript:void(0)" class="btn btn-info btn-xs addNewRow"><i class="fa fa-plus"></i></a>
+									<input type="text" class="form-control" value="" name="dependent[0][phone]" required>
 								</td>
-							</tr>
-						<?php } ?>
+								<td>
+									<input type="text" class="form-control dateofbirth" value="" name="dependent[0][dob]" required data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy">
+								</td>
+							</tr> 
 						
 					</tbody>
 				</table>
@@ -80,4 +58,6 @@
 	   </div>
 	</form>
 </div>
-				
+			<script type="text/javascript">
+				$('.dateofbirth').mask('00/00/0000');
+			</script>	

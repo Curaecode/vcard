@@ -1959,6 +1959,12 @@ class Dashboard extends CI_Controller {
 				$data['title']="Add Contact";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
+						if(isset($formData['dob']) && !empty($formData['dob'])){ 
+							$dateofbirth = $formData['dob'];
+							$dob= explode('/',$dateofbirth);
+							$formData['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
+						}
+					
 					 	$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
 						if($this->model->addData("contacts",$formData)){
 							$last_id = $this->db->insert_id();							
@@ -2020,6 +2026,12 @@ class Dashboard extends CI_Controller {
 								$recdata['relationship']=$row['dependent'];
 								$recdata['first_name']=$row['dependant_name'];
 								$recdata['last_name']=$row['dep_f_name'];
+								$recdata['phone']=$row['phone']; 
+								if(isset($row['dob']) && !empty($row['dob'])){ 
+									$dateofbirth = $row['dob'];
+									$dob= explode('/',$dateofbirth);
+									$recdata['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
+								}
 								$recdata['contract_number']=$contract_number;
 								$this->model->addData("contact_dependant",$recdata); 
 								$added = true;
@@ -2068,6 +2080,12 @@ class Dashboard extends CI_Controller {
 				$data['form']="edit";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
+					if(isset($formData['dob']) && !empty($formData['dob'])){ 
+						$dateofbirth = $formData['dob'];
+						$dob= explode('/',$dateofbirth);
+						$formData['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
+					}
+					
 					 // print_r($formData);die;
 				$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
 			//if(validateData("contacts",$formData,$id)){

@@ -103,6 +103,19 @@
 					</select>
 					<div class="help-block with-errors"></div>
 				</div>
+		  	</div>
+			<div class='col-sm-6'>
+				<div class='form-group'>
+					<label>State<span style="color: red;">*</span></label>
+					<?php 
+						$dpb='';
+						if(isset($edit["dob"]) && !empty($edit["dob"])){
+							$dobs= date('m-d-Y',strtotime($edit["dob"])); 
+						}
+					?>
+					<input type="text" class="form-control dateofbirth" value="<?php echo $dobs; ?>" name="dob" required data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy">
+					<div class="help-block with-errors"></div>
+				</div>
 		  	</div>  
 		</div> 
 		<div class="form-group row less_margin">

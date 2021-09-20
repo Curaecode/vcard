@@ -86,7 +86,7 @@
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/select2/js/select2.min.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/upload_file.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/custom.js?v=<?php echo time();?>"></script>
-		
+		<script type="text/javascript" src="<?php echo base_url();?>resources/assets/js/jquery.mask.js"></script>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-G9E7HV7G7R"></script>
 		<script>

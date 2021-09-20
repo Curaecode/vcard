@@ -36,7 +36,7 @@ class crons extends CI_Controller {
 		$myfile = fopen($_SERVER['DOCUMENT_ROOT'].'/resources/newfile.txt', "w");
 		 $txt = "Time: ".date('Y-m-d h:i A');
 		fwrite($myfile, $txt);
-		$results = $this->db->query("select * from contacts where vcard_name is null OR vcard_name=''  order by id DESC LIMIT 0,500")->result();
+		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id DESC LIMIT 0,500")->result();
 		$txt = "Total: ".count($results);
 		fwrite($myfile, $txt);
 		fclose($myfile);
@@ -48,15 +48,15 @@ class crons extends CI_Controller {
 					$last_data=$this->model->getLastData2("contacts",$last_id);
 					$this->load->library('phpqrcode/qrlib');
 					 
-					/* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
+					 $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
 					$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 					$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
 					
 					$image_new = genrate_image($last_id);
-					$query=$this->db->query("update `contacts` set image= '".$image_new."' where id=".$last_id.""); */
-					 
-						$down = get_contacts_vcard($last_id);
-						$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id='".$last_id."'");
+					$query=$this->db->query("update `contacts` set image= '".$image_new."' where id=".$last_id."");  
+					
+					$down = get_contacts_vcard($last_id);
+					$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id='".$last_id."'");
 					
 						/* $qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
 						$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
