@@ -56,6 +56,7 @@ $route['^(contacts|upload_excel_ajax|companies|industries|locations|salesgroups|
 $route['admin'] = 'admin/dashboard';
 $route['admin/profile'] = 'admin/dashboard/profile';
 $route['curaechoice_(:any)'] = 'curaechoice/download/$1/';
+$route['qrcode_(:any)'] = 'curaechoice/qrcode/$1/';
 
 /* $route['(:any)'] = 'Home/softwareDetail/$1/'; */
 

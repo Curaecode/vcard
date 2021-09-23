@@ -1973,8 +1973,9 @@ class Dashboard extends CI_Controller {
 							
 							$last_data=$this->model->getLastData2("contacts",$last_id);
 							
-							$down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
-							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id);
+							/* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
+							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id); */
+							$qrimage_new = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
 							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
 							  
 							  
@@ -2050,8 +2051,9 @@ class Dashboard extends CI_Controller {
 							
 							$last_data=$this->model->getLastData2("contacts",$last_id);
 							
-							$down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
-							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id);
+							/* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
+							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id); */
+							$qrimage_new = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
 							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
 							  
 							  
@@ -2101,8 +2103,9 @@ class Dashboard extends CI_Controller {
 				$last_data=$this->model->getLastData2("contacts",$id);
 					
 					
-				$down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$id).'_'.$id.'.vcf');
-				$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$id);
+				/* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$id).'_'.$id.'.vcf');
+				$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$id); */
+				$qrimage_new = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
 				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$id."");
 				 
 				
