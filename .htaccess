@@ -11,8 +11,8 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 
 
 
-DirectoryIndex index.php  index.html /index403.php
 
+DirectoryIndex index.php  index.html /index403.php
  
  
  
@@ -150,5 +150,4 @@ Deny from all
 Order allow,deny
 Deny from all
 </files>
-
  

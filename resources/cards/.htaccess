@@ -1,0 +1,20 @@
+Options +FollowSymLinks
+
+Options -Indexes
+IndexIgnore *
+  
+
+
+DirectoryIndex index.php  index.html /index403.php
+ 
+       
+<files *.jpg>
+Order allow,deny
+Deny from all
+</files>
+
+<files *.png>
+Order allow,deny
+Deny from all
+</files>
+ 

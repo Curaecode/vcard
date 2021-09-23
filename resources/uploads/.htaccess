@@ -1,0 +1,21 @@
+Options +FollowSymLinks
+
+Options -Indexes
+IndexIgnore *
+  
+
+
+DirectoryIndex index.php  index.html /index403.php
+ 
+ 
+<files *.xls>
+Order allow,deny
+Deny from all
+</files>
+      
+ 
+<files *.xlsx>
+Order allow,deny
+Deny from all
+</files>
+ 
