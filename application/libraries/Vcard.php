@@ -236,19 +236,8 @@ class Vcard
     if ($this->data['pager_tel']) { $this->card .= "TEL;TYPE=work,pager:".$this->data['pager_tel']."\r\n"; }
     /* if ($this->data['url']) { $this->card .= "URL;TYPE=work:".$this->data['url']."\r\n"; } */
 	 if ($this->data['url']) { $this->card .= "URL;TYPE=CuraeChoiceCard:".$this->data['url']."\r\n"; } 
- 
-		
-	   /* $this->card .= "URL;TYPE=Hospital:https://tinyurl.com/HospitalandER\r\n"; 
-	   $this->card .= "URL;TYPE=PhysicalTherapy:https://tinyurl.com/PhysicalTherapies\r\n"; 
-	   $this->card .= "URL;TYPE=Radiology:https://tinyurl.com/Radiologyhospitals\r\n"; 
-	   $this->card .= "URL;TYPE=Cardiovascular:https://tinyurl.com/Cardiovascularhospital\r\n"; 
-	   $this->card .= "URL;TYPE=Urology:https://tinyurl.com/Urologyhospital\r\n";
-	   $this->card .= "URL;TYPE=Surgery:https://tinyurl.com/Surgeryhospitals\r\n"; 
-	   $this->card .= "URL;TYPE=Oncology:https://tinyurl.com/Oncologyhospital\r\n"; 
-	   $this->card .= "URL;TYPE=OB_Gyn:https://tinyurl.com/OBandGyn\r\n"; 
-	   $this->card .= "URL;TYPE=Chiropractors:https://tinyurl.com/Chiropractorshospital\r\n"; */
-		
-	   $this->card .= "URL;TYPE=Hospital:https://tinyurl.com/choice-hospital-er\r\n"; 
+  
+	   /* $this->card .= "URL;TYPE=Hospital:https://tinyurl.com/choice-hospital-er\r\n"; 
 	   $this->card .= "URL;TYPE=PhysicalTherapy:https://tinyurl.com/choice-physical-therapy\r\n"; 
 	   $this->card .= "URL;TYPE=Radiology:https://tinyurl.com/choice-radiology\r\n"; 
 	   $this->card .= "URL;TYPE=Cardiovascular:https://tinyurl.com/choice-cardiovascular\r\n"; 
@@ -256,7 +245,19 @@ class Vcard
 	   $this->card .= "URL;TYPE=Surgery:https://tinyurl.com/choice-surgery\r\n"; 
 	   $this->card .= "URL;TYPE=Oncology:https://tinyurl.com/choice-oncology\r\n"; 
 	   $this->card .= "URL;TYPE=OB_Gyn:https://tinyurl.com/choice-ob-gyn\r\n"; 
-	   $this->card .= "URL;TYPE=Chiropractors:https://tinyurl.com/choice-chiropractors\r\n";
+	   $this->card .= "URL;TYPE=Chiropractors:https://tinyurl.com/choice-chiropractors\r\n"; */
+	   
+	   $this->ci->load->helper('url');
+	   $mainURL = base_url();
+	   $this->card .= "URL;TYPE=Hospital:".$mainURL."hospital-er\r\n"; 
+	   $this->card .= "URL;TYPE=PhysicalTherapy:".$mainURL."physical-therapy\r\n"; 
+	   $this->card .= "URL;TYPE=Radiology:".$mainURL."radiology\r\n"; 
+	   $this->card .= "URL;TYPE=Cardiovascular:".$mainURL."cardiovascular\r\n"; 
+	   $this->card .= "URL;TYPE=Urology:".$mainURL."urology\r\n";
+	   $this->card .= "URL;TYPE=Surgery:".$mainURL."surgery\r\n"; 
+	   $this->card .= "URL;TYPE=Oncology:".$mainURL."oncology\r\n"; 
+	   $this->card .= "URL;TYPE=OB_Gyn:".$mainURL."ob-gyn\r\n"; 
+	   $this->card .= "URL;TYPE=Chiropractors:".$mainURL."chiropractors\r\n";
 	   
 	   
       if ($this->data['birthday']) { $this->card .= "BDAY:".$this->data['birthday']."\r\n"; }
