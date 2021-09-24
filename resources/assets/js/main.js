@@ -99,7 +99,7 @@ function getqrimagecode(){
 	$.ajax({
 		type: 'post',
 		url: MAINURL+'subscriptions/getqrimagecode',
-		data: $('#cardform').serialize(),
+		data: $('#vcardform').serialize(),
 		dataType:"json",
 		success: function (result) {
 			 console.log(result);

@@ -30,7 +30,7 @@
 										<input type="number" class="form-control" maxlength="4" id="phone_second" name="phone_second" placeholder="xxxx" required>
 									</div>
 									<div class="col-3 pl-1"> 
-									<button type="button" onclick="getimagecode();" class="btn btn-sm form-control btn-primary rounded submit px-3 ">Send Code</button>
+									<button type="button" onclick="getqrimagecode();" class="btn btn-sm form-control btn-primary rounded submit px-3 ">Send Code</button>
 									</div>  
 								</div> 
 							</div>  

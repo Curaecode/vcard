@@ -206,17 +206,12 @@ class Curaechoice extends CI_Controller {
 		}
 		if($this->session->userdata('vcardimage')){ 
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
-			if(!empty($rec) && !empty($rec->image)){ 
-				/* $path= "resources/cards/".$rec->image;
-				$type = pathinfo($path, PATHINFO_EXTENSION);
-				 $data['type']=$type;
-				$data['image']=file_get_contents($path);
-				$data['filename']=$filename; */
+			if(!empty($rec) && !empty($rec->vcard_name)){  
 				$this->session->unset_userdata('vcardimage');
-				$id=$rec->id;
-				$this->load->library('vcard');                
-				$datavcard = $this->getvcard($this->model->getByIdvcard("contacts",$id));
-				/* $this->load->view('qrcode/cardimage',$data); */
+				$filename=$rec->vcard_name;
+				$this->load->helper('download'); 
+				$data = file_get_contents('vcards/'.$filename);
+				force_download($filename, $data); 
 			}else{
 				header("content-type: image/jpg");
 				echo file_get_contents('resources/img/default.jpg');
