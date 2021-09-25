@@ -19,7 +19,7 @@ function get_client_ip() {
 
     return $ipaddress; 
 }
-function generateID($id = null)
+function generateIDOLD($id = null)
 {
     $generated_id = '';
     if($id!=null)
@@ -48,10 +48,7 @@ function generateID($id = null)
     	{
     		$generated_id.=$location_id;
     	}
-    	// if($dependent)
-    	// {
-    	// 	$generated_id.='-'.strtoupper(substr($dependent,0,1));
-    	// }
+    	 
     	if($state_id)
     	{
     		$generated_id.='-'.$state_id;
@@ -68,6 +65,119 @@ function generateID($id = null)
     }
 	return $generated_id;
 }
+function generateID($id = null)
+{
+    $generated_id = '';
+    if($id!=null)
+    {
+    	$CI =& get_instance();
+    	$data = $CI->db->query("SELECT * FROM contacts WHERE id=$id")->row();
+    	$company_name = isset($data->company_id) ? getCompanyName($data->company_id):'';
+    	$location_id = isset($data->location_id) ? getLocationsPlace($data->location_id,$data->company_id) :'';
+    	$industry_name = isset($data->industry_id) ? getIndustryName($data->industry_id):'';
+    	$parts = isset($company_name) ? explode(' ',$company_name):'';
+    	$first_part = isset($parts[0]) ? $parts[0]:'';
+    	$second_part = isset($parts[1]) ? $parts[1]:'';
+
+    	 
+    	if($first_part)
+    	{
+    		$generated_id.= strtoupper(substr($first_part,0,1));
+    	}
+    	if($second_part)
+    	{
+    		$generated_id.= strtoupper(substr($second_part,0,1));
+    	}
+    	if(isset($data->first_name) && isset($data->last_name)){
+			$full_name = $data->first_name.' '.$data->last_name;
+			
+			$parts = isset($full_name) ? explode(' ',$full_name):'';
+			$first_part = isset($parts[0]) ? $parts[0]:'';
+			$second_part = isset($parts[1]) ? $parts[1]:'';
+			
+			if($first_part){
+				if(!empty($generated_id)){
+					$generated_id.= '-'.strtoupper(substr($first_part,0,1));
+				}else{
+					$generated_id.= strtoupper(substr($first_part,0,1));
+				} 
+			}
+			if($second_part){
+				if(!empty($generated_id)){
+					if($first_part){
+						$generated_id.= strtoupper(substr($second_part,0,1));
+					}else{
+						$generated_id.= '-'.strtoupper(substr($second_part,0,1));
+					}
+				}else{
+					$generated_id.= strtoupper(substr($second_part,0,1));
+				} 
+			} 
+		}  
+		
+		$unique = uniquestring($data->phone);
+		
+		
+		if(empty($generated_id)){
+			$generated_id.= $unique;
+		}else{
+			$generated_id.= '-'.$unique;
+		}
+    	$contract_number= $last_data->contract_number;
+		$dependant_data=$CI->model->getdependents("contact_dependant",$contract_number);
+		
+		$spouse=0;
+		$dependent=0;
+		if(isset($dependant_data))
+		{
+			 
+			if(!empty($dependant_data))
+			{
+				$i = 0; 
+				 
+				foreach($dependant_data as $key => $value) 
+				{
+					$dependent_data = '';
+					$dependent_data2 = '';
+					if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){
+						$dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
+						$datadependent = explode(' ',$dependent_data); 
+						if(count($datadependent) > 1){ 
+							$dependent_datas=$datadependent[1];
+						}else{
+							$dependent_datas = $datadependent[0];
+						}
+						 
+						$mystring = strtolower($dependent_datas);  
+						$findme   = 'spouse';
+						$pos = strpos($mystring, $findme);
+						
+						if ($pos === false){
+							$dependent_datas = 'D';
+						}else{
+							$dependent_datas = 'S';
+						}
+						
+						if($dependent_datas=='S'){
+							$spouse=1;
+						}else{
+							$dependent +=1;
+						}	
+					} 
+				} 
+			}
+		}
+		if(!empty($generated_id)){
+			$generated_id.= '-'.$spouse.''.$dependent;
+		}else{
+			$generated_id.= $spouse.''.$dependent;
+		}
+		
+    }
+	return $generated_id;
+}
+
+
 function getCompanyName($id=null)
 {
 	$CI =& get_instance();
@@ -139,68 +249,81 @@ function genrate_image($id=null)
 	$color=imagecolorallocate($image, 50, 51, 50);
 	$fname=ucwords($last_data->first_name." ".$last_data->last_name);
 	$heightdependimg = 300;
- 
-	imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $fname);
+	if($imagedata->showname==1){
+		imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $fname);
+	}
 	
 	
-	if(isset($dependant_data))
-	{
-		 
-		if(!empty($dependant_data))
+	if($imagedata->showdependent==1){
+		if(isset($dependant_data))
 		{
-			$i = 0; 
-			/* $heightdepend = 390;
-			if(count($dependant_data) > 3){ */
-				$heightdepend = 350;
-			/* } */
 			 
-			foreach($dependant_data as $key => $value) 
+			if(!empty($dependant_data))
 			{
-				$dependent_data = '';
-				$dependent_data2 = '';
-				if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){
-				    $dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
-					$datadependent = explode(' ',$dependent_data); 
-					if(count($datadependent) > 1){ 
-						$dependent_datas=$datadependent[1];
-					}else{
-						$dependent_datas = $datadependent[0];
-					}
-					/* if(strtolower($dependent_datas)!='spouse' || $dependent_datas!='SPOUSE'){
-						$dependent_datas='D';
-					}else{
-						$dependent_datas='S';
-					} */
-					$mystring = strtolower($dependent_datas);  
-					$findme   = 'spouse';
-					$pos = strpos($mystring, $findme);
-					
-					if ($pos === false){
-						$dependent_datas = 'D';
-					}else{
-						$dependent_datas = 'S';
-					}
-					$dependent_datas=$dependent_datas.': ';
-				    imagettftext($image, 9, 0, 15, ($heightdepend+$i), $color,$font, strtoupper($dependent_datas));
+				$i = 0; 
+				/* $heightdepend = 390;
+				if(count($dependant_data) > 3){ */
+					$heightdepend = 350;
+				/* } */
 				 
-				    $dependent_data = '';
-				    $dependent_data2 = '';
+				foreach($dependant_data as $key => $value) 
+				{
+					$dependent_data = '';
+					$dependent_data2 = '';
+					if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){
+						$dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
+						$datadependent = explode(' ',$dependent_data); 
+						if(count($datadependent) > 1){ 
+							$dependent_datas=$datadependent[1];
+						}else{
+							$dependent_datas = $datadependent[0];
+						}
+						/* if(strtolower($dependent_datas)!='spouse' || $dependent_datas!='SPOUSE'){
+							$dependent_datas='D';
+						}else{
+							$dependent_datas='S';
+						} */
+						$mystring = strtolower($dependent_datas);  
+						$findme   = 'spouse';
+						$pos = strpos($mystring, $findme);
+						
+						if ($pos === false){
+							$dependent_datas = 'D';
+						}else{
+							$dependent_datas = 'S';
+						}
+						$dependent_datas=$dependent_datas.': ';
+						imagettftext($image, 9, 0, 15, ($heightdepend+$i), $color,$font, strtoupper($dependent_datas));
+					 
+						$dependent_data = '';
+						$dependent_data2 = '';
+						
+						$dependent_data2.=(isset($value->first_name) && !empty($value->first_name)) ? ucwords($value->first_name):'';
+						$dependent_data2.=(isset($value->last_name)  && !empty($value->last_name)) ? ' '.ucwords($value->last_name):'';
+						/* $dependent_data2.=(isset($value->ssn)  && !empty($value->ssn)) ? ' '.$value->ssn:''; */
+						
+						imagettftext($image, 9, 0, 26, ($heightdepend+$i), $color,$font, $dependent_data2);
+						$i = $i+20;
+					}
 					
-    				$dependent_data2.=(isset($value->first_name) && !empty($value->first_name)) ? ucwords($value->first_name):'';
-    				$dependent_data2.=(isset($value->last_name)  && !empty($value->last_name)) ? ' '.ucwords($value->last_name):'';
-    				/* $dependent_data2.=(isset($value->ssn)  && !empty($value->ssn)) ? ' '.$value->ssn:''; */
-    				
-    				imagettftext($image, 9, 0, 26, ($heightdepend+$i), $color,$font, $dependent_data2);
-    				$i = $i+20;
-			    }
+				}
 				
 			}
-			
 		}
 	}
 	
-	$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
-	imagettftext($image, 12, 0, 15, 325, $color,$font, $account_id);  
+	$heightdependimg = 300;
+	
+	$main_image_width = imagesx($image); 	
+	
+	if($imagedata->showname==1){
+		$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
+		imagettftext($image, 12, 0, 15, 325, $color,$font, $account_id);
+	}else{
+		$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
+		imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $account_id);
+	}
+	
 	$date=date("M d,Y",strtotime($last_data->active_member));
 	imagettftext($image, 9, 0, 15, 468, $color,$font, $date);
 	$image_url = 'resources/admin/'.$imagedata->image;
@@ -210,15 +333,36 @@ function genrate_image($id=null)
 	$margin_bottom = 290;
 	$watermark_image_width = imagesx($watermark_image); 
 	$watermark_image_height = imagesy($watermark_image);  
+	
+	$centerwidth = $main_image_width - $watermark_image_width;
+	$margin_right = ($centerwidth/2);
      /* imagecopy($image, $watermark_image, 15, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); */
       imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); 
-	$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
-	$watermark_qr = imagecreatefrompng($qrimage_url);
-	$margin_right = 10; 
-	$margin_bottom = 95;
-	$watermark_qr_width = imagesx($watermark_qr); 
-	$watermark_qr_height = imagesy($watermark_qr);
-	imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
+	  
+	if($imagedata->showdependent==1){  
+		$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
+		$watermark_qr = imagecreatefrompng($qrimage_url);
+		$margin_right = 10; 
+		$margin_bottom = 95;
+		$watermark_qr_width = imagesx($watermark_qr); 
+		$watermark_qr_height = imagesy($watermark_qr);
+		imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
+	
+	}else{
+		$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
+		$watermark_qr = imagecreatefrompng($qrimage_url);
+		$margin_right = 145; 
+		$margin_bottom = 95;
+		$watermark_qr_width = imagesx($watermark_qr); 
+		$watermark_qr_height = imagesy($watermark_qr);
+		
+		$centerwidth = $main_image_width - $watermark_qr_width;
+		$margin_right = ($centerwidth/2);
+	
+		imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
+		
+	}
+	
 	$random = rand(99999,999999999); 
 	if (file_exists("resources/cards/cc_ex_".md5($id).".jpg")) {
 		 unlink("resources/cards/cc_ex_".md5($id).".jpg");
@@ -674,5 +818,31 @@ function sendEmail($to,$msg,$subject,$attach="") {
 
   // print_r($CI->email->print_debugger());  
 }
-
+function uniquestring($phone){
+	$CI =& get_instance();
+	$string="";
+	$CI->load->helper('string');
+	$string=random_string('nozero', 6);
+	$exist=false;
+	$query = $CI->db->query("SELECT * FROM account_codes WHERE phone_number = '".$phone."'");
+	$datafile= $query->row_array();
+	if(!empty($datafile['acc_code'])){
+		return $datafile['acc_code'];
+	}
+	do{
+		$query = $CI->db->query("SELECT * FROM account_codes WHERE phone_number != '".$phone."' AND acc_code = '".$string."'");
+		$datafile= $query->row_array();
+		if(!empty($datafile)){
+			$exist=true;
+		} 
+	}while($exist);
+	
+	$dataarray=array();
+	$dataarray['acc_code']=$string;
+	$dataarray['phone_number']=$phone;
+	$dataarray['created_date']=date('Y-m-d H:i:s');
+	$CI->db->insert('account_codes',$dataarray);
+	
+	return $string;
+}
 ?>

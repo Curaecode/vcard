@@ -269,6 +269,13 @@ class Dashboard extends CI_Controller {
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
 					
+					if(!isset($formData['showname'])){
+						$formData['showname']=0;
+					}
+					if(!isset($formData['showdependent'])){
+						$formData['showdependent']=0;
+					}
+					
 					$upload_path="resources/admin";
 			
 			$admin = array(
@@ -337,6 +344,14 @@ class Dashboard extends CI_Controller {
 				$data['form']="edit";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
+					
+					if(!isset($formData['showname'])){
+						$formData['showname']=0;
+					}
+					if(!isset($formData['showdependent'])){
+						$formData['showdependent']=0;
+					}
+					
 					 $upload_path="resources/admin";
 					
 			$admin = array(
@@ -375,10 +390,13 @@ class Dashboard extends CI_Controller {
 		               //check if the resize succeeds
 		                $formData['image'] =   $this->upload->file_name;
 		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
-			if($this->model->updateData("companies",$id,$formData))
-				$data['msg']="company updated! successfully.";
-							$data['return']=true;
+						if($this->model->updateData("companies",$id,$formData)){
+							$data['msg']="company updated! successfully.";
+							$this->db->query("update `contacts` set qrimage='' where company_id='".$id."'");
+							
 						}
+							$data['return']=true;
+			}
 					echo json_encode($data);
 					die;
 		

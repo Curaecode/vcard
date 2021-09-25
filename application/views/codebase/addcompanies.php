@@ -28,17 +28,16 @@
 						</div>
 					  </div>
 					  </div>
+					 
 					<div class="form-group row less_margin">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-material ">
 									<label for="name">Contact Person</label>
-								<input type="text" class="form-control" value="<?php echo isset($edit["contact_person"])?$edit["contact_person"]:""; ?>" name="contact_person" required>
+									<input type="text" class="form-control" value="<?php echo isset($edit["contact_person"])?$edit["contact_person"]:""; ?>" name="contact_person" required>
 							</div>
-								<div class="help-block with-errors"></div>
+							<div class="help-block with-errors"></div>
 						</div>
-					</div>
-					<div class="form-group row less_margin">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-material ">
 									<label for="name">Phone</label>
 								<input type="text" class="form-control" value="<?php echo isset($edit["phone"])?$edit["phone"]:""; ?>" name="phone" required>
@@ -53,6 +52,22 @@
 								<input type="text" class="form-control" value="<?php echo isset($edit["address"])?$edit["address"]:""; ?>" name="address" required>
 							</div>
 								<div class="help-block with-errors"></div>
+						</div>
+					</div>
+					<div class="form-group row less_margin">
+						<div class="col-md-6">
+							<div class="form-material ">
+									<label for="name">Show Name</label>
+								<input type="checkbox" class="form-control" value="1" name="showname" <?php if(isset($edit["showname"]) && $edit["showname"]==1){echo 'checked';} ?>>
+							</div>
+							<div class="help-block with-errors"></div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-material ">
+								<label for="name">Show Dependent</label>
+								<input type="checkbox" class="form-control" value="1" name="showdependent" <?php if(isset($edit["showdependent"]) && $edit["showdependent"]==1){echo 'checked';} ?>>
+							</div>
+							<div class="help-block with-errors"></div>
 						</div>
 					</div>
 

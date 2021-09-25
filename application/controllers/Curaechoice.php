@@ -156,9 +156,71 @@ class Curaechoice extends CI_Controller {
 			echo json_encode(array('returned'=>false,'msg'=>'No card exist with your phone number.'));
 		}
 	}	
+	
+	function hospitalcard(){
+		
+		if($this->input->post()){
+			$filename='';
+			if($this->input->post('card')){
+				$filename=$this->db->escape_str($this->input->post('card'));
+			}
+			if(!empty($filename)){  
+				if($this->input->post('area_code') && $this->input->post('phone_first') && $this->input->post('phone_second')){
+					$colsphone=$this->db->escape_str($this->input->post('area_code')).''.$this->db->escape_str($this->input->post('phone_first')).''.$this->db->escape_str($this->input->post('phone_second'));
+				}
+				if($colsphone=='3235696050'){
+					$phonecodes = $colsphone;
+				}else{
+					$phonecodes = $colsphone;
+				}
+				$pcode=$this->db->escape_str($this->input->post('vcode'));
+				$cols['vcode']=$pcode;
+				$results = $this->db->query("Select * from subscription_codes where phone='$phonecodes' AND pcode='$pcode' AND isused= 0")->row();
+				 
+				if(!empty($results)){
+					$query=$this->db->query("update `subscription_codes` set isused= 1 where id ='".$results->id."'");	
+					 	
+					 
+						
+						$ip = get_client_ip();  
+						$insert_data= array();
+						$insert_data['access_date'] = date('Y-m-d H:i:s');
+						 
+						$insert_data['ipaddress']= $ip;
+						$insert_data['linktype']= $filename; 
+						 
+						if($this->input->post('area_code') && $this->input->post('phone_first') && $this->input->post('phone_second')){
+							$insert_data['phone']=$this->db->escape_str($this->input->post('area_code')).''.$this->db->escape_str($this->input->post('phone_first')).''.$this->db->escape_str($this->input->post('phone_second'));
+						}
+						if($this->input->post('longitude')){
+							$insert_data['longitude']=$this->db->escape_str($this->input->post('longitude'));
+						}
+						if($this->input->post('latitude')){
+							$insert_data['latitude']=$this->db->escape_str($this->input->post('latitude'));
+						}
+						if($insert_data['phone']=='3235696050'){
+							$insert_data['phone'] = '+92'.$insert_data['phone'];
+						}else{
+							$insert_data['phone'] = '+1'.$insert_data['phone'];
+						} 
+						 
+						$this->db->insert('care_coordination_access',$insert_data);
+						 
+						$insert_id = $this->db->insert_id();
+						$phonecodes = $insert_data['phone']; 
+						
+						$this->session->set_userdata(array('hospitalcard'=>$filename)); 
+						echo json_encode(array('returned'=>true));
+						exit;  
+						  
+				} 
+			}
+			echo json_encode(array('returned'=>false,'msg'=>'No card exist with your phone number.'));
+		}
+	}	
 	public function download($filename=''){ 
 		if($this->session->userdata('cardimage') && $this->session->userdata('cardimage')!=$filename){
-			$this->session->unset_userdata('cardimage');
+			$this->session->unset_userdata('cardimage'); 
 		}
 		if($this->session->userdata('cardimage')){ 
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();

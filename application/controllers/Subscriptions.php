@@ -28,7 +28,10 @@ class Subscriptions extends CI_Controller {
 			$this->db->insert('care_coordination_access', $cols);
 			if(isset($cols['linktype'])){
 				$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
-				redirect($result->url);  
+				/* redirect($result->url);  */ 
+				
+				$data['url']=$result->embed;
+				$this->load->view('qrcode/hospitals',$data);  
 			}
 		}else{
 			redirect(admin_url());
@@ -54,14 +57,14 @@ class Subscriptions extends CI_Controller {
 			}else{
 				$phone = '+1'.$cols['phone'];
 			}
-			$response = $this->twilio->sendCode($phone,$num_str);
-			if(isset($response->sid)){
+			$response = $this->twilio->sendCode($phone,$num_str);  
+			if(isset($response->sid)){ 
 				$data['msg']="Security code sent.";
 				$data['status']=true;
 			}else{
 				$response['status']=0;
 				$response['message']=$response;
-			}
+			}  
 			
 			echo json_encode($data);
 			die;

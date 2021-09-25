@@ -51,6 +51,42 @@ function getcode(){
 		}
 	}); 
 }
+function gethospitalcode(){
+	var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
+	if(phone.length != 10){
+		/* alert('not a valid Phone number'); */
+		Swal.fire({
+			title: 'CuraeChoiceCard',
+			html: 'Please enter a valid phone number',
+			type: 'error'
+		});
+	  return false;
+	}	
+	$.ajax({
+		type: 'post',
+		url: MAINURL+'subscriptions/getcode',
+		data: $('#hospitalcardform').serialize(),
+		dataType:"json",
+		success: function (result) {
+			 console.log(result);
+			 if(result.returned == false) {
+				/*  alert('Please enter a valid phone number'); */
+				Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Please enter a valid phone number',
+						type: 'error'
+					});
+			 }else{
+				 /* alert('A unique security code has been sent to your phone');  */
+				Swal.fire({
+					title: 'CuraeChoiceCard',
+					html: 'A unique security code has been sent to your phone',
+					type: 'success'
+				});
+			 }
+		}
+	}); 
+}
 function getimagecode(){
 	var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
 	if(phone.length != 10){
@@ -365,6 +401,42 @@ function getqrimagecode(){
 				if(result.returned == true) {
 					 document.getElementById('vcardform').reset(); 
 					window.location.href=MAINURL+''+result.path; 
+				}else{
+					/* alert(result.msg); */
+					Swal.fire({
+						title: 'CuraeChoiceCard',
+						html: 'Sorry your number does not exist. Please contact <a href="mailto:support@curaechoice.com">support</a>',
+						type: 'error'
+					});
+				}
+			}
+		  });
+		  return false;
+		});
+	}
+	if($('#hospitalcardform').length > 0){
+		$('#hospitalcardform').on('submit', function (e) {
+			 e.preventDefault();
+			 
+			
+			var phone = $("#area_code").val()+''+$("#phone_first").val()+''+$("#phone_second").val();
+			 if(phone.length != 10){
+				/* alert('not a valid Phone number'); */
+				 Swal.fire({
+					title: 'CuraeChoiceCard',
+					text: 'Please enter a valid phone number.',
+					type: 'error'
+				});
+			  return false;
+			 } 
+		  $.ajax({
+			type: 'post',
+			url: MAINURL+'curaechoice/hospitalcard',
+			data: $('#hospitalcardform').serialize(),
+			dataType:"json",
+			success: function (result) {
+				if(result.returned == true) { 
+					window.location.href=window.location.href; 
 				}else{
 					/* alert(result.msg); */
 					Swal.fire({

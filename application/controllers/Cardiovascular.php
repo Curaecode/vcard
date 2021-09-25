@@ -7,14 +7,23 @@ class Cardiovascular extends CI_Controller {
 		$this->load->model("admin/model");
 	}
 	public function index(){
-		$cols=array();
-		$ip = get_client_ip();
-		$cols['ipaddress']=$ip;
-		$cols['linktype']=4;
-		$cols['access_date']= date('Y-m-d H:i:s');
-		$this->db->insert('care_coordination_access', $cols);
+		if($this->session->userdata('hospitalcard')){
+			$cols=array();
+			$ip = get_client_ip();
+			$cols['ipaddress']=$ip;
+			$cols['linktype']=4;
+			$cols['access_date']= date('Y-m-d H:i:s');
+			$this->db->insert('care_coordination_access', $cols);
+			$this->session->unset_userdata('hospitalcard'); 
+			$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
+			$data['url']=$result->embed;
+			$this->load->view('qrcode/hospitals',$data);  
+		}else{
+			$data=array();
+			$data['filename']=4;
+			$this->load->view('qrcode/hospitalcard',$data);   
+		}
 		
-		$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
-		redirect($result->url);  
+		   
 	} 
 }
