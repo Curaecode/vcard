@@ -324,8 +324,7 @@ function genrate_image($id=null)
 		imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $account_id);
 	}
 	
-	$date=date("M d,Y",strtotime($last_data->active_member));
-	imagettftext($image, 9, 0, 15, 468, $color,$font, $date);
+	
 	$image_url = 'resources/admin/'.$imagedata->image;
 	$watermark_image = imagecreatefromjpeg($image_url);
 	
@@ -347,6 +346,11 @@ function genrate_image($id=null)
 		$watermark_qr_width = imagesx($watermark_qr); 
 		$watermark_qr_height = imagesy($watermark_qr);
 		imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
+		
+		
+		$date=date("M d,Y",strtotime($last_data->active_member));
+		/* imagettftext($image, 12, 0, imagesx($image) - $watermark_qr_width - $margin_right, 468, $color,$font, $date); */
+		imagettftext($image, 14, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +10), 460, $color,$font, $date);
 	
 	}else{
 		$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
@@ -361,7 +365,14 @@ function genrate_image($id=null)
 	
 		imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 		
+		$date=date("M d,Y",strtotime($last_data->active_member));
+		imagettftext($image, 14, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +10), 460, $color,$font, $date);
+		
 	}
+	
+	
+	
+	
 	
 	$random = rand(99999,999999999); 
 	if (file_exists("resources/cards/cc_ex_".md5($id).".jpg")) {
