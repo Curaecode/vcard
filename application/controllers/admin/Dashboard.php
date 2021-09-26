@@ -345,10 +345,14 @@ class Dashboard extends CI_Controller {
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
 					
-					if(!isset($formData['showname'])){
+					if(isset($formData['showname'])){
+						$formData['showname']=1;
+					}else{
 						$formData['showname']=0;
 					}
-					if(!isset($formData['showdependent'])){
+					if(isset($formData['showdependent'])){
+						$formData['showdependent']=1;
+					}else{
 						$formData['showdependent']=0;
 					}
 					
@@ -375,27 +379,32 @@ class Dashboard extends CI_Controller {
 				}
 			}
 			if(validateData("companies",$formData,$id)){
-				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
-						$config['create_thumb'] = TRUE;
-						//$config['thumb_marker'] = false;
-						$config['maintain_ratio'] = FALSE;
-						$config['width'] = 235;//the width to resize to;
-						$config['height'] = 125;//height to resize to;
-						// echo "<pre>";
-						// print_r ($config);
-						// echo "</pre>";
-						// die();
-		                $this->load->library('image_lib', $config);//this loads the image resize library
-		                $this->image_lib->resize();//the resize function
-		               //check if the resize succeeds
-		                $formData['image'] =   $this->upload->file_name;
-		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
-						if($this->model->updateData("companies",$id,$formData)){
-							$data['msg']="company updated! successfully.";
-							$this->db->query("update `contacts` set qrimage='' where company_id='".$id."'");
-							
-						}
+				if($_FILES['fileToUpload']['name']!==""){
+					$config['source_image'] = $this->upload->upload_path.$this->upload->file_name; 
+					$config['create_thumb'] = TRUE;
+					//$config['thumb_marker'] = false;
+					$config['maintain_ratio'] = FALSE;
+					$config['width'] = 235;//the width to resize to;
+					$config['height'] = 125;//height to resize to; 
+					$this->load->library('image_lib', $config);//this loads the image resize library
+					$this->image_lib->resize();//the resize function
+				   //check if the resize succeeds
+					$formData['image'] =   $this->upload->file_name;
+					$formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+					if($this->model->updateData("companies",$id,$formData)){
+						$data['msg']="company updated! successfully.";
+						$this->db->query("update `contacts` set qrimage='' where company_id='".$id."'");
+						
+					}
+				}else{
+					if($this->model->updateData("companies",$id,$formData)){
+						$data['msg']="company updated! successfully.";
+						$this->db->query("update `contacts` set qrimage='' where company_id='".$id."'");
+						
+					}
+				}
 							$data['return']=true;
+							$data['formData']=$formData;
 			}
 					echo json_encode($data);
 					die;
@@ -722,6 +731,7 @@ class Dashboard extends CI_Controller {
 				);
 				$searchFields=array(
 			    "id",
+				"ipaddress",
 				"first_name",
 				"last_name",
 				"phone",
@@ -874,6 +884,7 @@ class Dashboard extends CI_Controller {
 				);
 				$searchFields=array(
 			    "cc.id", 
+				"cc.ipaddress",
 				"cc.phone",
 				"cd.linkname"
 				
@@ -1024,6 +1035,7 @@ class Dashboard extends CI_Controller {
 				);
 				$searchFields=array(
 			    "cc.id", 
+				"cc.ipaddress",
 				"cd.first_name", 
 				"cd.last_name",
 				"cc.ipaddress"
@@ -2081,14 +2093,16 @@ class Dashboard extends CI_Controller {
 							$down = get_contacts_vcard($last_id);
 							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
 							
-							  /* 
-							$qrimage_new = genrate_qrcode(base_url()."vcards/".$down,$last_id);
-							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new."' where id='".$last_id."'");
-							$image_new = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'"); */
+							
 							 
 						}
 					}
+					
+					$data['msg']="Dependent Add successfully.";
+					$data['dependent']='Child';
+					$data['return']=true; 
+					echo json_encode($data);
+					die;
 				}					
 				$data['dependent']=($this->model->getData("dependent"));
 				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
@@ -2100,11 +2114,11 @@ class Dashboard extends CI_Controller {
 				$data['form']="edit";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
-					if(isset($formData['dob']) && !empty($formData['dob'])){ 
+					/* if(isset($formData['dob']) && !empty($formData['dob'])){ 
 						$dateofbirth = $formData['dob'];
 						$dob= explode('/',$dateofbirth);
 						$formData['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
-					}
+					} */
 					
 					 // print_r($formData);die;
 				$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';

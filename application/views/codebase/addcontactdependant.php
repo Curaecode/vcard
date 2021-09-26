@@ -40,7 +40,7 @@
 									<input type="text" class="form-control" value="" name="dependent[0][phone]" required>
 								</td>
 								<td>
-									<input type="text" class="form-control dateofbirth" value="" name="dependent[0][dob]" required data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy">
+									<input type="date" class="form-control dateofbirth" value="" name="dependent[0][dob]" required <?php /* data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy" */ ?>>
 								</td>
 							</tr> 
 						

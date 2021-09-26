@@ -123,7 +123,7 @@ function generateID($id = null)
 		}else{
 			$generated_id.= '-'.$unique;
 		}
-    	$contract_number= $last_data->contract_number;
+    	$contract_number= $data->contract_number;
 		$dependant_data=$CI->model->getdependents("contact_dependant",$contract_number);
 		
 		$spouse=0;
@@ -316,13 +316,7 @@ function genrate_image($id=null)
 	
 	$main_image_width = imagesx($image); 	
 	
-	if($imagedata->showname==1){
-		$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
-		imagettftext($image, 12, 0, 15, 325, $color,$font, $account_id);
-	}else{
-		$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
-		imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $account_id);
-	}
+	
 	
 	
 	$image_url = 'resources/admin/'.$imagedata->image;
@@ -350,7 +344,7 @@ function genrate_image($id=null)
 		
 		$date=date("M d,Y",strtotime($last_data->active_member));
 		/* imagettftext($image, 12, 0, imagesx($image) - $watermark_qr_width - $margin_right, 468, $color,$font, $date); */
-		imagettftext($image, 14, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +10), 460, $color,$font, $date);
+		imagettftext($image, 12, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +18), 460, $color,$font, $date);
 	
 	}else{
 		$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
@@ -366,22 +360,38 @@ function genrate_image($id=null)
 		imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 		
 		$date=date("M d,Y",strtotime($last_data->active_member));
-		imagettftext($image, 14, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +10), 460, $color,$font, $date);
+		imagettftext($image, 12, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +18), 460, $color,$font, $date);
 		
 	}
-	
-	
-	
-	
+	 
+	if($imagedata->showname==1){
+		$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
+		imagettftext($image, 12, 0, 15, 325, $color,$font, $account_id);
+	}else{
+		if($imagedata->showdependent==1){
+			$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
+			imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $account_id);
+			
+		}else{
+			$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
+			imagettftext($image, 15, 0, ((imagesx($image) - $watermark_qr_width - $margin_right)-18), $heightdependimg, $color,$font, $account_id);
+		} 
+	}
 	
 	$random = rand(99999,999999999); 
 	if (file_exists("resources/cards/cc_ex_".md5($id).".jpg")) {
 		 unlink("resources/cards/cc_ex_".md5($id).".jpg");
+	} 
+	if (file_exists("resources/cards/cc_ex_".md5($id).".png")) {
+		 unlink("resources/cards/cc_ex_".md5($id).".png");
 	}
 	
-	imagejpeg($image,"resources/cards/cc_ex_".md5($id).".jpg", 100); 
+	 /* imagejpeg($image,"resources/cards/cc_ex_".md5($id).".jpg", 100);  */  
+	
+	imagepng($image,"resources/cards/cc_ex_".md5($id).".png", 9); 
 	imagedestroy($image);
-	$image_new_name = "cc_ex_".md5($id).".jpg";
+	$image_new_name = "cc_ex_".md5($id).".png"; 
+	/* $image_new_name = "cc_ex_".md5($id).".jpg";  */
 	return $image_new_name;
 
 }
@@ -404,7 +414,7 @@ function get_contacts_vcard($id="")
     $datavcarddata['company'] = getcompanyById($data->company_id);
    	if($data->image!="")
    	{
-	    $getPhoto = file_get_contents(base_url('resources/cards/'.$data->image));
+	    $getPhoto = file_get_contents('resources/cards/'.$data->image);
 	    $b64vcard  = base64_encode($getPhoto);
 	    $b64mline   = chunk_split($b64vcard,74,"\n");
 	    $b64final   = preg_replace('/(.+)/', ' $1', $b64mline);

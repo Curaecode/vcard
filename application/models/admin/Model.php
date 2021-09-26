@@ -2,6 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model extends CI_Model {
+	 public function __construct()
+    {
+        parent::__construct(); 
+    }
 	public function add($table,$data){
 		$this->db->insert($table,$data);
 		if($this->db->insert_id() > 0){

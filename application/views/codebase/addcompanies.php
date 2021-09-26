@@ -75,7 +75,7 @@
 							<div class="col-md-12">
 								<div class="form-material ">
 									<label for="name" class="logoimage" style="display: block;">Add Logo <span style="font-size: 12px;">(Please use 235x125 logo image or same ratio)</span> </label>
-									<input type="file" id="exampleInputFile" name="fileToUpload" onchange="document.getElementById('blah1').src = window.URL.createObjectURL(this.files[0])" style="display: none;" required> 
+									<input type="file" id="exampleInputFile" name="fileToUpload" onchange="document.getElementById('blah1').src = window.URL.createObjectURL(this.files[0])" style="display: none;" <?php if(!isset($edit["image"])){?>required<?php } ?>> 
 									<img style="width: 158px;padding: 9px;margin: 0 0 5px;"  id="blah1" src="<?php echo res_url()."admin/";echo isset($edit["image"]) && $edit["image"]!=="" ?$edit["image"]:'defaultlogo.png'; ?>" class="profile-img" style=""  >
 									
 								

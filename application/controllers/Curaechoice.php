@@ -344,10 +344,13 @@ class Curaechoice extends CI_Controller {
 			redirect(base_url().'admin/login');
 		} 
 		$path= "resources/cards/".$filename;
-		$type = pathinfo($path, PATHINFO_EXTENSION);
-		$data = file_get_contents($path);
-		header("content-type: image/". $type);
-		echo file_get_contents($path); 
+		/* $type = pathinfo($path, PATHINFO_EXTENSION);
+		$data = file_get_contents($path); */
+		/* header("content-type: image/". $type);
+		echo file_get_contents($path); */
+
+		header("Content-type: image/png");
+		readfile($path);	
 	}
 	function getvcard($dat)
     {

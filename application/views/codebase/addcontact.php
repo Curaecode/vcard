@@ -108,12 +108,12 @@
 				<div class='form-group'>
 					<label>Date of Bith<span style="color: red;">*</span></label>
 					<?php 
-						$dpb='';
+						$dobs='';
 						if(isset($edit["dob"]) && !empty($edit["dob"])){
 							$dobs= date('m-d-Y',strtotime($edit["dob"])); 
 						}
 					?>
-					<input type="text" class="form-control dateofbirth" value="<?php echo $dobs; ?>" name="dob" required  required data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy">
+					<input type="date" class="form-control dateofbirth" value="<?php echo isset($edit["dob"])?$edit["dob"]:""; ?>" name="dob" required  required <?php /* data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy" */ ?>>
 					<div class="help-block with-errors"></div>
 				</div>
 		  	</div>  
@@ -162,5 +162,5 @@
 </div>
 
 			<script type="text/javascript">
-				$('.dateofbirth').mask('00/00/0000');
+				/* $('.dateofbirth').mask('00/00/0000'); */
 			</script>				
