@@ -2058,11 +2058,11 @@ class Dashboard extends CI_Controller {
 								$recdata['first_name']=$row['dependant_name'];
 								$recdata['last_name']=$row['dep_f_name'];
 								$recdata['phone']=$row['phone']; 
-								if(isset($row['dob']) && !empty($row['dob'])){ 
+								/* if(isset($row['dob']) && !empty($row['dob'])){ 
 									$dateofbirth = $row['dob'];
 									$dob= explode('/',$dateofbirth);
 									$recdata['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
-								}
+								} */
 								$recdata['contract_number']=$contract_number;
 								$this->model->addData("contact_dependant",$recdata); 
 								$added = true;
@@ -2070,7 +2070,7 @@ class Dashboard extends CI_Controller {
 						}
 						$last_id=0;
 						if($added){
-							$result = $this->model->getLastData4($contract_number);
+							$result = $this->model->getLastData4("contacts",$contract_number);
 							if(!empty($result)){
 								$last_id = $result->id;
 							}
@@ -2080,9 +2080,7 @@ class Dashboard extends CI_Controller {
 							$this->load->library('phpqrcode/qrlib');
 							
 							$last_data=$this->model->getLastData2("contacts",$last_id);
-							
-						   /* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
-							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id); */  
+							  
 							$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
 							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
 							  

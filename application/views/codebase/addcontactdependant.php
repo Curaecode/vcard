@@ -59,5 +59,5 @@
 	</form>
 </div>
 			<script type="text/javascript">
-				$('.dateofbirth').mask('00/00/0000');
+				/* $('.dateofbirth').mask('00/00/0000'); */
 			</script>	
