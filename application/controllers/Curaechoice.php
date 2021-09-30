@@ -348,7 +348,9 @@ class Curaechoice extends CI_Controller {
 		$data = file_get_contents($path); */
 		/* header("content-type: image/". $type);
 		echo file_get_contents($path); */
-
+		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
 		header("Content-type: image/png");
 		readfile($path);	
 	}

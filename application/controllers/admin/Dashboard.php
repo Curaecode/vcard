@@ -2873,7 +2873,7 @@ function download2($filename = NULL) {
 					$returned = $this->sendmail($email,$fullname,$vcard_name,$vcard_image);
 					if($returned['status']==true){
 						$query=$this->db->query("update `contacts` set cardemail= cardemail+1 where id=".$id."");
-					}
+					} 
 				} 
 			} 
 			echo json_encode($response);exit(); 
@@ -2885,7 +2885,7 @@ function download2($filename = NULL) {
 		}  
 	}
 	function testmail(){
-		$detail = $this->model->getByIdvcard("contacts",16);
+		$detail = $this->model->getByIdvcard("contacts",1);
 		$vcard_name=$detail[0]->vcard_name;
 		$vcard_image=$detail[0]->image;
 		 /* Muhammad Sufian <sufian@ex3gen.com> */
@@ -2940,11 +2940,61 @@ function download2($filename = NULL) {
 				</table>';
 		$mainsubject="CuraeChoice vcard.";
         $message = 'This is test email.\nThis is test email.\nThis is test email.\n';
-		$this->load->library('My_PHPMailer');
-		 $mail = new PHPMailer(); 
-		$mail->IsSMTP(); 
-		$mail->SMTPAuth = true;
-        $mail->SMTPSecure = "ssl";  // prefix for secure protocol to connect to the server
+		
+		
+		 $res = "";
+
+		 $data = "username=".urlencode("support@curaechoice.com");
+		 $data .= "&api_key=".urlencode("00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125");
+		 
+
+		$weburl = 'https://api.elasticemail.com/v2/email/send';
+		
+		$filename = basename($url);
+		$file_name_with_full_path = /* base_url(). */'vcards/'.$url;
+		$filetype = "application/vcard"; // Change correspondingly to the file type
+
+		try{
+			$post = array('from' => 'support@curaechoice.com',
+			'fromName' => 'Curaechoice',
+			'apikey' => '00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125',
+			'subject' => $mainsubject,
+			'to' => $tomail,
+			'bodyHtml' => $body,
+			'bodyText' => strip_tags($body),
+			'file_1' => new CurlFile($file_name_with_full_path, $filetype, $filename),
+			'isTransactional' => false);
+			
+			$ch = curl_init();
+			curl_setopt_array($ch, array(
+				CURLOPT_URL => $weburl,
+				CURLOPT_POST => true,
+				CURLOPT_POSTFIELDS => $post,
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_HEADER => false,
+				CURLOPT_SSL_VERIFYPEER => false
+			));
+			
+			$result=curl_exec ($ch);
+			curl_close ($ch); 
+
+			 $data["message"] = "Message sent correctly!";
+			 $data["status"] = true;	
+		} catch(Exception $ex){
+			/* echo $ex->getMessage(); */
+			 $data["message"] = "Error: " . $ex->getMessage(); ;
+             $data["status"] = false;
+		}
+	
+
+		 /* print_r( $errno);
+		 print_r($errstr); */
+		/* $this->load->library('My_PHPMailer');
+		 
+		$mail = new PHPMailer(); 
+		$mail->IsSMTP(true); 
+		$mail->SMTPAuth = true;  
+		$mail->SMTPSecure = "ssl";  
         $mail->Host       = "smtp.elasticemail.com";      // setting GMail as our SMTP server
         $mail->Port       = 465;                   // SMTP port to connect to GMail
 		$mail->SMTPDebug = 0;
@@ -2957,22 +3007,24 @@ function download2($filename = NULL) {
         $mail->AltBody    = strip_tags($body); 
         $mail->AddAddress($tomail, $toname);
         $mail->AddReplyTo('support@curaechoice.com', 'Curaechoice');
-		$mail->AddAttachment('vcards/'.$url,basename($url)); 
-		/* $mail->AddAttachment('resources/cards/'.$cardimage,basename($cardimage)); */
+		$mail->AddAttachment('vcards/'.$url,basename($url)); */   
 		
+		 
+		
+		 
 		
 		/* $mail->AddAttachment('resources/cards/'.$cardimage); 
 		$mail->AddAttachment =$_SERVER['DOCUMENT_ROOT'].'/vcards/'.$url;   
 		 $mail->AddAttachment = $_SERVER['DOCUMENT_ROOT'].'/resources/cards/'.$cardimage; */
 		
-		
-        if(!$mail->Send()) {
+		  
+        /* if(!$mail->Send()) {
              $data["message"] = "Error: " . $mail->ErrorInfo;
              $data["status"] = false;
         } else {
              $data["message"] = "Message sent correctly!";
 			 $data["status"] = true;
-        }  
+        } */ 	
 		return $data;
     }
 }
