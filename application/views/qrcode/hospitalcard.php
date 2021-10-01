@@ -51,7 +51,7 @@
 							<input type="hidden" name="longitude" id="longitude" value="" />
 							<input type="hidden" name="latitude" id="latitude" value="" />
 							<input type="hidden" name="card" id="card" value="<?php echo $filename;?>" />
-								<button id="submitbtn" type="submit" class="btn form-control btn-primary rounded submit px-3">View Your Card</button>
+								<button id="submitbtn" type="submit" class="btn form-control btn-primary rounded submit px-3">View Providers Map</button>
 							</div>
 						</form> 
 					</div>

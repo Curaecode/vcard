@@ -30,7 +30,7 @@ class crons extends CI_Controller {
 		$myfile = fopen($_SERVER['DOCUMENT_ROOT'].'/resources/newfile.txt', "w");
 		 $txt = "Time: ".date('Y-m-d h:i A');
 		fwrite($myfile, $txt);
-		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id DESC LIMIT 0,50")->result();
+		$results = $this->db->query("select * from contacts where qrimage is null OR qrimage=''  order by id DESC LIMIT 0,500")->result();
 		$txt = "Total: ".count($results);
 		fwrite($myfile, $txt);
 		fclose($myfile);

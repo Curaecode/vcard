@@ -237,6 +237,10 @@ function genrate_qrcode($id=null,$lastid=0)
 }
 function genrate_image($id=null)
 {
+	ini_set('max_execution_time', 180000);
+	ini_set('fastcgi_read_timeout', 99999999);
+	ini_set('memory_limit', "-1"); 
+		 
 	$CI =& get_instance();
 	$last_data=$CI->model->getLastData2("contacts",$id);
 	$company_id= $last_data->company_id;

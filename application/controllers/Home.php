@@ -11,4 +11,11 @@ class Home extends CI_Controller {
 		redirect(admin_url());
 	}
 	
+	public function hospital()
+	{
+		$result = $this->db->query("Select * from care_coordination where id='1'")->row();
+		$data['url']=$result->embed;
+		$this->load->view('qrcode/hospitals',$data);  
+	}
+	
 }
