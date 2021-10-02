@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     'params' => array()
    );  */
    
+ 
 $hook['post_controller'] = function(){
 	$CI =& get_instance();
     $controller=$CI->router->class;

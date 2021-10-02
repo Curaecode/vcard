@@ -249,7 +249,16 @@ class Vcard
 	   
 	   $this->ci->load->helper('url');
 	   $mainURL = base_url();
-	   $this->card .= "URL;TYPE=Hospital:".$mainURL."hospital-er\r\n"; 
+	   
+	  
+		$query = $this->ci->db->get( 'care_coordination' );
+		$result = $query->result();
+		foreach( $result as $row ){
+			 $this->card .= "URL;TYPE=".preg_replace('/[^A-Za-z0-9\-]/', '-',$row->linkname).":".$mainURL.$row->slug."\r\n"; 
+			    
+		}
+
+	   /* $this->card .= "URL;TYPE=Hospital:".$mainURL."hospital-er\r\n"; 
 	   $this->card .= "URL;TYPE=PhysicalTherapy:".$mainURL."physical-therapy\r\n"; 
 	   $this->card .= "URL;TYPE=Radiology:".$mainURL."radiology\r\n"; 
 	   $this->card .= "URL;TYPE=Cardiovascular:".$mainURL."cardiovascular\r\n"; 
@@ -257,7 +266,7 @@ class Vcard
 	   $this->card .= "URL;TYPE=Surgery:".$mainURL."surgery\r\n"; 
 	   $this->card .= "URL;TYPE=Oncology:".$mainURL."oncology\r\n"; 
 	   $this->card .= "URL;TYPE=OB_Gyn:".$mainURL."ob-gyn\r\n"; 
-	   $this->card .= "URL;TYPE=Chiropractors:".$mainURL."chiropractors\r\n";
+	   $this->card .= "URL;TYPE=Chiropractors:".$mainURL."chiropractors\r\n"; */
 	   
 	   
       if ($this->data['birthday']) { $this->card .= "BDAY:".$this->data['birthday']."\r\n"; }

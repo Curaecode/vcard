@@ -63,9 +63,23 @@ $route['qrcode_(:any)'] = 'curaechoice/qrcode/$1/';
 $route['qrcode/'] = 'qrcode/index/';
 $route['qrcode/(:any)'] = 'qrcode/$1/';
 
-$route['hospital-er'] = 'hospital_er/index/';
+/* $route['hospital-er'] = 'hospital_er/index/';
 $route['physical-therapy'] = 'physical_therapy/index/';
-$route['ob-gyn'] = 'ob_gyn/index/';
+$route['ob-gyn'] = 'ob_gyn/index/'; */
+
+ 
+ 
 
 $route['404_override'] = 'error404/';
 $route['translate_uri_dashes'] = FALSE;
+
+ 
+require_once( BASEPATH .'database/DB.php');  
+$db =& DB();
+$query = $db->get( 'care_coordination' );
+$result = $query->result();
+foreach( $result as $row )
+{
+    $route[ $row->slug ] = 'hospitals/index/'.$row->id;   
+}
+ 
