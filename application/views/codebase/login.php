@@ -44,7 +44,7 @@
                 <!-- Page Content -->
                 <div class="bg-gd-dusk">
                     <div class="fix_head_fit hero-static content content-full invisible" data-toggle="appear">
-						<div class="bg-white ">
+						<div class="bg-white px-20" style="max-width: 400px;margin: 0 auto;min-width: 300px;">
 						   <!-- Header -->
 							<div class="py-30 px-5 text-center">
 								<a class="link-effect font-w700" href="<?php echo admin_url();?>">
@@ -57,7 +57,7 @@
 
 							<!-- Sign In Form -->
 							<div class="row justify-content-center px-5">
-								<div class="col-sm-8 col-md-6 col-xl-4">
+								<div class="col-sm-8 col-md-10 col-xl-10">
 								
 									<?php 
 									getMsg();
@@ -113,6 +113,14 @@
 
         <!-- Page JS Code -->
         <script src="<?php echo res_url(); ?>codebase/assets/js/pages/op_auth_signin.min.js"></script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-G9E7HV7G7R"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
 
+		  gtag('config', 'G-G9E7HV7G7R');
+		</script>
     </body>
 </html>

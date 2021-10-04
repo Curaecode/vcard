@@ -111,6 +111,9 @@
                                 </a> 
                                 <a class="dropdown-item loadview" href="#cardlogs/">
                                     <i class="fa fa-lock mr-5"></i>	Card Access Logs
+                                </a>
+                                <a class="dropdown-item loadview" href="#urllogs/">
+                                    <i class="fa fa-lock mr-5"></i>	Web Access Logs
                                 </a> 
                             </div>
                         </div>

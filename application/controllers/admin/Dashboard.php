@@ -1362,6 +1362,140 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
+	public function urllogs($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",     
+					"IP",    
+					"Address",
+					"Access Date Time"	
+				);
+				$data['id']=$id;
+				$data['title']="URL Access Log";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "cc.id",  
+				"cc.ip_address", 	
+				"cc.actual_link",
+				"cc.date_time" 
+				);
+				$searchFields=array(
+			    "cc.id", 
+				"cc.ip_address",
+				"cc.actual_link" 
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from rat_log_tbl cc  where 1=1";
+	 
+			if($id!==""){
+			$sql.=" and cc.id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id; 
+					 
+					if($key->date_time=='0000-00-00 00:00:00'){
+						$key->date_time='';
+					}else{
+						$key->date_time=cdate($key->date_time);
+					}
+					 
+					 
+					    
+					$value=array_values((array)$key);
+					 
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				 
+			case "edit":
+				$data['title']="Update company";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					 $upload_path="resources/admin";
+					
+			$admin = array(
+			'upload_path' => $upload_path,
+			'allowed_types' => "jpg|jpeg",
+			'overwrite' => TRUE,
+			'file_name' => time(),
+			'max_size' => "2048000"
+			// 'max_height' => "768",
+			// 'max_width' => "1024"
+			);
+			$this->load->library('upload', $admin);
+			if($_FILES['fileToUpload']['name']!==""){
+				if(!$this->upload->do_upload('fileToUpload')){ 
+					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+				
+				}
+				else{
+					$imageDetailArray = $this->upload->data();
+					$formData['image'] =  $imageDetailArray['file_name'];
+				}
+			}
+			if(validateData("companies",$formData,$id)){
+				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+						$config['create_thumb'] = TRUE;
+						//$config['thumb_marker'] = false;
+						$config['maintain_ratio'] = FALSE;
+						$config['width'] = 235;//the width to resize to;
+						$config['height'] = 125;//height to resize to;
+						// echo "<pre>";
+						// print_r ($config);
+						// echo "</pre>";
+						// die();
+		                $this->load->library('image_lib', $config);//this loads the image resize library
+		                $this->image_lib->resize();//the resize function
+		               //check if the resize succeeds
+		                $formData['image'] =   $this->upload->file_name;
+		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+			if($this->model->updateData("companies",$id,$formData))
+				$data['msg']="company updated! successfully.";
+							$data['return']=true;
+						}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=($this->model->getData("industries"));		
+				$data['edit']=(array)$this->model->getById("companies",$id);
+				generatePageView('addcompanies',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("companies",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="Company is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="Company is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
 	
 	public function maillogs($action="view",$id=""){
 		
