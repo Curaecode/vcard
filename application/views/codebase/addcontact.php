@@ -47,35 +47,7 @@
 					</select>
 					<div class="help-block with-errors"></div>
 				</div>
-		  	</div>
-		  	<div class='col-sm-6'>
-				<div class='form-group'>
-					<label>Location<span style="color: red;">*</span></label>
-					<select class="form-control select2 location_select" name="location_id" required>
-					<?php foreach ($locations as $key => $singleLocation) {?>
-						<option <?php if (isset($edit['location_id']) && $edit['location_id']==$singleLocation->id) { echo "selected"; } ?> value="<?php echo $singleLocation->id; ?>"><?php echo $singleLocation->location_name; ?></option>
-					<?php } ?>
-					</select>
-					<div class="help-block with-errors"></div>
-				</div>
-	  		</div>
-		</div>
-		<div class="form-group row less_margin">
-			<div class='col-sm-6'>
-				<div class='form-group'>
-					<label>Sales group</label>
-					<select class="form-control select2 " name="group_id">
-						<option value="">--Select Sales group--</option>
-						<?php
-						foreach($groups as $val){
-						$selected=isset($edit["group_id"])&&$val->id==$edit["group_id"]?"selected":"";
-							echo "<option value='$val->id' $selected>$val->group_name </option>";
-						}
-						?>
-					</select>
-					<div class="help-block with-errors"></div>
-				</div>
-		 	</div>
+		  	</div> 
 		  	<div class='col-sm-6'>
 				<div class='form-group'>
 					<label>Country Name<span style="color: red;">*</span></label>
@@ -106,14 +78,8 @@
 		  	</div>
 			<div class='col-sm-6'>
 				<div class='form-group'>
-					<label>Date of Bith<span style="color: red;">*</span></label>
-					<?php 
-						$dobs='';
-						if(isset($edit["dob"]) && !empty($edit["dob"])){
-							$dobs= date('m-d-Y',strtotime($edit["dob"])); 
-						}
-					?>
-					<input type="date" class="form-control dateofbirth" value="<?php echo isset($edit["dob"])?$edit["dob"]:""; ?>" name="dob" required  required <?php /* data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy" */ ?>>
+					<label>Date of Bith<span style="color: red;">*</span></label> 
+					<input type="date" class="form-control dateofbirth" value="<?php echo isset($edit["dob"])?$edit["dob"]:""; ?>" name="dob" required>
 					<div class="help-block with-errors"></div>
 				</div>
 		  	</div>  
@@ -125,32 +91,8 @@
 					<input type="date" class="form-control" value="<?php echo isset($edit["active_member"])?$edit["active_member"]:""; ?>" name="active_member">
 				</div>
 				<div class="help-block with-errors"></div>
-			</div>
-		    <div class="col-sm-6">
-				<div class="form-material ">
-					<label for="name">Enter website link</label>
-					<input type="text" class="form-control" value="<?php echo isset($edit["website"])?$edit["website"]:""; ?>" name="website">
-				</div>
-				<div class="help-block with-errors"></div>
-			</div>
-	    </div>
-	    <div class="form-group row less_margin">
-			<div class='col-sm-12'>
-				<div class='form-group'>
-					<label>Industries</label>
-					<select class="form-control select2 " name="industry_id" >
-						<option value="">--Select industry name--</option>
-						<?php
-						foreach($industries as $val){
-						$selected=isset($edit["industry_id"])&&$val->id==$edit["industry_id"]?"selected":"";
-							echo "<option value='$val->id' $selected>$val->industry_name </option>";
-						}
-						?>
-					</select>
-					<div class="help-block with-errors"></div>
-				</div>
-			</div>
-		</div>
+			</div> 
+	    </div> 
 		<div class="row text-center">
 		    <div class='col-sm-3'>
 				<div class='form-group'>

@@ -46,7 +46,7 @@
 											</select>
 									</div>
 								</div>
-								<div class='col-sm-3'>
+								<?php /* <div class='col-sm-3'>
 									<div class='form-group'>
 										<label>Select Group</label>
 											<select class="form-control" name="group_id" required>
@@ -58,7 +58,7 @@
 												?>
 											</select>
 									</div>
-								</div>
+								</div> */ ?>
 								<!-- <div class='col-sm-3'>
 							<div class='form-group'>
 								<label></label>

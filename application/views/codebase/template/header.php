@@ -47,7 +47,8 @@
                              <li class="<?php echo @$active=='companies'?"open":"";?>">
                                 <a class="loadview" href="#companies/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Companies</span></a>
                             </li>
-                            <li class="<?php echo @$active=='industries'?"open":"";?>">
+							<?php /*
+						   <li class="<?php echo @$active=='industries'?"open":"";?>">
                                 <a class="loadview" href="#industries/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Industries</span></a>
                             </li>
                              <li class="<?php echo @$active=='locations'?"open":"";?>">
@@ -59,7 +60,7 @@
                             </li>
                              <li class="<?php echo @$active=='subscriptions'?"open":"";?>">
                                 <a class="loadview" href="#subscriptions/" ><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Subscriptions</span></a>
-                            </li>
+                            </li> */ ?>
                             
                             <?php /* <li class="<?php echo @$active=='maillogs'?"open":"";?>">
                                 <a class="loadview" href="#maillogs/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Email Logs</span></a>

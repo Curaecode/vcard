@@ -196,8 +196,7 @@ class Dashboard extends CI_Controller {
 			case "view":
 				$coloumns=array(
 					"ID",
-					"Company Name",
-					"Industry Name",
+					"Company Name", 
 					"Contact person",
 					"Phone",
 					"Address",
@@ -213,8 +212,7 @@ class Dashboard extends CI_Controller {
 			case "ajax":
 			$coloumns=array(
 			    "companies.id",
-				"companies.company_name",
-				"industries.industry_name as i_name",
+				"companies.company_name", 
 				"companies.contact_person",
 				"companies.phone",
 				"companies.address",
@@ -1867,9 +1865,6 @@ class Dashboard extends CI_Controller {
 					"Email",
 					"Phone",
 					"company name",
-					//"industry name",
-					"Location",
-					//"Group name",
 					"state",
 					//"country",
 					"Dependent",
@@ -1890,10 +1885,7 @@ class Dashboard extends CI_Controller {
 				"contacts.last_name",
 				"contacts.email",
 				"contacts.phone", 
-				"companies.company_name as c_name",
-				//"contacts.industry_id",
-				"locations.location_name as l_name ",
-				//"groups.group_name as g_name",
+				"companies.company_name as c_name", 
 				"states.state_name as s_name",
 				//"country.country_name as cun_name",
 				"contacts.dependent",
@@ -1914,13 +1906,11 @@ class Dashboard extends CI_Controller {
 				"contacts.phone"
 				);
 			$fields=implode(",",$coloumns);
-			$sql="select $fields from contacts left join companies on contacts.company_id=companies.id left join groups on contacts.group_id=groups.id left join locations on contacts.location_id=locations.id left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id where 1=1 ";
+			$sql="select $fields from contacts left join companies on contacts.company_id=companies.id left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id where 1=1 ";
 			if($formData['company_id']!=="all"){
 					$sql.= " and contacts.company_id='".$formData['company_id']."'";
-				}
-				if($formData['group_id']!=="all"){
-					$sql.= " and contacts.group_id='".$formData['group_id']."'";
-				}
+			}
+				 
 			if($id!==""){
 				$sql.=" and id=$id";	
 			}
@@ -1928,6 +1918,7 @@ class Dashboard extends CI_Controller {
 				$fields=implode(",",$coloumns);
 				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
 				$results=$this->db->query($sql2['sql'])->result();
+			 
 				$values=array();
 				foreach($results as &$key){
 					$id=$key->id;
@@ -2065,6 +2056,13 @@ class Dashboard extends CI_Controller {
 								} */
 								$recdata['contract_number']=$contract_number;
 								$this->model->addData("contact_dependant",$recdata); 
+								
+								$lastrecord = $this->model->getLastData4('contacts',$contract_number);
+								$last_id = $lastrecord->id; 
+								
+								
+								 
+
 								$added = true;
 							}
 						}
@@ -2079,6 +2077,10 @@ class Dashboard extends CI_Controller {
 							$last_data=$this->model->getLastData2("contacts",$last_id);
 							$this->load->library('phpqrcode/qrlib');
 							
+							$account_id = generateID($last_id);
+							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
+								
+								
 							$last_data=$this->model->getLastData2("contacts",$last_id);
 							  
 							$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
@@ -2089,10 +2091,7 @@ class Dashboard extends CI_Controller {
 							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
 							
 							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
-							
-							
-							 
+							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");  
 						}
 					}
 					
@@ -2799,12 +2798,28 @@ function download2($filename = NULL) {
 		}
 	}
 	function deletedependent($id){
-		if($this->model->deleteData("contact_dependant",$id)){
+		$dependent = $this->model->getimageData("contact_dependant",$id);
+		if($this->model->deleteData("contact_dependant",$id)){ 
 			$msg['success']="dependent is deleted! successfully.</div>";
 		}
 		else{
 			$msg['error']="dependent is deleted! successfully";
 		} 
+		
+		$result = $this->model->getLastData4("contacts",$dependent->contract_number);
+		if(!empty($result)){
+			$last_id = $result->id; 
+			$account_id = generateID($last_id);
+			$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
+			$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
+			$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
+			$image_new = genrate_image($last_id);
+			$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
+
+			$down = get_contacts_vcard($last_id);
+			$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
+		}
+		
 		echo json_encode($msg); 
 	}
 	function sendtestcards(){

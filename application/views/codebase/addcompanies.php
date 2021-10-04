@@ -10,24 +10,7 @@
 							</div>
 								<div class="help-block with-errors"></div>
 						</div>
-					</div>
-					<div class="form-group row less_margin">
-					<div class='col-md-12'>
-						 <div class='form-group'>
-							<label>Industries</label>
-							<select class="form-control select2 " name="industry_id" required>
-								<option value="">--Select industry name--</option>
-								<?php
-								foreach($industries as $val){
-								$selected=isset($edit["industry_id"])&&$val->id==$edit["industry_id"]?"selected":"";
-									echo "<option value='$val->id' $selected>$val->industry_name </option>";
-								}
-								?>
-							</select>
-							<div class="help-block with-errors"></div>
-						</div>
-					  </div>
-					  </div>
+					</div> 
 					 
 					<div class="form-group row less_margin">
 						<div class="col-md-6">
