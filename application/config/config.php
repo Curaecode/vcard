@@ -386,7 +386,7 @@ $config['encryption_key'] = 'cTC0nn7w08YDll11i8Q5v1Z396411PfF';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ci_session';
+$config['sess_cookie_name'] = 'ex3gen';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
