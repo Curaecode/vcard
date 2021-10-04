@@ -47,6 +47,9 @@
                              <li class="<?php echo @$active=='companies'?"open":"";?>">
                                 <a class="loadview" href="#companies/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Companies</span></a>
                             </li>
+                             <li class="<?php echo @$active=='hospitals'?"open":"";?>">
+                                <a class="loadview" href="#hospitals/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Hospitals</span></a>
+                            </li>
 							<?php /*
 						   <li class="<?php echo @$active=='industries'?"open":"";?>">
                                 <a class="loadview" href="#industries/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Industries</span></a>
