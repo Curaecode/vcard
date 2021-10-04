@@ -43,56 +43,58 @@
 
                 <!-- Page Content -->
                 <div class="bg-gd-dusk">
-                    <div class="fix_head_fit hero-static content content-full bg-white invisible" data-toggle="appear">
-                        <!-- Header -->
-                        <div class="py-30 px-5 text-center">
-                            <a class="link-effect font-w700" href="<?php echo admin_url();?>">
-                                <img src="<?php echo res_url();?>img/image_logo.png" style="width:116px;margin-top:-9px;"> 
-                            </a>
-                            <h1 class="h2 font-w700 mt-50 mb-10">Welcome to Your Dashboard</h1>
-                            <h2 class="h4 font-w400 text-muted mb-0">Please sign in</h2>
-                        </div>
-                        <!-- END Header -->
+                    <div class="fix_head_fit hero-static content content-full invisible" data-toggle="appear">
+						<div class="bg-white ">
+						   <!-- Header -->
+							<div class="py-30 px-5 text-center">
+								<a class="link-effect font-w700" href="<?php echo admin_url();?>">
+									<img src="<?php echo res_url();?>img/image_logo.png" style="width:116px;margin-top:-9px;"> 
+								</a>
+								<h1 class="h2 font-w700 mt-50 mb-10">Welcome to Your Dashboard</h1>
+								<h2 class="h4 font-w400 text-muted mb-0">Please sign in</h2>
+							</div>
+							<!-- END Header -->
 
-                        <!-- Sign In Form -->
-                        <div class="row justify-content-center px-5">
-                            <div class="col-sm-8 col-md-6 col-xl-4">
-                            
-								<?php 
-								getMsg();
-								echo isset($msg)?$msg:""; 
+							<!-- Sign In Form -->
+							<div class="row justify-content-center px-5">
+								<div class="col-sm-8 col-md-6 col-xl-4">
 								
-								?>
-            
-							   <form class="js-validation-signin" action="" method="post">
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <div class="form-material floating">
-                                                <input type="text" class="form-control" id="login-username" name="email">
-                                                <label for="login-username">Username</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-12">
-                                            <div class="form-material floating">
-                                                <input type="password" class="form-control" id="login-password" name="password">
-                                                <label for="login-password">Password</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row gutters-tiny">
-                                        <div class="col-12 mb-10">
-                                            <button type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
-                                                <i class="si si-login mr-10"></i> Sign In
-                                            </button>
-                                        </div> 
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- END Sign In Form -->
-                    </div>
+									<?php 
+									getMsg();
+									echo isset($msg)?$msg:""; 
+									
+									?>
+				
+								   <form class="js-validation-signin" action="" method="post">
+										<div class="form-group row">
+											<div class="col-12">
+												<div class="form-material floating">
+													<input type="text" class="form-control" id="login-username" name="email">
+													<label for="login-username">Username</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-12">
+												<div class="form-material floating">
+													<input type="password" class="form-control" id="login-password" name="password">
+													<label for="login-password">Password</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group row gutters-tiny">
+											<div class="col-12 mb-10">
+												<button type="submit" class="btn btn-block btn-hero btn-noborder btn-rounded btn-alt-primary">
+													<i class="si si-login mr-10"></i> Sign In
+												</button>
+											</div> 
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- END Sign In Form -->
+						</div>
+					</div>
                 </div>
                 <!-- END Page Content -->
 
