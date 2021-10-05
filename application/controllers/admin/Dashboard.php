@@ -2245,13 +2245,15 @@ class Dashboard extends CI_Controller {
 			    "contacts.id",
 				"contacts.account_code",
 				"contacts.contract_number",
+				"cd.first_name",
+				"cd.last_name",
 				"contacts.first_name",
 				"contacts.last_name",
 				"contacts.email",
 				"contacts.phone"
 				);
 			$fields=implode(",",$coloumns);
-			$sql="select $fields from contacts left join companies on contacts.company_id=companies.id left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id where 1=1 ";
+			$sql="select $fields from contacts left join companies on contacts.company_id=companies.id left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
 			if($formData['company_id']!=="all"){
 					$sql.= " and contacts.company_id='".$formData['company_id']."'";
 			}
@@ -2261,14 +2263,15 @@ class Dashboard extends CI_Controller {
 			}
 			  //die($sql);
 				$fields=implode(",",$coloumns);
-				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields,array(),'group by contacts.id');
 				$results=$this->db->query($sql2['sql'])->result();
 			 
 				$values=array();
 				foreach($results as &$key){
 					$id=$key->id;
-					$dependent_data = '';
-					if(isset($key->dependent))
+					$dependent_data = array();
+					
+					/* if(isset($key->dependent))
 					{
 						$dependents = json_decode($key->dependent);
 						if(!empty($dependents))
@@ -2284,8 +2287,37 @@ class Dashboard extends CI_Controller {
 								}
 							}
 						}
+					} */
+					$contract_number= $key->contract_number;
+					$dependant_data=$this->model->getdependents("contact_dependant",$contract_number);
+					if(!empty($dependant_data)){
+						foreach($dependant_data as $value){
+							$dependent_data2=''; 
+							$dependent_data2.=(isset($value->first_name) && !empty($value->first_name)) ? ucwords($value->first_name):'';
+							$dependent_data2.=(isset($value->last_name)  && !empty($value->last_name)) ? ' '.ucwords($value->last_name):'';
+							
+							$dependentdata =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.'':'';
+							$datadependent = explode(' ',$dependentdata); 
+							if(count($datadependent) > 1){ 
+								$dependent_datas=$datadependent[1];
+							}else{
+								$dependent_datas = $datadependent[0];
+							}
+							$mystring = strtolower($dependent_datas);  
+							$findme   = 'spouse';
+							$pos = strpos($mystring, $findme);
+							
+							if ($pos === false){
+								$dependent_datas = 'D';
+							}else{
+								$dependent_datas = 'S';
+							}
+							$string = $dependent_datas.': '.$dependent_data2.' - '.count($datadependent);
+							array_push($dependent_data,$string);
+							/* $dependent_data .= $dependent_datas.': '.$dependent_data2.' <br />'; */
+						}
 					}
-					$key->dependent = $dependent_data;
+					$key->dependent = implode(' <br />',$dependent_data);
 					
 					$contract_number = $key->contract_number;
 					 unset($key->contract_number);  

@@ -86,9 +86,9 @@ $(document).ready(function(){
 			html+='<td>';
 				html+='<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent['+index+'][dependent]" required>';
 					html+='<option value="">--Please Select--</option>';
-					html+='<option value="Member">Member</option>';
+					/* html+='<option value="Member">Member</option>'; */
 					html+='<option value="Spouse">Spouse</option>';
-					html+='<option value="Child">Child</option>';
+					html+='<option value="Dependent">Dependent</option>';
 				html+='</select>';
 			html+='</td>';
 			html+='<td>';
@@ -96,6 +96,12 @@ $(document).ready(function(){
 			html+='</td>';
 			html+='<td>';
 				html+='<input type="text" class="form-control" value="" name="dependent['+index+'][dep_f_name]">';
+			html+='</td>';
+			html+='<td>';
+				html+='<input type="text" class="form-control" value="" name="dependent['+index+'][phone]">';
+			html+='</td>';
+			html+='<td>';
+				html+='<input type="date" class="form-control" value="" name="dependent['+index+'][dob]">';
 			html+='</td>';
 			html+='<td>';
 				html+='<a href="javascript:void(0)" class="btn btn-danger btn-xs delete_row"><i class="fa fa-trash"></i></a>';
@@ -273,7 +279,7 @@ $(document).ready(function(){
 	})
 	$(document).on("keyup change","textarea,input,select",function(e){
 		if($(this).val()!==""){
-			$(this).parent().addClass("open");
+			$(this).parent().addClass("open"); 
 		}
 		else{
 			$(this).parent().removeClass("open");

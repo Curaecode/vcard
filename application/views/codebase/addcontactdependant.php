@@ -4,7 +4,7 @@
 }
 </style>
 <div class="container">
-	<form action="" method="post"  enctype="multipart/form-data" role="form" class="viewform" data-toggle="validator">
+	<form action="" method="post" role="form" class="viewform">
 		  
 		<div class="form-group row less_margin">
 			<div class="col-sm-12">
@@ -16,6 +16,7 @@
 							<th style="width:686px !important">Last name</th>
 							<th style="width:686px !important">Phone</th>
 							<th style="width:686px !important">Date of Birth</th> 
+							<th style="width:686px !important">Action</th> 
 						</tr>
 					</thead>
 					<tbody id="dependent_table"> 
@@ -23,11 +24,13 @@
 								<td>
 									<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent[0][dependent]" required>
 										<option value="">--Please Select--</option>
-										<?php if(!empty($dependent)){ ?>
+										<option value="Spouse">Spouse</option>
+										<option value="Dependent">Dependent</option>
+										<?php /* if(!empty($dependent)){ ?>
 											<?php foreach($dependent as $rows){?> 
 												<option value="<?php echo $rows->dependent_type;?>"><?php echo $rows->dependent_type;?></option>
 											<?php } ?>
-										<?php }?> 
+										<?php } */ ?> 
 									</select>
 								</td>
 								<td>
@@ -37,10 +40,13 @@
 									<input type="text" class="form-control" value="" name="dependent[0][dep_f_name]">
 								</td>
 								<td>
-									<input type="text" class="form-control" value="" name="dependent[0][phone]" required>
+									<input type="text" class="form-control" value="" name="dependent[0][phone]">
 								</td>
 								<td>
-									<input type="date" class="form-control dateofbirth" value="" name="dependent[0][dob]" required <?php /* data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy" */ ?>>
+									<input type="date" class="form-control dateofbirth" value="" name="dependent[0][dob]">
+								</td>
+								<td>
+									<a href="javascript:void(0)" class="btn btn-info btn-xs addNewRow"><i class="fa fa-plus"></i></a>
 								</td>
 							</tr> 
 						

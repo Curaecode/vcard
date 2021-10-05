@@ -140,8 +140,8 @@ function generateID($id = null)
 					$dependent_data = '';
 					$dependent_data2 = '';
 					if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){
-						$dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
-						$datadependent = explode(' ',$dependent_data); 
+						$dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.':':'';
+						$datadependent = explode(' ',trim($dependent_data)); 
 						if(count($datadependent) > 1){ 
 							$dependent_datas=$datadependent[1];
 						}else{
@@ -275,8 +275,8 @@ function genrate_image($id=null)
 					$dependent_data = '';
 					$dependent_data2 = '';
 					if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){
-						$dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.': ':'';
-						$datadependent = explode(' ',$dependent_data); 
+						$dependent_data =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.':':'';
+						$datadependent = explode(' ',trim($dependent_data)); 
 						if(count($datadependent) > 1){ 
 							$dependent_datas=$datadependent[1];
 						}else{
