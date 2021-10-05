@@ -2357,12 +2357,7 @@ class Dashboard extends CI_Controller {
 				$data['title']="Add Contact";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
-						if(isset($formData['dob']) && !empty($formData['dob'])){ 
-							$dateofbirth = $formData['dob'];
-							$dob= explode('/',$dateofbirth);
-							$formData['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
-						}
-					
+						  
 					 	$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
 						if($this->model->addData("contacts",$formData)){
 							$last_id = $this->db->insert_id();							
