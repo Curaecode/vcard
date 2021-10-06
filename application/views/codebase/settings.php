@@ -39,8 +39,12 @@
 									<?php
 									if($field->type=='radio'){
 										?>
-										<input type='radio' value='1' name='<?php echo $field->name; ?>' <?php echo $field->value=="1"?"checked":""; ?>>Enable
-										<input type='radio' value='0' name='<?php echo $field->name; ?>' <?php echo $field->value=="0"?"checked":""; ?>>Disable
+										<div class="form-check">
+											<label class="form-check-label"><input type='radio' value='1' name='<?php echo $field->name; ?>' <?php echo $field->value=="1"?"checked":""; ?>> Enable</label>
+										</div>	
+										<div class="form-check">
+											<label class="form-check-label"><input type='radio' value='0' name='<?php echo $field->name; ?>' <?php echo $field->value=="0"?"checked":""; ?>> Disable</label>
+										</div>
 									<?php
 									}
 									else{

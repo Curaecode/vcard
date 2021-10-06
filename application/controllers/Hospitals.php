@@ -8,7 +8,7 @@ class Hospitals extends CI_Controller {
 	}
 	public function index($linktype=1){
 		$dataconfig=$this->model->getDatarow("config","where isVisible=1 AND name='provider' order by id asc");
-		if($dataconfig->value==1){
+		if($dataconfig->value==0){
 			$cols=array();
 			$ip = get_client_ip();
 			$cols['ipaddress']=$ip;

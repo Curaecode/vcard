@@ -85,7 +85,7 @@ $(document).ready(function(){
 		html+='<tr>';
 			html+='<td>';
 				html+='<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent['+index+'][dependent]" required>';
-					html+='<option value="">--Please Select--</option>';
+					html+='<option value="">Please Select</option>';
 					/* html+='<option value="Member">Member</option>'; */
 					html+='<option value="Spouse">Spouse</option>';
 					html+='<option value="Dependent">Dependent</option>';
@@ -465,6 +465,7 @@ view.refreshJs=function(datatable,page){
 	}
 	$("input,textarea,select").trigger("keyup");
 	if(datatable){
+		console.log('AAAA');
 		url=base_url+"admin/dashboard/"+page+"/ajax/";
 		table = $('.datatable').DataTable({ 
 			"lengthMenu": [[100, 250, 500,1000,-1], [100, 250, 500,1000,"All"]],
@@ -476,7 +477,7 @@ view.refreshJs=function(datatable,page){
 				'pdfHtml5'
 			],
 			"scrollY":        "300px",
-			"scrollCollapse": true,
+			"scrollCollapse": true, 
 			"processing": true, //Feature control the processing indicator.
 			"serverSide": true, //Feature control DataTables' server-side processing mode.
 			"order": [], //Initial no order.
@@ -494,7 +495,7 @@ view.refreshJs=function(datatable,page){
 					d.group_id = $('[name="group_id"]').val();
 				},
 				"initComplete": function(settings, json) {
-					 
+					console.log("settings",settings); 
 				}
 			},
 			"destroy" : true

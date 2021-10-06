@@ -113,13 +113,12 @@
 			
 			<div class="block-content block-content-full" id="listingview">
 				<!-- DataTables functionality is initialized with .js-dataTable-full class in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
-				<table data-id="<?php echo @$id; ?>" data-active2="<?php echo @$active2; ?>"  data-active="<?php echo @$active; ?>" class="table table-bordered table-striped table-vcenter datatable js-dataTable-full" id="basic-datatable">
-					
+				<table data-id="<?php echo @$id; ?>" data-active2="<?php echo @$active2; ?>"  data-active="<?php echo @$active; ?>" class="table table-bordered table-striped table-vcenter datatable js-dataTable-full" id="basic-datatable"> 
 					<thead>
 						<tr role="row">
 						<?php
 							foreach($coloumns as $coloumn){
-								echo "<th class='sorting' style='width:50px;'>$coloumn</th>";
+								echo "<th class='sorting'>$coloumn</th>";
 							}
 						?>
 						 

@@ -1,29 +1,27 @@
-<style>
-.modal-content {
-	width:700px;
-}
-</style>
+<script>
+ $('.modal-dialog').addClass('modal-lg');
+</script>
 <div class="container">
 	<form action="" method="post" role="form" class="viewform">
 		  
 		<div class="form-group row less_margin">
 			<div class="col-sm-12">
-				<table class="table" style="width:650px;">
+				<table class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th style="width:114px !important">Mem/Spouse/Child</th>
-							<th style="width:562px !important">First Name</th>
-							<th style="width:686px !important">Last name</th>
-							<th style="width:686px !important">Phone</th>
-							<th style="width:686px !important">Date of Birth</th> 
-							<th style="width:686px !important">Action</th> 
+							<th style="width:150px;">Spouse / Dependent</th>
+							<th style="width:200px;">First Name</th>
+							<th style="width:200px;">Last name</th>
+							<th style="width:200px;">Phone</th>
+							<th style="width:100px;">Date of Birth</th> 
+							<th>Action</th> 
 						</tr>
 					</thead>
 					<tbody id="dependent_table"> 
 							<tr>
 								<td>
 									<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent[0][dependent]" required>
-										<option value="">--Please Select--</option>
+										<option value="">Please Select</option>
 										<option value="Spouse">Spouse</option>
 										<option value="Dependent">Dependent</option>
 										<?php /* if(!empty($dependent)){ ?>

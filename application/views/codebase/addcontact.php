@@ -1,3 +1,6 @@
+<script>
+ $('.modal-dialog').removeClass('modal-lg');
+</script>
 <div class="container">
 	<form action="" method="post"  enctype="multipart/form-data" role="form" class="viewform" data-toggle="validator">
 		<div class="form-group row less_margin">
