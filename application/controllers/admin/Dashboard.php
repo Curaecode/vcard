@@ -1281,6 +1281,38 @@ class Dashboard extends CI_Controller {
 				break; 
 		}
 	}
+	public function twilliologs($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array( 
+					"Phone",     
+					"Access Date Time" 
+				);
+				$data['id']=$id;
+				$data['title']="Twillio Access Log";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+				$email = $formData['search']['value'];
+				$limit=$formData['length'];
+				$offset=$formData['start'];
+				$this->load->library('twilio');
+				$response = $this->twilio->readlog($offset,$limit);  
+				$total = $this->twilio->readlog(0,0); 
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" =>count($total),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($response)?$response:array(),
+				);
+				echo json_encode($output);
+				break; 
+		}
+	}
 	
 	public function cardlogs($action="view",$id=""){
 		
@@ -1631,41 +1663,7 @@ class Dashboard extends CI_Controller {
 				curl_close($ch);
 				$jsonresult=json_decode($result);
 			   
-				/*
-				bouncetype: null
-				channel: "SMTP API"
-				contactlasterror: null
-				date: "2021-09-14T11:40:10"
-				dateclicked: null
-				dateopened: "2021-09-14T11:54:15"
-				datesent: "2021-09-14T11:40:10"
-				envelopefrom: "support@curaechoice.com"
-				fromemail: "support@curaechoice.com"
-				ipaddress: null
-				issms: false
-				jobid: "f3132a3b-9de3-40bd-a03b-5e113348f29f"
-				message: ""
-				messagecategory: "Unknown"
-				messagecategoryid: 0
-				messagesid: null
-				msgid: "9MYK-ZD0f6-yGqvcdaC-5Q2"
-				nexttryon: null
-				showcategory: false
-				smsupdaterequired: false
-				status: "Opened"
-				statuschangedate: "2021-09-14T11:54:15"
-				subject: "CuraeChoice vcard."
-				textmessage: null
-				to: "sufian@ex3gen.com"
-				*/
-				
-				/*
-				"Email",
-					"Subject",
-					"Status", 
-					"Date Sent",  
-					"Date Opened" 
-				*/
+				 
 				$maillogs=array();
 			    $results=$jsonresult->data->recipients; 
 				foreach($results as $key){

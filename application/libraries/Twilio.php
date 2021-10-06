@@ -55,4 +55,25 @@ class Twilio {
 	  	}
 	  	return $response;
   	}
+	function readlog($Page=1,$PageSize=100){
+		if($Page>0 && $PageSize > 0){
+			$records = $this->client->messages->stream( 
+			array( 
+				'StartDate' => '2021-09-01', 
+				'EndDate' => '2021-10-06', 
+				'PageSize' => $PageSize
+			  )
+			 );
+		}else{
+			$records = $this->client->messages->stream( 
+				array( 
+					'StartDate' => '2021-09-01', 
+					'EndDate' => '2021-10-06'
+				  )
+				 );
+		}  
+		
+
+		 return $records;
+	}
 }
