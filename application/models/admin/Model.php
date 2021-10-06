@@ -59,6 +59,11 @@ class Model extends CI_Model {
 		// die;
 		return $this->db->query("Select * from `$table` $where")->result();
 	}
+	public function getDatarow($table,$where="where 1=1"){
+		// echo "Select * from `$table` $where";
+		// die;
+		return $this->db->query("Select * from `$table` $where")->row();
+	}
 	
 	public function updateData($table,$id,$data)
 	{
