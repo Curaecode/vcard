@@ -114,6 +114,9 @@
                                 </a>
                                 <a class="dropdown-item loadview" href="#urllogs/">
                                     <i class="fa fa-lock mr-5"></i>	Web Access Logs
+                                </a>
+                                <a class="dropdown-item loadview" href="#twillio/">
+                                    <i class="fa fa-lock mr-5"></i>	Twillio Logs
                                 </a> 
                             </div>
                         </div>

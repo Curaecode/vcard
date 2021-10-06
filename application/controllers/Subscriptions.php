@@ -26,6 +26,8 @@ class Subscriptions extends CI_Controller {
 			$cols['ipaddress']=$ip;
 			$cols['access_date']= date('Y-m-d H:i:s');
 			$this->db->insert('care_coordination_access', $cols);
+			
+			
 			if(isset($cols['linktype'])){
 				$result = $this->db->query("Select * from care_coordination where id='".$cols['linktype']."'")->row();
 				/* redirect($result->url);  */ 
@@ -47,8 +49,12 @@ class Subscriptions extends CI_Controller {
 			
 			$num_str = sprintf("%06d", mt_rand(100000,999999));
 			$cols['pcode']=$num_str;
+			$cols['addeddate']=date('Y-m-d H:i:s'); 
+			$ip = get_client_ip();  
+			$insert_data['ipaddress']= $ip;
 			$this->db->insert('subscription_codes', $cols);
-			 
+			
+			
 			
 			$this->load->library('twilio'); 
 			$phone = $cols['phone'];
@@ -58,6 +64,21 @@ class Subscriptions extends CI_Controller {
 				$phone = '+1'.$cols['phone'];
 			}
 			$response = $this->twilio->sendCode($phone,$num_str);  
+			
+			
+			$colstwillio=array();
+			$ip = get_client_ip();
+			$colstwillio['ipaddress']=$ip;
+			$colstwillio['logtype']='Subscription Access';
+			$colstwillio['access_date']= date('Y-m-d H:i:s');
+			if(isset($phone)){
+				$colstwillio['phone']=$phone;
+			}
+			$colstwillio['code']=$num_str;
+			$this->db->insert('twillio_logs', $colstwillio);
+			
+			
+			
 			if(isset($response->sid)){ 
 				$data['msg']="Security code sent.";
 				$data['status']=true;
@@ -102,6 +123,19 @@ class Subscriptions extends CI_Controller {
 					$phone = '+1'.$cols['phone'];
 				}
 				$response = $this->twilio->sendCode($phone,$num_str);
+				
+				$colstwillio=array();
+				$ip = get_client_ip();
+				$colstwillio['ipaddress']=$ip;
+				$colstwillio['logtype']='Card Image Access';
+				$colstwillio['access_date']= date('Y-m-d H:i:s');
+				if(isset($phone)){
+					$colstwillio['phone']=$phone;
+				}
+				$colstwillio['code']=$num_str;
+				$this->db->insert('twillio_logs', $colstwillio);
+				
+				
 				if(isset($response->sid)){
 					$data['msg']="Security code sent.";
 					$data['status']=true;
@@ -135,6 +169,9 @@ class Subscriptions extends CI_Controller {
 			}
 			$ip = get_client_ip();  
 			$insert_data['ipaddress']= $ip;
+			$cols['addeddate']=date('Y-m-d H:i:s'); 
+			 
+			
 			if(isset($cols['phone'])){
 				$num_str = sprintf("%06d", mt_rand(100000,999999));
 				$cols['pcode']=$num_str;
@@ -149,6 +186,19 @@ class Subscriptions extends CI_Controller {
 					$phone = '+1'.$cols['phone'];
 				}
 				$response = $this->twilio->sendCode($phone,$num_str);
+				
+				
+				$colstwillio=array();
+				$ip = get_client_ip();
+				$colstwillio['ipaddress']=$ip;
+				$colstwillio['logtype']='QR Code Link Access';
+				$colstwillio['access_date']= date('Y-m-d H:i:s');
+				if(isset($phone)){
+					$colstwillio['phone']=$phone;
+				}
+				$colstwillio['code']=$num_str;
+				$this->db->insert('twillio_logs', $colstwillio);
+				
 				if(isset($response->sid)){
 					$data['msg']="Security code sent.";
 					$data['status']=true;

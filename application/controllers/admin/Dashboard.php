@@ -1210,6 +1210,77 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
+	public function twillio($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="subscriptions";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",  
+					"Phone", 
+					"Exist in Contact",   
+					"IP",   
+					"Access Date Time" 
+				);
+				$data['id']=$id;
+				$data['title']="Twillio Access Log";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "cc.id", 
+				"cc.phone",  
+				"cd.id as exisitng",   
+				"cc.ipaddress", 
+				"cc.addeddate as access_date"  
+				);
+				$searchFields=array(
+			    "cc.id", 
+				"cc.ipaddress",
+				"cc.phone"  
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from twillio_logs cc LEFT JOIN contacts cd ON cc.phone = cd.phone where 1=1";
+			 
+			if($id!==""){
+			$sql.=" and cc.id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id; 
+					if($key->access_date=='0000-00-00 00:00:00'){
+						$key->access_date='';
+					}else{
+						$key->access_date=cdate($key->access_date);
+					}
+					 
+					if(!is_null($key->exisitng)){
+						$key->exisitng = 'Yes';
+					}else{
+						$key->exisitng = 'No';
+					} 
+					    
+					$value=array_values((array)$key);
+					 
+					array_push($value);
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break; 
+		}
+	}
 	
 	public function cardlogs($action="view",$id=""){
 		
