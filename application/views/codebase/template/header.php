@@ -48,7 +48,7 @@
                                 <a class="loadview" href="#companies/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Companies</span></a>
                             </li>
                              <li class="<?php echo @$active=='hospitals'?"open":"";?>">
-                                <a class="loadview" href="#hospitals/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Hospitals</span></a>
+                                <a class="loadview" href="#hospitals/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Providers</span></a>
                             </li>
 							<?php /*
 						   <li class="<?php echo @$active=='industries'?"open":"";?>">
@@ -107,7 +107,7 @@
                                     <i class="fa fa-user mr-5"></i> Subscription Logs
                                 </a>
                                 <a class="dropdown-item loadview" href="#detaillogs/">
-                                    <i class="fa fa-lock mr-5"></i>	URL Access Logs
+                                    <i class="fa fa-lock mr-5"></i>	Providers Logs
                                 </a> 
                                 <a class="dropdown-item loadview" href="#cardlogs/">
                                     <i class="fa fa-lock mr-5"></i>	Card Access Logs

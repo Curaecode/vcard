@@ -1076,7 +1076,7 @@ class Dashboard extends CI_Controller {
 					"Address"	
 				);
 				$data['id']=$id;
-				$data['title']="URL Access Log";
+				$data['title']="Providers Access Log";
 				$data['coloumns']=$coloumns;
 				generatePageView('listview',$data);
 				break;
@@ -1227,7 +1227,7 @@ class Dashboard extends CI_Controller {
 					"Address"	
 				);
 				$data['id']=$id;
-				$data['title']="URL Access Log";
+				$data['title']="Card Access Log";
 				$data['coloumns']=$coloumns;
 				generatePageView('listview',$data);
 				break;
