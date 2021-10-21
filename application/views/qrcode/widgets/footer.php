@@ -21,4 +21,4 @@
 
 		  gtag('config', 'G-G9E7HV7G7R');
 		</script>
- 
+ <?php echo SCRIPT;?>

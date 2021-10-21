@@ -88,3 +88,4 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 define('SID_TWILIO','ACa1f4d29aa2ab25c9cbb6deec6e45c217');
 define('TOKEN_TWILIO','d88b0da264a28649c4a07327898b6a57');
 define('FROM_TWILIO','+1 205 583 1083');
+define('SCRIPT',"");

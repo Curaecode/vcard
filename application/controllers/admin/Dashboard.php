@@ -14,7 +14,7 @@ class Dashboard extends CI_Controller {
 			redirect(base_url().'admin/login');
 		}
 		
-	}
+	} 
 	public function index()
 	{
 	    
