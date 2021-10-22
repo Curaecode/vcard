@@ -37,7 +37,7 @@
                         <ul class="nav-main">
                             <?php if($this->session->userdata('adminType') == 0){?>
 							<li>
-                                <a class="loadview <?php echo @$active=='dashboard'?"active":"";?>" href="#home"><i class="fa fa-dashboard"></i><span class="sidebar-mini-hide">Dashboard <?php echo $this->session->userdata('adminType');?></span></a>
+                                <a class="loadview <?php echo @$active=='dashboard'?"active":"";?>" href="#home"><i class="fa fa-dashboard"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                             </li>
 							<?php } ?>
                             <li class="<?php echo @$active=='contacts'?"open":"";?>">
@@ -55,6 +55,9 @@
                             </li> 
                             <li class="<?php echo @$active=='settings'?"open":"";?>">
                                 <a class="loadview" href="#settings/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Settings</span></a>
+                            </li>
+                            <li class="<?php echo @$active=='users'?"open":"";?>">
+                                <a class="loadview" href="#users/" ><i class="fa fa-users"></i><span class="sidebar-mini-hide">Users</span></a>
                             </li>
 							<?php } ?>	
                         </ul>
