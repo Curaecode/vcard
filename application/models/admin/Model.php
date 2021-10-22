@@ -16,7 +16,7 @@ class Model extends CI_Model {
 	}
 	
 	public function getPassword($email){
-		return $this->db->query("Select id,password from admin where email='$email' or user_name='$email'")->row();
+		return $this->db->query("Select id,password,type from admin where email='$email' or user_name='$email'")->row();
 	}
 	public function getById($table,$id){
 		// echo "Select * from `$table` where id=$id";
@@ -115,16 +115,25 @@ class Model extends CI_Model {
 	{
 		return $this->db->query("select * from $table where id=$id")->row();
 	}
+	function checkuser($email,$username,$id = 0)
+	{
+		if($id>0){
+			return $this->db->query("Select * from admin where (email='$email' or user_name='$username') AND id <> $id ")->row();
+		}else{
+			return $this->db->query("Select * from admin where email='$email' or user_name='$username'")->row();
+		}
+		
+	}
 	
 	
 	public function insert($data) {
-$res = $this->db->insert_batch('user',$data);
-if($res){
-return TRUE;
-}else{
-return FALSE;
-}
-}
+		$res = $this->db->insert_batch('user',$data);
+		if($res){
+		return TRUE;
+		}else{
+		return FALSE;
+		}
+	}
 
 }
 ?>

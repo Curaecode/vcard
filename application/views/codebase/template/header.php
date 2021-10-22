@@ -23,7 +23,7 @@
 
                             <!-- Logo -->
                             <div class="content-header-item">
-                                <a class="font-w700 loadview" href="#home">
+                                <a class="font-w700 loadview" href="<?php if($this->session->userdata('adminType') > 0){?>#contacts<?php }else{ ?>#home<?php }?>">
                                     <img src="<?php echo res_url();?>img/image_logo.png" style="width:116px;margin-top:-9px;">
                                 </a>
                             </div>
@@ -35,12 +35,15 @@
                     
                     <div class="menubar">
                         <ul class="nav-main">
-                            <li>
-                                <a class="loadview <?php echo @$active=='dashboard'?"active":"";?>" href="#home"><i class="fa fa-dashboard"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            <?php if($this->session->userdata('adminType') == 0){?>
+							<li>
+                                <a class="loadview <?php echo @$active=='dashboard'?"active":"";?>" href="#home"><i class="fa fa-dashboard"></i><span class="sidebar-mini-hide">Dashboard <?php echo $this->session->userdata('adminType');?></span></a>
                             </li>
+							<?php } ?>
                             <li class="<?php echo @$active=='contacts'?"open":"";?>">
                                 <a class="loadview" href="#contacts/" ><i class="fa fa-address-book"></i><span class="sidebar-mini-hide">Contacts</span></a>
                             </li>
+							<?php if($this->session->userdata('adminType') == 0){?>
                              <li class="<?php echo @$active=='upload_excel_ajax'?"open":"";?>">
                                 <a class="loadview" href="#upload_excel_ajax/" ><i class="fa fa-address-book"></i><span class="sidebar-mini-hide">Import Contacts</span></a>
                             </li>
@@ -49,28 +52,11 @@
                             </li>
                              <li class="<?php echo @$active=='hospitals'?"open":"";?>">
                                 <a class="loadview" href="#hospitals/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Providers</span></a>
-                            </li>
-							<?php /*
-						   <li class="<?php echo @$active=='industries'?"open":"";?>">
-                                <a class="loadview" href="#industries/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Industries</span></a>
-                            </li>
-                             <li class="<?php echo @$active=='locations'?"open":"";?>">
-                                <a class="loadview" href="#locations/" ><i class="fa fa-location-arrow"></i><span class="sidebar-mini-hide">Locations</span></a>
-                            </li>
-
-                            <li class="<?php echo @$active=='salesgroups'?"open":"";?>">
-                                <a class="loadview" href="#salesgroups/" ><i class="fa fa-users" aria-hidden="true"></i><span class="sidebar-mini-hide">Sales Groups</span></a>
-                            </li>
-                             <li class="<?php echo @$active=='subscriptions'?"open":"";?>">
-                                <a class="loadview" href="#subscriptions/" ><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Subscriptions</span></a>
-                            </li> */ ?>
-                            
-                            <?php /* <li class="<?php echo @$active=='maillogs'?"open":"";?>">
-                                <a class="loadview" href="#maillogs/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Email Logs</span></a>
-                            </li>  */ ?>
+                            </li> 
                             <li class="<?php echo @$active=='settings'?"open":"";?>">
                                 <a class="loadview" href="#settings/" ><i class="fa fa-wrench"></i><span class="sidebar-mini-hide">Settings</span></a>
-                            </li> 
+                            </li>
+							<?php } ?>	
                         </ul>
                     </div>
 
@@ -90,7 +76,8 @@
                     </div>
                     <!-- END Left Section -->
 					<!-- Right Section -->
-                   <div class="content-header-section">
+                   <?php if($this->session->userdata('adminType') == 0){?>
+				   <div class="content-header-section">
                         <!-- User Dropdown -->
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-logs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -123,6 +110,7 @@
                         <!-- END User Dropdown -->
                     </div><!-- END Right Section -->
                     <!-- Right Section -->
+				   <?php } ?>
                    <div class="content-header-section">
                         <!-- User Dropdown -->
                         <div class="btn-group" role="group">

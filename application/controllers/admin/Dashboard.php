@@ -17,7 +17,9 @@ class Dashboard extends CI_Controller {
 	} 
 	public function index()
 	{
-	    
+	    if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		// genrate_image(67);die();
 		$data['title']="Dashboard";
 		$data['active']="dashboard";
@@ -140,12 +142,12 @@ class Dashboard extends CI_Controller {
 		                // print_r ($formData);
 		                // echo "</pre>";
 		                // die();
-						if($this->model->addData("companies",$formData)){
+						if($this->model->addData("care_coordination",$formData)){
 						$data['msg']="Hospital is added! successfully.";
 							$data['return']=true;
 						}
 						else{
-							$data['msg']="hospital is not added successfully.";
+							$data['msg']="Hospital is not added successfully.";
 							$data['return']=false;
 						}
 					}
@@ -200,7 +202,7 @@ class Dashboard extends CI_Controller {
 					$formData['image'] =   $this->upload->file_name;
 					$formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
 					if($this->model->updateData("care_coordination",$id,$formData)){
-						$data['msg']="company updated! successfully."; 
+						$data['msg']="hospital updated! successfully."; 
 						
 					}
 				}else{
@@ -235,6 +237,247 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
+	public function users($action="view",$id=""){
+		
+		$formData=escapeArray($this->input->post());
+		$data['active']="users";
+		switch($action){
+			case "view":
+				$coloumns=array(
+					"ID",
+					"Name", 
+					"User Name",
+					"Email",
+					"Address",
+					"Image", 
+					"Actions",
+				);
+				$data['id']=$id;
+				$data['title']="Users";
+				$data['coloumns']=$coloumns;
+				generatePageView('listview',$data);
+				break;
+			case "ajax":
+			$coloumns=array(
+			    "id",
+				"Name", 
+				"user_name",
+				"email",
+				"address", 
+				"image" 
+				
+				);
+				$searchFields=array(
+			    "id",
+				"Name",
+				"user_name",
+				"email"  
+				);
+			$fields=implode(",",$coloumns);
+			$sql="select $fields from admin where type > 0";
+			
+			if($id!==""){
+			$sql.=" and id=$id";	
+			}
+			// die($sql);
+			
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				$results=$this->db->query($sql2['sql'])->result();
+				$values=array();
+				foreach($results as &$key){
+					$id=$key->id; 
+					if($key->image==""){
+						$key->image="<img src='".res_url()."admin/default.jpg' width='100' height='80' class='img-responsive rounded-circle' >";
+					}else{
+						$key->image="<img src='".res_url()."admin/".$key->image."' width='100' height='80' class='img-responsive rounded-circle' >";
+					}
+					    
+					$value=array_values((array)$key);
+					// print_r($key);die;
+					array_push($value,addActions("users",$id));
+					$values[]=$value;
+				}
+				$output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				);
+				echo json_encode($output);
+				break;
+				case "add":
+				$data['title']="Add User";
+				if(isset($formData['submit'])){
+					unset($formData['submit']); 
+					$email=$formData['email'];
+					$username=$formData['user_name'];
+					$rec = $this->model->checkuser($email,$username);
+					if(!empty($rec)){
+						$data['msg']="User Name or Email already Exist. Please use another";
+						$data['return']=false;
+						echo json_encode($data);
+						die;
+						exit;
+					}
+					if(isset($formData['password'])){
+						$formData['password'] = password_hash($formData['password'],PASSWORD_DEFAULT);
+					}
+					$upload_path="resources/admin";
+			
+					$admin = array(
+					'upload_path' => $upload_path,
+					'allowed_types' => "jpg|jpeg",
+					'overwrite' => TRUE,
+					'file_name' => time(),
+					'max_size' => "2048000"
+					// 'max_height' => "768",
+					// 'max_width' => "1024"
+					);
+					$this->load->library('upload', $admin);
+					$config['image_library'] = 'gd2';//this loads the library for image resize where upload is successful
+						
+					if($_FILES['fileToUpload']['name']!==""){
+						if(!$this->upload->do_upload('fileToUpload')){ 
+							$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+						
+						}
+						else{
+							$imageDetailArray = $this->upload->data();
+							$formData['image'] =  $imageDetailArray['file_name'];
+						}
+					}
+						if(validateData("admin",$formData,$id)){
+							$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
+								$config['create_thumb'] = TRUE;
+								//$config['thumb_marker'] = false;
+								$config['maintain_ratio'] = FALSE;
+								$config['width'] = 235;//the width to resize to;
+								$config['height'] = 125;//height to resize to;
+								// echo "<pre>";
+								// print_r ($config);
+								// echo "</pre>";
+								// die();
+								$this->load->library('image_lib', $config);//this loads the image resize library
+								$this->image_lib->resize();//the resize function
+							   //check if the resize succeeds
+								$formData['image'] =   $this->upload->file_name;
+								$formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+								// echo "<pre>";
+								// print_r ($formData);
+								// echo "</pre>";
+								// die();
+								if($this->model->addData("admin",$formData)){
+									$data['msg']="User is added! successfully.";
+									$data['return']=true;
+								}
+								else{
+									$data['msg']="User is not added successfully.";
+									$data['return']=false;
+								}
+							}
+							else{
+									//$data['msg']="User is already exist.";
+									$data['edit']=$formData;
+							}
+							echo json_encode($data);
+							die;
+				}
+				$data['industries']=array();
+				generatePageView('adduser',$data);
+				break;
+			case "edit":
+				$data['title']="Update User";
+				$data['form']="edit";
+				if(isset($formData['submit'])){
+					unset($formData['submit']);
+					$email=$formData['email'];
+					$username=$formData['user_name'];
+					$rec = $this->model->checkuser($email,$username,$id);
+					if(!empty($rec)){
+						$data['msg']="User Name or Email already Exist. Please use another";
+						$data['return']=false;
+						echo json_encode($data);
+						die;
+						exit;
+					}
+					if(isset($formData['password']) && !empty($formData['password'])){
+						$formData['password'] = password_hash($formData['password'],PASSWORD_DEFAULT);
+					}else{
+						unset($formData['password']);
+					}
+					$upload_path="resources/admin";
+					
+					$admin = array(
+						'upload_path' => $upload_path,
+						'allowed_types' => "jpg|jpeg",
+						'overwrite' => TRUE,
+						'file_name' => time(),
+						'max_size' => "2048000"
+						// 'max_height' => "768",
+						// 'max_width' => "1024"
+					);
+					$this->load->library('upload', $admin);
+					if($_FILES['fileToUpload']['name']!==""){
+						if(!$this->upload->do_upload('fileToUpload')){ 
+							$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
+						
+						}
+						else{
+							$imageDetailArray = $this->upload->data();
+							$formData['image'] =  $imageDetailArray['file_name'];
+						}
+					}
+					if(validateData("admin",$formData,$id)){
+						if($_FILES['fileToUpload']['name']!==""){
+							$config['source_image'] = $this->upload->upload_path.$this->upload->file_name; 
+							$config['create_thumb'] = TRUE;
+							//$config['thumb_marker'] = false;
+							$config['maintain_ratio'] = FALSE;
+							$config['width'] = 235;//the width to resize to;
+							$config['height'] = 125;//height to resize to; 
+							$this->load->library('image_lib', $config);//this loads the image resize library
+							$this->image_lib->resize();//the resize function
+						   //check if the resize succeeds
+							$formData['image'] =   $this->upload->file_name;
+							$formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+							if($this->model->updateData("admin",$id,$formData)){
+								$data['msg']="User updated! successfully."; 
+								
+							}
+						}else{
+							if($this->model->updateData("admin",$id,$formData)){
+								$data['msg']="User updated! successfully."; 
+								
+							}
+						}
+								$data['return']=true;
+								$data['formData']=$formData;
+					}
+					echo json_encode($data);
+					die;
+		
+				}
+				$data['industries']=array();		
+				$data['edit']=(array)$this->model->getById("admin",$id);
+				generatePageView('adduser',$data);
+				break;
+			    case "delete":
+					if($this->model->deleteData("admin",$id))
+					{
+						//$this->model->deleteDatauser("user",$id);
+						$msg['success']="hospital is deleted! successfully.</div>";
+					}
+					else
+					{
+						$msg['error']="hospital is deleted! successfully";
+					}
+					
+				echo json_encode($msg);
+				break;
+		}
+	}
+	
+	
 	public function home($page="index")
 	{
 	   // echo "string";

@@ -20,7 +20,13 @@ class Login extends CI_Controller {
 				if(!empty($hash)){
 					if(password_verify($formData['password'],$hash->password)){
 						$this->session->set_userdata('adminId', $hash->id);
-					redirect(base_url().'admin/dashboard');
+						$this->session->set_userdata('adminType', $hash->type);
+						if($hash->type > 0){
+							redirect(base_url().'admin/dashboard#contacts');
+						}else{
+							redirect(base_url().'admin/dashboard#contacts');
+						}
+						
 					//redirect(base_url().'admin/dashboard#users');
 				}
 					else{
