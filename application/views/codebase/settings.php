@@ -33,7 +33,7 @@
 							</div>
 							
 						<?php }else{ ?>
-							<div class='col-sm-6 fix_radio'>
+							<div class='col-sm-6 <?php if($field->type=='radio'){?>fix_radio<?php } ?>'>
 								<div class='form-group '>
 									<label><?php echo ucfirst($field->label); ?></label>
 									<?php
@@ -50,6 +50,9 @@
 									else{
 										?>
 										<input type='<?php echo $field->type; ?>' value='<?php echo $field->value; ?>' class='form-control' name='<?php echo $field->name; ?>' >
+										<?php if($field->type=='file'){?>
+										<img style="width: 158px;padding: 9px;margin: 0 0 5px;"  id="blah1" src="<?php echo res_url()."admin/";echo isset($field->value) && $field->value!=="" ?$field->value:'defaultlogo.png'; ?>" class="profile-img" style=""  >
+										<?php } ?>
 									<?php
 									}
 									?>

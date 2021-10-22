@@ -730,28 +730,28 @@ class Dashboard extends CI_Controller {
 					
 					$upload_path="resources/admin";
 			
-			$admin = array(
-			'upload_path' => $upload_path,
-			'allowed_types' => "jpg|jpeg",
-			'overwrite' => TRUE,
-			'file_name' => time(),
-			'max_size' => "2048000"
-			// 'max_height' => "768",
-			// 'max_width' => "1024"
-			);
-			$this->load->library('upload', $admin);
-			$config['image_library'] = 'gd2';//this loads the library for image resize where upload is successful
+					$admin = array(
+					'upload_path' => $upload_path,
+					'allowed_types' => "jpg|jpeg",
+					'overwrite' => TRUE,
+					'file_name' => time(),
+					'max_size' => "2048000"
+					// 'max_height' => "768",
+					// 'max_width' => "1024"
+					);
+					$this->load->library('upload', $admin);
+					$config['image_library'] = 'gd2';//this loads the library for image resize where upload is successful
+								
+					if($_FILES['fileToUpload']['name']!==""){
+						if(!$this->upload->do_upload('fileToUpload')){ 
+							$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
 						
-			if($_FILES['fileToUpload']['name']!==""){
-				if(!$this->upload->do_upload('fileToUpload')){ 
-					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
-				
-				}
-				else{
-					$imageDetailArray = $this->upload->data();
-					$formData['image'] =  $imageDetailArray['file_name'];
-				}
-			}
+						}
+						else{
+							$imageDetailArray = $this->upload->data();
+							$formData['image'] =  $imageDetailArray['file_name'];
+						}
+					}
 				if(validateData("companies",$formData,$id)){
 					$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
 						$config['create_thumb'] = TRUE;
@@ -2892,12 +2892,49 @@ function download2($filename = NULL) {
 		$data['controller']="dashboard";
 		switch($action){
 			case "update":
-				$data['title']="Setting";
+				$data['title']="Setting"; 
 				if(isset($formData['submit'])){
 					$i=0;
+					if($_FILES['image']['name']!==""){ 
+						$upload_path="resources/admin"; 
+						$admin = array(
+							'upload_path' => $upload_path,
+							'allowed_types' => "jpg|jpeg|png",
+							'overwrite' => TRUE,
+							'file_name' => time() 
+						);
+						$this->load->library('upload', $admin);
+						$config['image_library'] = 'gd2'; 
+						if(!$this->upload->do_upload('image')){ 
+							$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>"; 
+						}
+						else{
+							$imageDetailArray = $this->upload->data(); 
+							 
+							$config['source_image'] = $imageDetailArray['full_path'];
+							$config['create_thumb'] = TRUE;
+							//$config['thumb_marker'] = false;
+							$config['maintain_ratio'] = FALSE;
+							$config['width'] = 235;
+							$config['height'] = 125;
+							 
+							$this->load->library('image_lib', $config); 
+							$this->image_lib->resize(); 
+						    $formData['image'] =   $this->upload->file_name;
+							$formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
+							
+							$this->db->where('name','image')->update('config', array("value"=>$formData['image']));
+						}
+					}
 					foreach($formData as $name=>$value){
-						$i++;
-						$this->db->where('name',$name)->update('config', array("value"=>$value));
+						$i++; 
+						if($name=='image'){
+							 
+							
+						}else{
+							$this->db->where('name',$name)->update('config', array("value"=>$value));
+						}
+						
 					}
 					if($i>0){
 						$data['msg']="Setting has been updated successfully</div>";
