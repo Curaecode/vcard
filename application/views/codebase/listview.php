@@ -27,13 +27,13 @@
 				
 				
 			<?php
-			if($active=="contacts"){ 
+			if($active=="contactsdemo"){ 
 				if($id==""){
 					
 						?>
 						<div class="block-content col-sm-12">
 							<div class="row">
-								<div class='col-sm-3'>
+								<?php /*<div class='col-sm-3'>
 									<div class='form-group'>
 										<label>Select company</label>
 											<select class="form-control" name="company_id" required>
@@ -45,7 +45,7 @@
 												?>
 											</select>
 									</div>
-								</div>
+								</div> */ ?>
 								<?php /* <div class='col-sm-3'>
 									<div class='form-group'>
 										<label>Select Group</label>

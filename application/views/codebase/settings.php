@@ -51,7 +51,9 @@
 										?>
 										<input type='<?php echo $field->type; ?>' value='<?php echo $field->value; ?>' class='form-control' name='<?php echo $field->name; ?>' >
 										<?php if($field->type=='file'){?>
+										<div class="help-block red">Only JPG allowed</div>
 										<img style="width: 158px;padding: 9px;margin: 0 0 5px;"  id="blah1" src="<?php echo res_url()."admin/";echo isset($field->value) && $field->value!=="" ?$field->value:'defaultlogo.png'; ?>" class="profile-img" style=""  >
+										
 										<?php } ?>
 									<?php
 									}

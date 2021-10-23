@@ -247,18 +247,25 @@ function genrate_image($id=null)
 	$contract_number= $last_data->contract_number;
 	$dependant_data=$CI->model->getdependents("contact_dependant",$contract_number);
 	 
-	$imagedata=$CI->model->getimageData("companies",$company_id);
+	/* $imagedata=$CI->model->getimageData("companies",$company_id); */
+	
+	$nameconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='showname'");
+ 
+	$dependconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='showdependent'");
+ 
+	$imageconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='image'");
+	 
 	$font=realpath('resources/font/Facit Regular.otf');
 	$image=imagecreatefromjpeg("resources/img/formate.jpg");
 	$color=imagecolorallocate($image, 50, 51, 50);
 	$fname=ucwords($last_data->first_name." ".$last_data->last_name);
 	$heightdependimg = 300;
-	if($imagedata->showname==1){
+	if($nameconfig->value==1){
 		imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $fname);
 	}
 	
 	
-	if($imagedata->showdependent==1){
+	if($dependconfig->value==1){
 		if(isset($dependant_data))
 		{
 			 
@@ -323,7 +330,7 @@ function genrate_image($id=null)
 	
 	
 	
-	$image_url = 'resources/admin/'.$imagedata->image;
+	$image_url = 'resources/admin/'.$imageconfig->value;
 	$watermark_image = imagecreatefromjpeg($image_url);
 	
 	$margin_right = 45; 
@@ -336,7 +343,7 @@ function genrate_image($id=null)
      /* imagecopy($image, $watermark_image, 15, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); */
       imagecopy($image, $watermark_image, imagesx($image) - $watermark_image_width - $margin_right, imagesy($image) - $watermark_image_height - $margin_bottom, 0, 0, $watermark_image_width, $watermark_image_height); 
 	  
-	if($imagedata->showdependent==1){  
+	if($dependconfig->value==1){  
 		$qrimage_url = 'resources/qrimage/'.$last_data->qrimage;
 		$watermark_qr = imagecreatefrompng($qrimage_url);
 		$margin_right = 10; 
@@ -368,11 +375,11 @@ function genrate_image($id=null)
 		
 	}
 	 
-	if($imagedata->showname==1){
+	if($nameconfig->value==1){
 		$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
 		imagettftext($image, 12, 0, 15, 325, $color,$font, $account_id);
 	}else{
-		if($imagedata->showdependent==1){
+		if($dependconfig->value==1){
 			$account_id=(!empty($last_data->account_code)?$last_data->account_code:'');
 			imagettftext($image, 15, 0, 15, $heightdependimg, $color,$font, $account_id);
 			

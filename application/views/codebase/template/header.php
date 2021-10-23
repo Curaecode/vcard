@@ -47,9 +47,9 @@
                              <li class="<?php echo @$active=='upload_excel_ajax'?"open":"";?>">
                                 <a class="loadview" href="#upload_excel_ajax/" ><i class="fa fa-address-book"></i><span class="sidebar-mini-hide">Import Contacts</span></a>
                             </li>
-                             <li class="<?php echo @$active=='companies'?"open":"";?>">
+                           <?php  /* <li class="<?php echo @$active=='companies'?"open":"";?>">
                                 <a class="loadview" href="#companies/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Companies</span></a>
-                            </li>
+                            </li> */ ?>
                              <li class="<?php echo @$active=='hospitals'?"open":"";?>">
                                 <a class="loadview" href="#hospitals/" ><i class="fa fa-building-o" aria-hidden="true"></i><span class="sidebar-mini-hide">Providers</span></a>
                             </li> 

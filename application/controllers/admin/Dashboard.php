@@ -27,7 +27,9 @@ class Dashboard extends CI_Controller {
 		generateView('index',$data);
 	}
 	public function hospitals($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="hospitals";
 		switch($action){
@@ -238,7 +240,9 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function users($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="users";
 		switch($action){
@@ -465,11 +469,11 @@ class Dashboard extends CI_Controller {
 					if($this->model->deleteData("admin",$id))
 					{
 						//$this->model->deleteDatauser("user",$id);
-						$msg['success']="hospital is deleted! successfully.</div>";
+						$msg['success']="User is deleted! successfully.</div>";
 					}
 					else
 					{
-						$msg['error']="hospital is deleted! successfully";
+						$msg['error']="User is deleted! successfully";
 					}
 					
 				echo json_encode($msg);
@@ -480,6 +484,9 @@ class Dashboard extends CI_Controller {
 	
 	public function home($page="index")
 	{
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}	
 	   // echo "string";
 	   // die();
 		//$_GET=escapeArray($this->input->get());
@@ -643,7 +650,9 @@ class Dashboard extends CI_Controller {
 		generatePageView('changePassword',$data);
 	}
 	public function companies($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="companies";
 		switch($action){
@@ -881,133 +890,11 @@ class Dashboard extends CI_Controller {
 				break;
 		}
 	}
-	public function locations_old($action="view",$id=""){
-		
-		$formData=escapeArray($this->input->post());
-		$data['active']="locations";
-		switch($action){
-			case "view":
-				$coloumns=array(
-					"ID",
-					"Location Name",
-					"company Name",
-					"Contact person",
-					"Address",
-					"Date",
-					"Actions",
-				);
-				$data['id']=$id;
-				$data['title']="Locations";
-				$data['coloumns']=$coloumns;
-				generatePageView('listview',$data);
-				break;
-			case "ajax":
-			$coloumns=array(
-			    "locations.id",
-				"locations.location_name",
-				"companies.company_name as c_name",
-				"locations.contact_person",
-				"locations.address",
-				"locations.date"
-				
-				);
-				$searchFields=array(
-			    "locations.id",
-				"locations.location_name",
-				"compaanies.company_name",
-				"locations.contact_person",
-				"locations.address"
-				
-				);
-			$fields=implode(",",$coloumns);
-			$sql="select $fields from locations inner join companies on locations.company_id=companies.id where 1=1";
-			
-			if($id!==""){
-			$sql.=" and id=$id";	
-			}
-			// die($sql);
-			
-				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
-				$results=$this->db->query($sql2['sql'])->result();
-				$values=array();
-				foreach($results as &$key){
-					$id=$key->id;
-					//unset($key->id); //we cant get id in datatable cause its unset if u remove unset u can get id in datatable 
-					$key->date=cdate($key->date);
-					$value=array_values((array)$key);
-					// print_r($key);die;
-					array_push($value,addActions("locations",$id));
-					$values[]=$value;
-				}
-				$output = array(
-					"draw" => $formData['draw'],
-					"recordsTotal" => $this->db->query("$sql")->num_rows(),
-					"recordsFiltered" => $sql2['countFiltered'],
-					"data" => isset($values)?$values:array(),
-				);
-				echo json_encode($output);
-				break;
-				case "add":
-				$data['title']="Add Location";
-				if(isset($formData['submit'])){
-					unset($formData['submit']);
-					
-				if(validateData("locations",$formData,$id)){
-					if($this->model->addData("locations",$formData)){
-						$data['msg']="Location is added! successfully.";
-							$data['return']=true;
-						}
-						else{
-							$data['msg']="Location is not added successfully.";
-							$data['return']=false;
-						}
-					}
-					else{
-							//$data['msg']="User is already exist.";
-							$data['edit']=$formData;
-					}
-					echo json_encode($data);
-					die;
-				}
-				$data['companies']=($this->model->getData("companies"));
-				generatePageView('addlocation',$data);
-				break;
-			case "edit":
-				$data['title']="Update Location";
-				$data['form']="edit";
-				if(isset($formData['submit'])){
-					unset($formData['submit']);
-					
-			if(validateData("locations",$formData,$id)){
-				
-			if($this->model->updateData("locations",$id,$formData))
-				$data['msg']="Location updated! successfully.";
-							$data['return']=true;
-						}
-					echo json_encode($data);
-					die;
-		
-				}
-				$data['companies']=($this->model->getData("companies"));
-		$data['edit']=(array)$this->model->getById("locations",$id);
-		generatePageView('addlocation',$data);
-				break;
-			case "delete":
-					if($this->model->deleteData("locations",$id)){
-						//$this->model->deleteDatauser("user",$id);
-						$msg['success']="Location is deleted! successfully.</div>";
-					}
-					else{
-						$msg['error']="Location is not deleted! successfully";
-					}
-					
-				echo json_encode($msg);
-				break;
-		}
-	}
-	
+	 
 	public function subscriptions($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1146,7 +1033,9 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function qrcodelogs($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1305,7 +1194,9 @@ class Dashboard extends CI_Controller {
 	
 	
 	public function detaillogs($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1454,7 +1345,9 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function twillio($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1525,7 +1418,9 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function twilliologs($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1558,7 +1453,9 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function cardlogs($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1709,7 +1606,9 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function urllogs($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -1844,7 +1743,9 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function maillogs($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="Email Logs";
 		switch($action){
@@ -2010,7 +1911,9 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function locations($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="locations";
 		switch($action){
@@ -2134,7 +2037,9 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function salesgroups($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="salesgroups";
 		switch($action){
@@ -2260,7 +2165,9 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	public function industries($action="view",$id=""){
-		
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="industries";
 		switch($action){
@@ -2505,9 +2412,7 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function contacts($action="view",$id=""){
-		// if(is_developer()){
-		// 	redirect(base_url());
-		// }
+		 
 		$formData=escapeArray($this->input->post());
 		$data['active']="contacts";
 		switch($action){
@@ -2520,8 +2425,7 @@ class Dashboard extends CI_Controller {
 					"First name",
 					"Last name",
 					"Email",
-					"Phone",
-					"company name", 
+					"Phone",  
 					//"country",
 					"Dependent",
 					"Account code",
@@ -2540,9 +2444,7 @@ class Dashboard extends CI_Controller {
 				"contacts.first_name",
 				"contacts.last_name",
 				"contacts.email",
-				"contacts.phone", 
-				"companies.company_name as c_name",  
-				//"country.country_name as cun_name",
+				"contacts.phone",     
 				"contacts.dependent",
 				"contacts.contract_number",
 				"contacts.account_code",
@@ -2563,10 +2465,10 @@ class Dashboard extends CI_Controller {
 				"contacts.phone"
 				);
 			$fields=implode(",",$coloumns);
-			$sql="select $fields from contacts left join companies on contacts.company_id=companies.id left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
-			if($formData['company_id']!=="all"){
+			$sql="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
+			/* if($formData['company_id']!=="all"){
 					$sql.= " and contacts.company_id='".$formData['company_id']."'";
-			}
+			} */
 				 
 			if($id!==""){
 				$sql.=" and id=$id";	
@@ -2886,7 +2788,10 @@ function download2($filename = NULL) {
     $data = file_get_contents('vcards/'.$filename);
     force_download($filename, $data);
 }
-	public function settings($action="update",$id=null){
+public function settings($action="update",$id=null){
+	if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		$formData=escapeArray($this->input->post());
 		$data['active']="settings";
 		$data['controller']="dashboard";
@@ -2899,7 +2804,7 @@ function download2($filename = NULL) {
 						$upload_path="resources/admin"; 
 						$admin = array(
 							'upload_path' => $upload_path,
-							'allowed_types' => "jpg|jpeg|png",
+							'allowed_types' => "jpg|jpeg",
 							'overwrite' => TRUE,
 							'file_name' => time() 
 						);
@@ -2991,8 +2896,10 @@ function download2($filename = NULL) {
 		    }
 		}
 	public function upload_validation(){
-  
-      if ($this->input->post('bulk_booking')) {
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
+		if ($this->input->post('bulk_booking')) {
                   $path = 'resources/uploads/';
                 require_once APPPATH . "/third_party/PHPExcel.php"; 
                 $import_xls_file =$_POST['change_file_name'];     
@@ -3036,7 +2943,9 @@ function download2($filename = NULL) {
        
     }
 	public function upload_file_excel(){ 
-		error_reporting(1);
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
 		if ($this->input->post('save_booking')){
 			$path = 'resources/uploads/';
 			 
@@ -3263,7 +3172,9 @@ function download2($filename = NULL) {
 			}
 	}
 	public function upload_excel(){
-  
+		if($this->session->userdata('adminType') > 0){
+			redirect(base_url().'admin/dashboard#contacts/');
+		}
       if ($this->input->post('submit')) {
                  
                 $path = 'resources/uploads/';

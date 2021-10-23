@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="form-group row less_margin">
-			<div class='col-sm-6'>
+			<?php /* <div class='col-sm-6'>
 				<div class='form-group'>
 					<label>Company<span style="color: red;">*</span></label>
 					<select class="form-control select2 " name="company_id" required>
@@ -50,7 +50,7 @@
 					</select>
 					<div class="help-block with-errors"></div>
 				</div>
-		  	</div> 
+		  	</div>  */ ?>
 		  	<div class='col-sm-6'>
 				<div class='form-group'>
 					<label>Country Name<span style="color: red;">*</span></label>
@@ -66,8 +66,6 @@
 					<div class="help-block with-errors"></div>
 				</div>
 		  	</div>
-		</div>
-		<div class="form-group row less_margin">
 			<div class='col-sm-6'>
 				<div class='form-group'>
 					<label>State<span style="color: red;">*</span></label>
@@ -79,15 +77,16 @@
 					<div class="help-block with-errors"></div>
 				</div>
 		  	</div>
+		</div>
+		<div class="form-group row less_margin">
+			
 			<div class='col-sm-6'>
 				<div class='form-group'>
 					<label>Date of Bith<span style="color: red;">*</span></label> 
 					<input type="date" class="form-control dateofbirth" value="<?php echo isset($edit["dob"])?$edit["dob"]:""; ?>" name="dob" required>
 					<div class="help-block with-errors"></div>
 				</div>
-		  	</div>  
-		</div> 
-		<div class="form-group row less_margin">
+		  	</div> 
 			<div class="col-sm-6">
 				<div class="form-material ">
 					<label for="name">Active member date</label>
