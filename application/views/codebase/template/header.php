@@ -6,7 +6,7 @@
                         <div class="content-header-section sidebar-mini-visible-b">
                             <!-- Logo -->
                             <span class="content-header-item font-w700 font-size-xl float-left animated fadeIn">
-                                <span class="text-dual-primary-dark">U</span><span class="text-primary">POS</span>
+                                <img src="<?php echo res_url();?>img/image_logo.png" style="width:116px;margin-top:-9px;">
                             </span>
                             <!-- END Logo -->
                         </div>
@@ -141,7 +141,24 @@
                         </div>
                         <!-- END User Dropdown -->
                     </div><!-- END Right Section -->
-                </div>
+                
+					<div class="content-header content-header-fullrow px-15">
+                         <?php 
+						 $imageconfig=$this->model->getDatarow("config","where isVisible=1 AND name='image'");
+						 ?>
+                        <!-- Normal Mode -->
+                        <div class="content-header-section text-center align-parent sidebar-mini-hidden"> 
+                            <!-- Logo -->
+                            <div class="content-header-item">
+                                <a class="font-w500 loadview" href="<?php if($this->session->userdata('adminType') > 0){?>#contacts<?php }else{ ?>#home<?php }?>">
+                                    <img src="<?php echo res_url();?>admin/<?php echo $imageconfig->value;?>" style="width:100px;margin-top:-15px;">
+                                </a>
+                            </div>
+                            <!-- END Logo -->
+                        </div>
+                        <!-- END Normal Mode -->
+                    </div>
+				</div>
                 <!-- END Header Content -->
 
                 <!-- Header Search -->
