@@ -11,6 +11,8 @@ class Qrcode extends CI_Controller {
 		if($this->session->userdata('vcode')){
 			redirect(base_url().'qrcode/detail');
 		}
+		$data['qrname']=$CI->model->getDatarow("config","where isVisible=1 AND name='qrname'");
+		$data['qrdob']=$CI->model->getDatarow("config","where isVisible=1 AND name='qrdob'");
 		$this->load->view('qrcode/index',$data);
 	}
 	public function detail(){

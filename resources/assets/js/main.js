@@ -278,19 +278,20 @@ function getqrimagecode(){
 			  return false;
 			 }
 			 /* var date = $("#year").val()+'-'+$("#month").val()+'-'+$("#day").val();*/
-			 
-			 var date = $("#dob").val();
-			 var dob = date.split('/');
-			 var orgdob = dob[2]+'-'+dob[0]+'-'+dob[1];
-			 if(!isValidDate(orgdob)){
-				 /* alert('Date of Birth is invalid.'); */
-				 Swal.fire({
-						title: 'CuraeChoiceCard',
-						html: 'Date of Birth is invalid.',
-						type: 'error'
-					});
-				 return false;
-			 } 
+			if($("#dob").length > 0){ 
+				 var date = $("#dob").val();
+				 var dob = date.split('/');
+				 var orgdob = dob[2]+'-'+dob[0]+'-'+dob[1];
+				 if(!isValidDate(orgdob)){
+					 /* alert('Date of Birth is invalid.'); */
+					 Swal.fire({
+							title: 'CuraeChoiceCard',
+							html: 'Date of Birth is invalid.',
+							type: 'error'
+						});
+					 return false;
+				 } 
+			}
 			var longitude = $("#longitude").val();
 			var latitude = $("#latitude").val();
 			/* if(locationenable==false){

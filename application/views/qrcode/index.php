@@ -16,7 +16,7 @@
 					<div class="login-wrap py-3">
 						<h3 class="vcard_title">vCard Sign up</h3>
 						<form action="" id="subscriptionform" class="login-form">
-						
+						<?php if($qrname->value == 1){?>
 							<div class="row"> 
 								<div class="col-6">
 									<div class="form-group">
@@ -31,6 +31,7 @@
 									</div>
 								</div> 
 							</div> 
+						<?php } ?>	
 							<div class="form-group">
 								<label class="pb-0" for="exampleInputPassword1">Email</label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="" required>
@@ -55,7 +56,7 @@
 							
 							<div class="form-group">
 								<div class="row">
-									<div class="col-5 pr-2">
+									<div class="col-<?php if($qrdob->value == 1){?>5<?php }else{ ?>12<?php }?> pr-2">
 										<div class="row">
 											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0 ">Verification Code</label>   
 											<div class="col-sm-12">
@@ -63,6 +64,7 @@
 											</div> 
 										</div>
 									</div>
+									<?php if($qrdob->value == 1){?>
 									<div class="col-7">
 										<div class="row">
 											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Date of Birth:</label> 
@@ -71,6 +73,7 @@
 											</div>
 										</div>  
 									</div>
+									<?php } ?>
 								</div>
 							</div> 
 							<div class="form-group mt-4">
@@ -84,6 +87,10 @@
 			</div>
 		</div>
 	</section>
+	 <script type="text/javascript">
+		var qrfullname = '<?php echo $qrname->value;?>';
+		var qrdob = '<?php echo $qrdob->value;?>';
+	 </script>
  <?php $this->load->view('qrcode/widgets/footer'); ?>
  <script type="text/javascript">
 		 	var locationenable = false; 	 
