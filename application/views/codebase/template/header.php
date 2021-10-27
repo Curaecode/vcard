@@ -43,6 +43,11 @@
                             <li class="<?php echo @$active=='contacts'?"open":"";?>">
                                 <a class="loadview" href="#contacts/" ><i class="fa fa-address-book"></i><span class="sidebar-mini-hide">Contacts</span></a>
                             </li>
+							<?php if($this->session->userdata('adminType') == 1){?>
+								 <li class="<?php echo @$active=='qrcodelogs'?"open":"";?>">
+									<a class="loadview" href="#qrcodelogs/" ><i class="fa fa-user mr-5"></i><span class="sidebar-mini-hide">Subscription Logs</span></a>
+								</li> 
+							<?php } ?>
 							<?php if($this->session->userdata('adminType') == 0){?>
                              <li class="<?php echo @$active=='upload_excel_ajax'?"open":"";?>">
                                 <a class="loadview" href="#upload_excel_ajax/" ><i class="fa fa-address-book"></i><span class="sidebar-mini-hide">Import Contacts</span></a>

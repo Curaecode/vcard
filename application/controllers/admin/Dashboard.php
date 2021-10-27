@@ -17,9 +17,7 @@ class Dashboard extends CI_Controller {
 	} 
 	public function index()
 	{
-	    if($this->session->userdata('adminType') > 0){
-			redirect(base_url().'admin/dashboard#contacts/');
-		}
+	    
 		// genrate_image(67);die();
 		$data['title']="Dashboard";
 		$data['active']="dashboard";
@@ -536,16 +534,18 @@ class Dashboard extends CI_Controller {
 		$id_con=$_POST['id'];
 		$edit=$this->model->getById("contacts",$id_con);
 		$id=$edit->location_id;
-		$location=$this->model->getByIdvcard("locations",$id);
-		$location_select='';
-		if(!empty($location)){
-			$location_select .="<option value=''>--Select location name--</option>";
-			foreach($location as $val){
-				$selected=isset($edit->location_id)&&$val->id==$edit->location_id?"selected":"";
-				$location_select .="<option value='".$val->id."' ".$selected.">".$val->location_name."</option>";
+		if(!empty($id)){
+			$location=$this->model->getByIdvcard("locations",$id);
+			$location_select='';
+			if(!empty($location)){
+				$location_select .="<option value=''>--Select location name--</option>";
+				foreach($location as $val){
+					$selected=isset($edit->location_id)&&$val->id==$edit->location_id?"selected":"";
+					$location_select .="<option value='".$val->id."' ".$selected.">".$val->location_name."</option>";
+				}
 			}
+			echo json_encode($location_select);
 		}
-		echo json_encode($location_select);
 	}
 	public function getcountry(){
 		$id=$_POST['id'];
@@ -1033,9 +1033,7 @@ class Dashboard extends CI_Controller {
 	}
 	
 	public function qrcodelogs($action="view",$id=""){
-		if($this->session->userdata('adminType') > 0){
-			redirect(base_url().'admin/dashboard#contacts/');
-		}
+		 
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
 		switch($action){
@@ -2444,6 +2442,8 @@ class Dashboard extends CI_Controller {
 				"contacts.first_name",
 				"contacts.last_name",
 				"contacts.email",
+				"contacts.emaildate",
+				"contacts.smsdate",
 				"contacts.phone",     
 				"contacts.dependent",
 				"contacts.contract_number",
@@ -2482,24 +2482,7 @@ class Dashboard extends CI_Controller {
 				foreach($results as &$key){
 					$id=$key->id;
 					$dependent_data = array();
-					
-					/* if(isset($key->dependent))
-					{
-						$dependents = json_decode($key->dependent);
-						if(!empty($dependents))
-						{
-							foreach($dependents as $key1 => $value1) 
-							{
-								if(!empty($value->dependent) || !empty($value->dependant_name) || !empty($value->dep_f_name)){
-									$dependent_data.=(isset($value1->dependent) && !empty($value1->dependent)) ? $value1->dependent.': ':'';
-									$dependent_data.=(isset($value1->dependant_name) && !empty($value->dependant_name)) ? $value1->dependant_name:'';
-									$dependent_data.=(isset($value1->dep_f_name) && !empty($value->dep_f_name)) ? ' '.$value1->dep_f_name:'';
-									
-									$dependent_data.='<br>';
-								}
-							}
-						}
-					} */
+					 
 					$contract_number= $key->contract_number;
 					$dependant_data=$this->model->getdependents("contact_dependant",$contract_number);
 					if(!empty($dependant_data)){
@@ -2536,14 +2519,29 @@ class Dashboard extends CI_Controller {
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
 					$key->image="<img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					
 					if($key->cardsend>=1){
 						$key->image ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->image;
 					}
 					if($key->cardemail>=1){
 						$key->email ='<i class="fa fa-check" aria-hidden="true" style="    color: green;"></i>'.$key->email;
+						if($key->emaildate!='0000-00-00 00:00:00' && !empty($key->emaildate)){
+							$key->email .='<br />'.cdate($key->emaildate);
+						}
 					}
+					if($key->cardsend>=1){
+						$key->phone ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->phone;
+						if($key->smsdate!='0000-00-00 00:00:00' && !empty($key->smsdate)){
+							$key->phone .='<br />'.cdate($key->smsdate);
+						}
+					}
+					/*
+					cdate
+					*/
 					unset($key->cardsend);
-					unset($key->cardemail);  
+					unset($key->cardemail);
+					unset($key->smsdate);  
+					unset($key->emaildate);  
 					$value=array_values((array)$key);
 					// print_r($key);die;
 					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
@@ -2755,7 +2753,7 @@ class Dashboard extends CI_Controller {
 		$data['edit']=(array)$this->model->getById("contacts",$id);
 		$data['groups']=($this->model->getData("groups"));
 		$data['companies']=($this->model->getData("companies"));
-		$data['locations']=($this->model->getLocation_byid("locations",$data['edit']['company_id']));
+		/* $data['locations']=($this->model->getLocation_byid("locations",$data['edit']['company_id'])); */
 		$data['states']=($this->model->getState_byid("states",$data['edit']['country_id']));
 		
 		$data['countries']=($this->model->getData("country"));
@@ -3347,7 +3345,7 @@ public function settings($action="update",$id=null){
         if(isset($datavcard->sid))
         {
 			
-			$query=$this->db->query("update `contacts` set cardsend= '1' where id=".$id."");
+			$query=$this->db->query("update `contacts` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
 	        $response['status']=1;
 	        $response['message']='Sent successfully';
         }
@@ -3458,7 +3456,7 @@ public function settings($action="update",$id=null){
 		$id=15; 
 		$datavcard = $this->sendtestVcard($this->model->getByIdvcard("contacts",$id),$id);
 		if(isset($datavcard->sid))  {
-			$query=$this->db->query("update `contacts` set cardsend= cardsend+1 where id=".$id."");
+			$query=$this->db->query("update `contacts` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
 		}
 		 
 		echo json_encode($response);exit();
@@ -3490,7 +3488,7 @@ public function settings($action="update",$id=null){
 			foreach($ids as $id){
 				$datavcard = $this->sendVcard($this->model->getByIdvcard("contacts",$id),$id);
 				if(isset($datavcard->sid))  {
-					$query=$this->db->query("update `contacts` set cardsend= cardsend+1 where id=".$id."");
+					$query=$this->db->query("update `contacts` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
 				}
 			} 
 			echo json_encode($response);exit(); 
@@ -3517,7 +3515,7 @@ public function settings($action="update",$id=null){
 				if(!empty($email)){
 					$returned = $this->sendmail($email,$fullname,$vcard_name,$vcard_image);
 					if($returned['status']==true){
-						$query=$this->db->query("update `contacts` set cardemail= cardemail+1 where id=".$id."");
+						$query=$this->db->query("update `contacts` set emaildate= '".date('Y-m-d H:i:s')."', cardemail= cardemail+1 where id=".$id."");
 					} 
 				} 
 			} 

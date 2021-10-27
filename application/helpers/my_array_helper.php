@@ -65,6 +65,7 @@ function generateIDOLD($id = null)
     }
 	return $generated_id;
 }
+
 function generateID($id = null)
 {
     $generated_id = '';
@@ -73,6 +74,8 @@ function generateID($id = null)
     	$CI =& get_instance();
     	$data = $CI->db->query("SELECT * FROM contacts WHERE id=$id")->row();
     	$company_name = isset($data->company_id) ? getCompanyName($data->company_id):'';
+		$imageconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='siteName'");
+		$company_name = $imageconfig->value;
     	$location_id = isset($data->location_id) ? getLocationsPlace($data->location_id,$data->company_id) :'';
     	$industry_name = isset($data->industry_id) ? getIndustryName($data->industry_id):'';
     	$parts = isset($company_name) ? explode(' ',$company_name):'';
@@ -181,12 +184,14 @@ function generateID($id = null)
 function getCompanyName($id=null)
 {
 	$CI =& get_instance();
-	$company_name = '';
+	$imageconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='siteName'");
+	$company_name = $imageconfig->value;
+	/* $company_name = '';
 	if($id!=null)
 	{
 		$data = $CI->db->query("SELECT * FROM companies WHERE id=$id")->row();
 		$company_name = isset($data->company_name) ? $data->company_name:'';
-	}
+	} */
 	return $company_name;
 }
 function getIndustryName($id=null)
