@@ -42,7 +42,11 @@ class Model extends CI_Model {
 		return $this->db->query("Select * from `$table` where company_id=$id")->result();
 	}
 	public function getByIdCountry($table,$id){
-		return $this->db->query("Select * from `$table` where country_id=$id")->result();
+		if($table=='states'){
+			return $this->db->query("Select * from `$table` where country_id=$id ORDER BY state_name ASC")->result();
+		}else{
+			return $this->db->query("Select * from `$table` where country_id=$id")->result();
+		} 
 	}
 	public function getByIdcompany($id){
 

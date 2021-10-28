@@ -164,18 +164,16 @@ function getqrimagecode(){
 	$('#submitbtn').prop('disabled', true); 
 	if($("#area_code").length > 0){
 		$("#area_code").keydown(function(event){
-			if(event.which != 8){
-				var charcters = $(this).val();
-				console.log(charcters);
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
+				var charcters = $(this).val(); 
 				if(charcters.length >=3){
 					$('#phone_first').focus();
 				}
 			}
 		});
 		$("#area_code").keyup(function(event){
-			if(event.which != 8){
-				var charcters = $(this).val();
-				console.log(charcters);
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
+				var charcters = $(this).val(); 
 				if(charcters.length >=3){
 					$('#phone_first').focus();
 				}
@@ -184,7 +182,7 @@ function getqrimagecode(){
 	}
 	if($("#phone_first").length > 0){
 		$("#phone_first").keydown(function(event){ 
-			if(event.which != 8){
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
 				var charcters = $(this).val();
 				if(charcters.length >=3){
 					$('#phone_second').focus();
@@ -192,7 +190,7 @@ function getqrimagecode(){
 			} 
 		});
 		$("#phone_first").keyup(function(event){
-			if(event.which != 8){
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
 				var charcters = $(this).val();
 				if(charcters.length >=3){
 					$('#phone_second').focus();
@@ -202,25 +200,33 @@ function getqrimagecode(){
 	}
 	if($("#phone_second").length > 0){
 		$("#phone_second").keydown(function(event){ 
-			if(event.which != 8){
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
 				var charcters = $(this).val();
 				if(charcters.length >=4){
 					if($('#cardform').length > 0){
 						$('#vcode').focus();
 					}else{
-						$('#dob').focus();
+						if($("#dob").length > 0){
+							$('#dob').focus();
+						}else{
+							$('#vcode').focus();
+						}
 					}
 				}
 			}
 		});
 		$("#phone_second").keyup(function(event){
-			if(event.which != 8){
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
 				var charcters = $(this).val();
 				if(charcters.length >=4){
 					if($('#cardform').length > 0){
 						$('#vcode').focus();
 					}else{
-						$('#dob').focus();
+						if($("#dob").length > 0){
+							$('#dob').focus();
+						}else{
+							$('#vcode').focus();
+						}
 					}
 				}
 			}
@@ -228,7 +234,7 @@ function getqrimagecode(){
 	}
 	if($("#vcode").length > 0){
 		$("#vcode").keydown(function(event){ 
-			if(event.which != 8){
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
 				var charcters = $(this).val();
 				if(charcters.length >=6){
 					$('#submitbtn').removeProp('disabled');
@@ -239,7 +245,7 @@ function getqrimagecode(){
 			}
 		});
 		$("#vcode").keyup(function(event){
-			if(event.which != 8){
+			if(event.which != 8 && event.which != 46 && event.which != 35 && event.which != 36 && event.which != 37 && event.which != 38 && event.which != 39 && event.which != 40){
 				var charcters = $(this).val();
 				if(charcters.length >=6){
 					$('#submitbtn').removeProp('disabled');

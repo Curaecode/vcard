@@ -267,6 +267,7 @@ class Subscriptions extends CI_Controller {
 					} 
 					$ip = get_client_ip();
 					$cols['ipaddress']=$ip;
+					$cols['addeddate']=date('Y-m-d H:i:s'); 
 					$this->db->insert('subscription_access', $cols);
 					
 					$usedata=$cols;
