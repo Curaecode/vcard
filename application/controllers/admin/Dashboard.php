@@ -2567,7 +2567,25 @@ class Dashboard extends CI_Controller {
 				$data['title']="Add Contact";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
-						  
+					if(isset($formData['phone'])){	
+						$newvalues=$formData['phone'];
+						$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
+						$mystring = $newvalues; 
+						$findme   = '+1';
+						$pos = strpos($mystring, $findme);
+						$findme2   = '+92';
+						$pos2 = strpos($mystring, $findme2);
+						
+						if ($pos === false) {
+							$newvalues = '+1'.$newvalues;
+						}
+						if ($newvalues=='3235696050' && $findme2===false) {
+							if($newvalues=='3235696050'){
+								$newvalues = '+92'.$newvalues;
+							} 
+						}
+						$formData['phone']=$newvalues;	
+					}	 
 					 	$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
 						if($this->model->addData("contacts",$formData)){
 							$last_id = $this->db->insert_id();							
@@ -2630,7 +2648,26 @@ class Dashboard extends CI_Controller {
 								$recdata['relationship']=$row['dependent'];
 								$recdata['first_name']=$row['dependant_name'];
 								$recdata['last_name']=$row['dep_f_name'];
-								$recdata['phone']=$row['phone']; 
+								
+								if(isset($row['phone'])){	
+									$newvalues=$row['phone'];
+									$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
+									$mystring = $newvalues; 
+									$findme   = '+1';
+									$pos = strpos($mystring, $findme);
+									$findme2   = '+92';
+									$pos2 = strpos($mystring, $findme2);
+									
+									if ($pos === false) {
+										$newvalues = '+1'.$newvalues;
+									}
+									if ($newvalues=='3235696050' && $findme2===false) {
+										if($newvalues=='3235696050'){
+											$newvalues = '+92'.$newvalues;
+										} 
+									}
+									$recdata['phone']=$newvalues;
+								}	
 								/* if(isset($row['dob']) && !empty($row['dob'])){ 
 									$dateofbirth = $row['dob'];
 									$dob= explode('/',$dateofbirth);
@@ -2693,6 +2730,25 @@ class Dashboard extends CI_Controller {
 				$data['form']="edit";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
+					if(isset($formData['phone'])){	
+						$newvalues=$formData['phone'];
+						$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
+						$mystring = $newvalues; 
+						$findme   = '+1';
+						$pos = strpos($mystring, $findme);
+						$findme2   = '+92';
+						$pos2 = strpos($mystring, $findme2);
+						
+						if ($pos === false) {
+							$newvalues = '+1'.$newvalues;
+						}
+						if ($newvalues=='3235696050' && $findme2===false) {
+							if($newvalues=='3235696050'){
+								$newvalues = '+92'.$newvalues;
+							} 
+						}
+						$formData['phone']=$newvalues;	
+					}
 					/* if(isset($formData['dob']) && !empty($formData['dob'])){ 
 						$dateofbirth = $formData['dob'];
 						$dob= explode('/',$dateofbirth);

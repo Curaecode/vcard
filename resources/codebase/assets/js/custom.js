@@ -98,7 +98,16 @@ $(document).ready(function(){
 				html+='<input type="text" class="form-control" value="" name="dependent['+index+'][dep_f_name]">';
 			html+='</td>';
 			html+='<td>';
-				html+='<input type="text" class="form-control" value="" name="dependent['+index+'][phone]">';
+			
+				html+='<div class="input-group">'+
+						  '<div class="input-group-prepend">'+
+							'<span class="input-group-text">'+
+							  '+1'+
+							'</span>'+
+						  '</div>'+
+						  '<input type="text" class="form-control" value="" name="dependent['+index+'][phone]">'+
+						'</div>';
+				/* html+='<input type="text" class="form-control" value="" name="dependent['+index+'][phone]">'; */
 			html+='</td>';
 			html+='<td>';
 				html+='<input type="date" class="form-control" value="" name="dependent['+index+'][dob]">';

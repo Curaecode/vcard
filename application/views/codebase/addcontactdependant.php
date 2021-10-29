@@ -38,7 +38,15 @@
 									<input type="text" class="form-control" value="" name="dependent[0][dep_f_name]">
 								</td>
 								<td>
-									<input type="text" class="form-control" value="" name="dependent[0][phone]">
+									<div class="input-group">
+									  <div class="input-group-prepend">
+										<span class="input-group-text">
+										  +1
+										</span>
+									  </div>
+									  <input type="text" class="form-control" value="" name="dependent[0][phone]">
+									</div>
+									
 								</td>
 								<td>
 									<input type="date" class="form-control dateofbirth" value="" name="dependent[0][dob]">

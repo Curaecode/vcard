@@ -30,7 +30,15 @@
 			<div class="col-sm-6">
 				<div class="form-material ">
 					<label for="name">Enter Phone<span style="color: red;">*</span></label>
-					<input type="text" class="form-control" value="<?php echo isset($edit["phone"])?$edit["phone"]:""; ?>" name="phone" required>
+					<div class="input-group">
+					  <div class="input-group-prepend">
+						<span class="input-group-text">
+						  +1
+						</span>
+					  </div>
+					  <input type="text" class="form-control" value="<?php echo isset($edit["phone"])?str_replace('+92','',str_replace('+1','',$edit["phone"])):""; ?>" name="phone" required> 
+					</div>
+					
 				</div>
 				<div class="help-block with-errors"></div>
 			</div>
