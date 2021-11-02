@@ -2577,13 +2577,12 @@ class Dashboard extends CI_Controller {
 						$pos2 = strpos($mystring, $findme2);
 						
 						if ($pos === false) {
-							$newvalues = '+1'.$newvalues;
-						}
-						if ($newvalues=='3235696050' && $findme2===false) {
 							if($newvalues=='3235696050'){
 								$newvalues = '+92'.$newvalues;
-							} 
-						}
+							}else{
+								 $newvalues = '+1'.$newvalues;
+							}
+						} 
 						$formData['phone']=$newvalues;	
 					}	 
 					 	$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
@@ -2659,13 +2658,15 @@ class Dashboard extends CI_Controller {
 									$pos2 = strpos($mystring, $findme2);
 									
 									if ($pos === false) {
-										$newvalues = '+1'.$newvalues;
+										if ($pos === false) {
+												if($newvalues=='3235696050'){
+													$newvalues = '+92'.$newvalues;
+												}else{
+													 $newvalues = '+1'.$newvalues;
+												}
+											}
 									}
-									if ($newvalues=='3235696050' && $findme2===false) {
-										if($newvalues=='3235696050'){
-											$newvalues = '+92'.$newvalues;
-										} 
-									}
+									 
 									$recdata['phone']=$newvalues;
 								}	
 								/* if(isset($row['dob']) && !empty($row['dob'])){ 
@@ -2739,14 +2740,15 @@ class Dashboard extends CI_Controller {
 						$findme2   = '+92';
 						$pos2 = strpos($mystring, $findme2);
 						
+						 
 						if ($pos === false) {
-							$newvalues = '+1'.$newvalues;
-						}
-						if ($newvalues=='3235696050' && $findme2===false) {
 							if($newvalues=='3235696050'){
 								$newvalues = '+92'.$newvalues;
-							} 
-						}
+							}else{
+								 $newvalues = '+1'.$newvalues;
+							}
+						} 
+						 
 						$formData['phone']=$newvalues;	
 					}
 					/* if(isset($formData['dob']) && !empty($formData['dob'])){ 
