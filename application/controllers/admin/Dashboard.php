@@ -3414,6 +3414,24 @@ public function settings($action="update",$id=null){
         }
         echo json_encode($response);exit();
     } 
+    function send_dependent_vcard($id= "")
+    {
+        $this->load->library('vcard');                
+        $datavcard = $this->senddependentVcard($this->model->getByIdvcard("contact_dependant",$id),$id);
+        if(isset($datavcard->sid))
+        {
+			
+			$query=$this->db->query("update `contact_dependant` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
+	        $response['status']=1;
+	        $response['message']='Sent successfully';
+        }
+        else
+        {
+        	$response['status']=0;
+        	$response['message']=$datavcard;
+        }
+        echo json_encode($response);exit();
+    } 
     function sendVcard($dat,$id=null)
     {
         $response = '';
@@ -3438,6 +3456,35 @@ public function settings($action="update",$id=null){
 					$inserdata['phone_number']=$data->phone;
 					$inserdata['sendstate']=2;
 					$this->db->insert('sms_logs',$inserdata); 
+				}
+			}
+        }
+        return $response;
+    }
+	function senddependentVcard($dat,$id=null)
+    {
+        $response = '';
+        foreach($dat as $data)
+        {
+	        if(!empty($data->phone)){
+				$this->load->library('twilio');
+				$filename = isset($data->vcard_name) ? $data->vcard_name:'';
+				$response = $this->twilio->sendSMS($data->phone,$filename);
+				
+				if(isset($response->sid))  {
+					$inserdata=array();
+					$inserdata['added_date']=date('Y-m-d H:i:s');
+					$inserdata['user_id']=$data->id;
+					$inserdata['phone_number']=$data->phone;
+					$inserdata['sendstate']=1;
+					$this->db->insert('dependent_sms_logs',$inserdata); 
+				}else{
+					$inserdata=array();
+					$inserdata['added_date']=date('Y-m-d H:i:s');
+					$inserdata['user_id']=$data->id;
+					$inserdata['phone_number']=$data->phone;
+					$inserdata['sendstate']=2;
+					$this->db->insert('dependent_sms_logs',$inserdata); 
 				}
 			}
         }
@@ -3551,8 +3598,7 @@ public function settings($action="update",$id=null){
         return $response;
     }
 	
-	function sendvcards(){
-		
+	function sendvcards(){ 
 		if($this->input->post('id')){
 			$response['status']=1;
 			$response['message']='Sent successfully';
@@ -3565,6 +3611,25 @@ public function settings($action="update",$id=null){
 			} 
 			echo json_encode($response);exit(); 
 			
+		}else{ 
+			$response['status']=0;
+			$response['message']='Please select some contact to send card';
+			echo json_encode($response);exit(); 
+		} 
+		
+	}
+	function senddependentvcards(){ 
+		if($this->input->post('id')){
+			$response['status']=1;
+			$response['message']='Sent successfully';
+			$ids=$this->input->post('id');
+			foreach($ids as $id){
+				$datavcard = $this->senddependentVcard($this->model->getByIdvcard("contact_dependant",$id),$id);
+				if(isset($datavcard->sid)){
+					$query=$this->db->query("update `contact_dependant` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
+				}
+			} 
+			echo json_encode($response);exit();  
 		}else{ 
 			$response['status']=0;
 			$response['message']='Please select some contact to send card';
@@ -3613,6 +3678,7 @@ public function settings($action="update",$id=null){
 			echo json_encode($response);exit(); 
 		}  
 	}
+	 
 	function testmail(){
 		$detail = $this->model->getByIdvcard("contacts",1);
 		$vcard_name=$detail[0]->vcard_name;
