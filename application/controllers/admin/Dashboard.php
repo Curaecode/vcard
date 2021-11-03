@@ -3423,6 +3423,22 @@ public function settings($action="update",$id=null){
 				$this->load->library('twilio');
 				$filename = isset($data->vcard_name) ? $data->vcard_name:'';
 				$response = $this->twilio->sendSMS($data->phone,$filename);
+				
+				if(isset($response->sid))  {
+					$inserdata=array();
+					$inserdata['added_date']=date('Y-m-d H:i:s');
+					$inserdata['user_id']=$data->id;
+					$inserdata['phone_number']=$data->phone;
+					$inserdata['sendstate']=1;
+					$this->db->insert('sms_logs',$inserdata); 
+				}else{
+					$inserdata=array();
+					$inserdata['added_date']=date('Y-m-d H:i:s');
+					$inserdata['user_id']=$data->id;
+					$inserdata['phone_number']=$data->phone;
+					$inserdata['sendstate']=2;
+					$this->db->insert('sms_logs',$inserdata); 
+				}
 			}
         }
         return $response;
@@ -3536,16 +3552,14 @@ public function settings($action="update",$id=null){
     }
 	
 	function sendvcards(){
-		/*
-		/send_contacts_email_vcard/92208
-		*/
+		
 		if($this->input->post('id')){
 			$response['status']=1;
 			$response['message']='Sent successfully';
 			$ids=$this->input->post('id');
 			foreach($ids as $id){
 				$datavcard = $this->sendVcard($this->model->getByIdvcard("contacts",$id),$id);
-				if(isset($datavcard->sid))  {
+				if(isset($datavcard->sid)){
 					$query=$this->db->query("update `contacts` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
 				}
 			} 
@@ -3574,6 +3588,20 @@ public function settings($action="update",$id=null){
 					$returned = $this->sendmail($email,$fullname,$vcard_name,$vcard_image);
 					if($returned['status']==true){
 						$query=$this->db->query("update `contacts` set emaildate= '".date('Y-m-d H:i:s')."', cardemail= cardemail+1 where id=".$id."");
+						
+						$inserdata=array();
+						$inserdata['added_date']=date('Y-m-d H:i:s');
+						$inserdata['user_id']=$detail[0]->id;
+						$inserdata['email']=$detail[0]->email;
+						$inserdata['sendstate']=1;
+						$this->db->insert('email_logs',$inserdata); 
+					}else{
+						$inserdata=array();
+						$inserdata['added_date']=date('Y-m-d H:i:s');
+						$inserdata['user_id']=$detail[0]->id;
+						$inserdata['email']=$detail[0]->email;
+						$inserdata['sendstate']=1;
+						$this->db->insert('email_logs',$inserdata); 
 					} 
 				} 
 			} 
