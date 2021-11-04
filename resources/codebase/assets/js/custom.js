@@ -16,6 +16,16 @@ function selectall(ele){
 			
 	}); */
 }
+function selectalldependent(ele){
+	var select_all = document.getElementById("select_alldependent"); 
+	if($(ele).is(':checked')){
+		console.log('TRUE');
+	}
+	
+	var checked = $(ele).prop('checked');
+	 $(".checkboxdependent").prop('checked',checked); 
+	 
+}
 function sendallcard(){
 	 if($(".checkbox:checked").length > 0) {
 		var selectedids= new Array(); 
@@ -26,6 +36,34 @@ function sendallcard(){
 		$.ajax({
             type:'POST',
             url:base_url+'admin/dashboard/sendvcards/',
+            data:{id:selectedids},
+            type:"post",
+			dataType:"json",
+            success:function(data){
+				console.log(data);
+				 
+                Swal.fire({
+					title: 'Done!',
+					text: data.message,
+					type: 'success'
+				});
+            }
+        }); 
+	 }else{
+		 Swal.fire("Error!",'Please select the contact to send the vcard.', "error");   
+	 }
+	return false;
+}
+function sendallcarddependent(){
+	 if($(".checkbox:checked").length > 0) {
+		var selectedids= new Array(); 
+		$('.checkbox:checked').each(function() {
+		   console.log(this.value);
+		   selectedids.push(this.value);
+		}); 
+		$.ajax({
+            type:'POST',
+            url:base_url+'admin/dashboard/senddependentvcards/',
             data:{id:selectedids},
             type:"post",
 			dataType:"json",

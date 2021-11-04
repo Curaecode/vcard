@@ -68,7 +68,7 @@ class Curaechoice extends CI_Controller {
 						 $insert_id = $this->db->insert_id();
 						$phonecodes = $insert_data['phone'];
 						 
-						$result = $this->db->query("Select * from contacts where phone='$phonecodes' AND md5(id)='$filename'")->row();
+						$result = $this->db->query("Select c.* from contacts c LEFT JOIN contact_dependant cd ON c.contract_number = cd.contract_number where (c.phone='$phonecodes' OR cd.phone='$phonecodes') AND md5(c.id)='$filename'")->row();
 						
 						if(!empty($result)){
 							$this->db->where('id',$insert_id);
@@ -140,8 +140,8 @@ class Curaechoice extends CI_Controller {
 						 $insert_id = $this->db->insert_id();
 						$phonecodes = $insert_data['phone'];
 						 
-						$result = $this->db->query("Select * from contacts where phone='$phonecodes' AND md5(id)='$filename'")->row();
-						
+						/* $result = $this->db->query("Select * from contacts where phone='$phonecodes' AND md5(id)='$filename'")->row(); */
+						$result = $this->db->query("Select c.* from contacts c LEFT JOIN contact_dependant cd ON c.contract_number = cd.contract_number where (c.phone='$phonecodes' OR cd.phone='$phonecodes') AND md5(c.id)='$filename'")->row();
 						if(!empty($result)){
 							$this->db->where('id',$insert_id);
 							$this->db->update('qrcard_access_log',array('visible'=>1));
