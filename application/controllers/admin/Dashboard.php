@@ -2544,9 +2544,19 @@ class Dashboard extends CI_Controller {
 					unset($key->emaildate);  
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> <a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
+					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
+					<a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
 					<a data-toggle='Send vCard' class='send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
-					<a data-toggle='View Dependent' class='loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> <a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-plus-square'></i></a>";
+					<a data-toggle='View Dependent' class='loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
+					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-plus-square'></i></a>
+					
+					<a data-toggle='View Send vCard SMS Logs' class='loadview modalview edite dependant_edit_page' data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
+					
+					<a data-toggle='View Send vCard SMS Logs' class='loadview modalview edite dependant_edit_page' data-title='View Send vCard SMS Logs' data-company='".$id."' title='View Send vCard SMS Logs' href='#contacts/viewsmslog/".$id."' style='background: #e18c0d;'><i class='fa fa-history'></i></a>
+					
+					<a data-toggle='View Send vCard Email Logs' class='loadview modalview edite dependant_edit_page' data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
+					
+					";
 					
 					
 					$up="<input type='checkbox' value='".$id."' class='checkbox form-control'>";
@@ -2635,6 +2645,31 @@ class Dashboard extends CI_Controller {
 				generatePageView('contactdependant',$data);
 			
 				break;
+			case "viewsmslog":
+				$contract_number=$id;  
+				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
+				
+				 
+				generatePageView('contactsmslogs',$data);
+			
+				break;
+			case "viewemaaillog":
+				$contract_number=$id;  
+				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
+				
+				 
+				generatePageView('contactemaillogs',$data);
+			
+				break;
+			case "viewdependentsmslog":
+				$contract_number=$id;  
+				 
+				$data['smslogs']=$this->db->query("Select sl.*,c.relationship,c.first_name,c.last_name,c.phone as phonenumber from dependent_sms_logs sl INNER JOIN contact_dependant c ON sl.user_id = c.id  INNER JOIN contacts cn ON c.contract_number = cn.contract_number where cn.id = ".$contract_number)->result(); 
+				 
+				generatePageView('contactdependentsmslogs',$data);
+			
+				break;
+			 
 			case "adddependent":  
 				$contract_number=$id;
 				if(isset($formData['submit'])){
@@ -3416,8 +3451,9 @@ public function settings($action="update",$id=null){
     } 
     function send_dependent_vcard($id= "")
     {
-        $this->load->library('vcard');                
-        $datavcard = $this->senddependentVcard($this->model->getByIdvcard("contact_dependant",$id),$id);
+        $this->load->library('vcard');   
+		$dependentdata = $data['smslogs']=$this->db->query("Select c.*,cn.vcard_name from  contact_dependant c  INNER JOIN contacts cn ON c.contract_number = cn.contract_number where c.id = ".$id)->result(); 	
+        $datavcard = $this->senddependentVcard($dependentdata,$id);
         if(isset($datavcard->sid))
         {
 			
@@ -3624,7 +3660,8 @@ public function settings($action="update",$id=null){
 			$response['message']='Sent successfully';
 			$ids=$this->input->post('id');
 			foreach($ids as $id){
-				$datavcard = $this->senddependentVcard($this->model->getByIdvcard("contact_dependant",$id),$id);
+				$dependentdata = $data['smslogs']=$this->db->query("Select c.*,cn.vcard_name from  contact_dependant c  INNER JOIN contacts cn ON c.contract_number = cn.contract_number where c.id = ".$id)->result(); 
+				$datavcard = $this->senddependentVcard($dependentdata,$id);
 				if(isset($datavcard->sid)){
 					$query=$this->db->query("update `contact_dependant` set smsdate= '".date('Y-m-d H:i:s')."', cardsend= cardsend+1 where id=".$id."");
 				}

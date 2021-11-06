@@ -1,5 +1,6 @@
-	
-
+<script>
+ $('.modal-dialog').addClass('modal-lg');
+</script>
 	<div class="container">
 						<form action="" method="post"  enctype="multipart/form-data" role="form" class="viewform" data-toggle="validator">
 					 
