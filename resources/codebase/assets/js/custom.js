@@ -422,6 +422,39 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$(document).on("click",".completedrec",function(e){
+		target=$(this).attr('href');
+		thiss=$(this);
+		e.preventDefault();
+		swal({
+		  title: "Are you sure?",
+		  text: "You will not be able to recover Record Again!",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonColor: "#DD6B55",
+		  confirmButtonText: "Yes, Complete it!",
+		  closeOnConfirm: false
+		}).then(result => {
+			// console.log(result);
+			if(result.value==true){
+				$.ajax({
+					url:target,
+					dataType:'json',
+					success:function(data){
+						if(data.success){
+							swal("Complete!", data.success, "success");
+							 table.ajax.reload();
+						}
+						else{
+							swal("Not Complete!", data.error, "error");
+						}
+					  
+					}
+				
+				});
+			}
+		});
+	});
 	
 	$(document).on("click",".change", function(e){
 	e.preventDefault();

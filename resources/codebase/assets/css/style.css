@@ -182,6 +182,9 @@
 #listingview table tr td:last-child a.delete {
     background:#ff0000;
 }
+#listingview table tr td:last-child a.completedrec {
+    background:#ff0000;
+}
 .download_btn a {
     background: #398439;
     border-radius: 0;

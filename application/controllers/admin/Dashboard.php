@@ -891,6 +891,7 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	 
+	
 	public function subscriptions($action="view",$id=""){
 		if($this->session->userdata('adminType') > 0){
 			redirect(base_url().'admin/dashboard#contacts/');
@@ -1032,6 +1033,15 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	
+	
+	function completesubscriptionaccess($id){
+		$recdata=array();
+		$recdata['completed']=1;
+		$this->model-> updateData("subscription_access",$id,$recdata); 
+		$msg['success']="Mark completed successfully."; 
+		$msg['return']=true; 	
+		echo json_encode($msg);
+	}
 	public function qrcodelogs($action="view",$id=""){
 		 
 		$formData=escapeArray($this->input->post());
@@ -1047,7 +1057,8 @@ class Dashboard extends CI_Controller {
 					"DOB", 
 					"IP",   
 					"Access Date Time",
-					"Address"	
+					"Address"	,
+					"Action"	
 				);
 				$data['id']=$id;
 				$data['title']="Subscriptions";
@@ -1065,6 +1076,7 @@ class Dashboard extends CI_Controller {
 				"ipaddress",
 				"latitude",
 				"longitude",
+				"completed",
 				"addeddate" 
 				
 				);
@@ -1100,14 +1112,19 @@ class Dashboard extends CI_Controller {
 						$key->addeddate=cdate($key->addeddate);
 					}
 					
-					
+					$completed = $key->completed;
+					unset($key->completed);
 					unset($key->latitude);
 					unset($key->longitude);
-					 
-					    
+					if($completed==0){
+						$down="<a data-toggle='Mark Complete' class='completedrec swal' style='color:#6bad1f;' title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check-square-o'></i></a>";
+					}else{
+						$down="Completed";
+					} 
+					     
 					$value=array_values((array)$key);
 					 
-					array_push($value,addActions("subscriptions",$id));
+					array_push($value,$down);
 					$values[]=$value;
 				}
 				$output = array(
@@ -1118,75 +1135,8 @@ class Dashboard extends CI_Controller {
 				);
 				echo json_encode($output);
 				break;
-				 
-			case "edit":
-				$data['title']="Update company";
-				$data['form']="edit";
-				if(isset($formData['submit'])){
-					unset($formData['submit']);
-					 $upload_path="resources/admin";
-					
-			$admin = array(
-			'upload_path' => $upload_path,
-			'allowed_types' => "jpg|jpeg",
-			'overwrite' => TRUE,
-			'file_name' => time(),
-			'max_size' => "2048000"
-			// 'max_height' => "768",
-			// 'max_width' => "1024"
-			);
-			$this->load->library('upload', $admin);
-			if($_FILES['fileToUpload']['name']!==""){
-				if(!$this->upload->do_upload('fileToUpload')){ 
-					$data['imageError'] =  "<div class='alert alert-danger'>".$this->upload->display_errors()."</div>";
-				
-				}
-				else{
-					$imageDetailArray = $this->upload->data();
-					$formData['image'] =  $imageDetailArray['file_name'];
-				}
-			}
-			if(validateData("companies",$formData,$id)){
-				$config['source_image'] = $this->upload->upload_path.$this->upload->file_name;//path to the image we want to resize which is the image we just uploaded
-						$config['create_thumb'] = TRUE;
-						//$config['thumb_marker'] = false;
-						$config['maintain_ratio'] = FALSE;
-						$config['width'] = 235;//the width to resize to;
-						$config['height'] = 125;//height to resize to;
-						// echo "<pre>";
-						// print_r ($config);
-						// echo "</pre>";
-						// die();
-		                $this->load->library('image_lib', $config);//this loads the image resize library
-		                $this->image_lib->resize();//the resize function
-		               //check if the resize succeeds
-		                $formData['image'] =   $this->upload->file_name;
-		                $formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
-			if($this->model->updateData("companies",$id,$formData))
-				$data['msg']="company updated! successfully.";
-							$data['return']=true;
-						}
-					echo json_encode($data);
-					die;
-		
-				}
-				$data['industries']=($this->model->getData("industries"));		
-				$data['edit']=(array)$this->model->getById("companies",$id);
-				generatePageView('addcompanies',$data);
-				break;
-			    case "delete":
-					if($this->model->deleteData("companies",$id))
-					{
-						//$this->model->deleteDatauser("user",$id);
-						$msg['success']="Company is deleted! successfully.</div>";
-					}
-					else
-					{
-						$msg['error']="Company is deleted! successfully";
-					}
-					
-				echo json_encode($msg);
-				break;
+				  
+			 
 		}
 	}
 	
@@ -2548,7 +2498,8 @@ class Dashboard extends CI_Controller {
 					<a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
 					<a data-toggle='Send vCard' class='send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
 					<a data-toggle='View Dependent' class='loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
-					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-plus-square'></i></a>
+					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-user-plus'></i></a>
+					<a data-toggle='Edit Dependent' title='Edit Dependent' href='#contacts/editdependents/".$contract_number."' data-company='".$contract_number."' data-title='Edit Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-pencil-square'></i></a>
 					
 					<a data-toggle='View Send vCard SMS Logs' class='loadview modalview edite dependant_edit_page' data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
 					
@@ -2645,6 +2596,87 @@ class Dashboard extends CI_Controller {
 				generatePageView('contactdependant',$data);
 			
 				break;
+			case "editdependents":
+				$contract_number=$id;  
+				if(isset($formData['submit'])){
+					$dependent = isset($formData['dependent']) ? $formData['dependent']:'';
+					
+					$added = false;
+					if(!empty($dependent)){
+						foreach($dependent as $row){
+							if(!empty($row['dependent']) || !empty($row['dependant_name']) || !empty($row['dep_f_name'])){
+								$recdata=array();
+								$recdata['relationship']=$row['dependent'];
+								$recdata['first_name']=$row['dependant_name'];
+								$recdata['last_name']=$row['dep_f_name'];
+								$did=$row['id'];
+								$recdata['dob']=$row['dob'];
+								if(isset($row['phone'])){	
+									$newvalues=$row['phone'];
+									$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
+									$mystring = $newvalues; 
+									$findme   = '+1';
+									$pos = strpos($mystring, $findme);
+									$findme2   = '+92';
+									$pos2 = strpos($mystring, $findme2);
+									
+									if ($pos === false) {
+										if ($pos === false) {
+												if($newvalues=='3235696050'){
+													$newvalues = '+92'.$newvalues;
+												}else{
+													 $newvalues = '+1'.$newvalues;
+												}
+											}
+									}
+									 
+									$recdata['phone']=$newvalues;
+								}	 
+								$recdata['contract_number']=$contract_number;
+								$this->model-> updateData("contact_dependant",$did,$recdata);  
+								$added=true;
+							}
+						} 
+						$last_id=0;
+						if($added){
+							$result = $this->model->getLastData4("contacts",$contract_number);
+							if(!empty($result)){
+								$last_id = $result->id;
+							}
+						}
+						if($last_id > 0){
+							$last_data=$this->model->getLastData2("contacts",$last_id);
+							$this->load->library('phpqrcode/qrlib');
+							
+							$account_id = generateID($last_id);
+							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
+								
+								
+							$last_data=$this->model->getLastData2("contacts",$last_id);
+							  
+							$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
+							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
+							  
+							  
+							$image_new = genrate_image($last_id);
+							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
+							
+							$down = get_contacts_vcard($last_id);
+							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");  
+						} 
+					}
+					
+					$data['msg']="Dependent Add successfully.";
+					$data['dependent']='Child';
+					$data['return']=true; 
+					echo json_encode($data);
+					die;
+				}
+				
+				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
+				generatePageView('editdependant',$data);
+			
+				break;
 			case "viewsmslog":
 				$contract_number=$id;  
 				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
@@ -2682,7 +2714,7 @@ class Dashboard extends CI_Controller {
 								$recdata['relationship']=$row['dependent'];
 								$recdata['first_name']=$row['dependant_name'];
 								$recdata['last_name']=$row['dep_f_name'];
-								
+								$recdata['dob']=$row['dob'];
 								if(isset($row['phone'])){	
 									$newvalues=$row['phone'];
 									$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
@@ -2704,20 +2736,17 @@ class Dashboard extends CI_Controller {
 									 
 									$recdata['phone']=$newvalues;
 								}	
-								/* if(isset($row['dob']) && !empty($row['dob'])){ 
+								if(isset($row['dob']) && !empty($row['dob'])){ 
 									$dateofbirth = $row['dob'];
 									$dob= explode('/',$dateofbirth);
 									$recdata['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
-								} */
+								}
 								$recdata['contract_number']=$contract_number;
 								$this->model->addData("contact_dependant",$recdata); 
 								
 								$lastrecord = $this->model->getLastData4('contacts',$contract_number);
 								$last_id = $lastrecord->id; 
-								
-								
 								 
-
 								$added = true;
 							}
 						}
