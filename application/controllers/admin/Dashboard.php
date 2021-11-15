@@ -2735,12 +2735,7 @@ class Dashboard extends CI_Controller {
 									}
 									 
 									$recdata['phone']=$newvalues;
-								}	
-								if(isset($row['dob']) && !empty($row['dob'])){ 
-									$dateofbirth = $row['dob'];
-									$dob= explode('/',$dateofbirth);
-									$recdata['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
-								}
+								}	 
 								$recdata['contract_number']=$contract_number;
 								$this->model->addData("contact_dependant",$recdata); 
 								
