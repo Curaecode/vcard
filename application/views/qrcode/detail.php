@@ -16,15 +16,23 @@
 				<div class="col-md-6 col-lg-5">
 					<div class="detail-wrap ">
 						<div class="row"> 
-							<div class="col-sm-6 col-xs-6">
-								<div class="card">
-									<a href="javascript:void(0)" onclick="return openlink(1)" target="_blank">
-										<img src="<?php echo base_url();?>resources/assets/images/Hospital.png" />
-										Hospital & ER 
-									</a>
-								</div>
-							</div>
-							<div class="col-sm-6 col-xs-6">
+							<?php  
+								$query = $this->db->get( 'care_coordination' );
+								$result = $query->result();
+								foreach( $result as $row ){
+									?>
+									<div class="col-sm-6 col-xs-6">
+										<div class="card">
+											<a href="javascript:void(0)" onclick="return openlink(<?php echo $row->id;?>)" target="_blank">
+												<img src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>" />
+												<?php echo $row->linkname;?>
+											</a>
+										</div>
+									</div>
+							<?php   } ?>
+							
+							
+						<?php	/* <div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="javascript:void(0)" onclick="return openlink(2)" target="_blank">
 										<img src="<?php echo base_url();?>resources/assets/images/Physical-Therapy.png" />
@@ -92,12 +100,12 @@
 							
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
-									<a href="javascript:void(0)" onclick="return false" target="_blank"> <?php /*  openlink(10) */ ?>
+									<a href="javascript:void(0)" onclick="return false" target="_blank">  
 										<img src="<?php echo base_url();?>resources/assets/images/Dental.png" />
 										Dentists (Coming Soon)
 									</a>
 								</div>
-							</div>
+							</div> */ ?>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="mailto:support@curaechoice.com" target="">

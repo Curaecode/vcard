@@ -250,7 +250,8 @@ class Vcard
 	   $this->ci->load->helper('url');
 	   $mainURL = base_url();
 	   
-	  
+		$this->ci->db->select('*');
+		$this->ci->db->where('is_card',1);
 		$query = $this->ci->db->get( 'care_coordination' );
 		$result = $query->result();
 		foreach( $result as $row ){
