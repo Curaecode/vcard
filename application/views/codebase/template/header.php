@@ -128,7 +128,7 @@
                                 <i class="fa fa-angle-down ml-5"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
-                                <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">Gebruiker</h5>
+                                <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase"><?php echo getCurrentData()->Name;?></h5>
                                 <a class="dropdown-item loadview" href="#profile">
                                     <i class="fa fa-user mr-5"></i> Profile
                                 </a>
@@ -183,7 +183,10 @@
             <!-- END Header -->
 
             <!-- Header -->
-            
+            <div id="overlay"></div>
+			<div id="overlayContent">
+			<img id="imgBig" src="" alt="" width="400" />
+			</div>
             <!-- Main Container -->
             <main id="main-container">
 

@@ -549,7 +549,8 @@ view.refreshJs=function(datatable,page){
 		url=base_url+"admin/dashboard/"+page+"/ajax/";
 		table = $('.datatable').DataTable({ 
 			"lengthMenu": [[100, 250, 500,1000,-1], [100, 250, 500,1000,"All"]],
-			 dom: 'Blfrtip',
+			 /* dom: 'Blfrtip', */
+			 "dom": '<"row"<"col-md-6"l><"col-md-6 text-end"B>><"table-responsive"rt><"row"<"col-md-6"i><"col-md-6 text-end"p>>',
 			buttons: [
 				'copyHtml5',
 				'excelHtml5',
@@ -558,34 +559,31 @@ view.refreshJs=function(datatable,page){
 			],
 			"scrollY":        "300px",
 			"scrollCollapse": true, 
-			"processing": true, //Feature control the processing indicator.
-			"serverSide": true, //Feature control DataTables' server-side processing mode.
-			"order": [], //Initial no order.
+			"processing": true, 
+			"serverSide": true,  
+			"order": [], 
 			"ajax": {
 				"url":url ,
-				"type": "POST",
-				// "data":{
-					// "from_date":$(".from_date").val(),
-					// "to_date":$(".to_date").val(),
-				// }
+				"type": "POST", 
 				"data":function (d) {
-					d.from_date = $('.from_date').val();
+					/* d.from_date = $('.from_date').val();
 					d.to_date = $('.to_date').val();
 					d.company_id = $('[name="company_id"]').val();
-					d.group_id = $('[name="group_id"]').val();
+					d.group_id = $('[name="group_id"]').val(); */
 				},
 				"initComplete": function(settings, json) {
 					console.log("settings",settings); 
+					 
+					
 				}
 			},
-			"destroy" : true
-			
-			
-			
-		// fixedColumns: true,
+			"destroy" : true 
 			
 		});
 		
+		$('#myInputTextField').keyup(function(){
+			  table.search($(this).val()).draw() ;
+		})
 	}
 	if(datatable&&$(".dt-button").length>0){
 		$(".dt-button").addClass("btn btn-secondary btn-sm");

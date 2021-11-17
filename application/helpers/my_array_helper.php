@@ -753,11 +753,18 @@ function decrypt($string) {
 function generateView($view,$data=null){
 	$CI =& get_instance();
 	$theme=getSiteData('theme')[0]->value;
+	$CI->load->view("$theme/template/mainsidebar",$data);
+	$CI->load->view("$theme/template/mainheader",$data);
+	// $CI->load->view($theme."/".$view,$data);
+	$CI->load->view("$theme/template/mainfooter",$data); 	
+}
+function generateViewOLD($view,$data=null){
+	$CI =& get_instance();
+	$theme=getSiteData('theme')[0]->value;
 	$CI->load->view("$theme/template/sidebar",$data);
 	$CI->load->view("$theme/template/header",$data);
 	// $CI->load->view($theme."/".$view,$data);
-	$CI->load->view("$theme/template/footer",$data);
-		
+	$CI->load->view("$theme/template/footer",$data); 	
 }
 function generatePageView($view,$data=null){
 	$CI =& get_instance();

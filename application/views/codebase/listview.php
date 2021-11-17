@@ -1,134 +1,65 @@
+<div class="row page-titles">
+	<div class="col-md-5 col-12 align-self-center">
+		<h3 class="text-themecolor mb-0"><?php  echo ucfirst($title); ?></h3>
+		<ol class="breadcrumb mb-0">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+			<li class="breadcrumb-item active"><?php  echo ucfirst($title); ?></li>
+		</ol>
+	</div> 
+</div>
+
+<div class="card card-body">
+	<div class="row">
+			<div class="col-md-4 col-xl-2">
+				<form>
+					<input type="text" class="form-control product-search"  id="myInputTextField" placeholder="Search ...">
+				</form>
+			</div>
+			<div class="col-md-8 col-xl-10 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
+				 <?php if($title == 'Contact'){ ?>
+					<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Email</button>
+					<button type="button"  style="margin-right:10px;" onclick='return sendallcard()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Card</button>
+				 <?php } ?>
+				 <?php if($title != 'Subscriptions' && $title != 'Email Logs' && $title != 'URL Access Log' && $title != 'Providers Access Log' && $title != 'Card Access Log' && $title != 'Twillio Access Log'){ ?>
+					<a href="#<?php echo "$active/add"?>" id="btn-add-contact" class="btn btn-info loadview modalview" data-title='<?php echo "Add $title"; ?>'>  Add <?php echo ucfirst($title); ?></a> 
+					<?php }?>
+				 
+			</div>
+	</div>
+</div>
+
 
 	<div class="block animated fadeIn">
-		<div class="block-header block-header-default">
-			<h3 class="block-title">
-				<?php 
-					echo ucfirst($title);
-				?>
-			</h3>
-			
-			<?php if($title == 'Contact'){ ?>
-				<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Email</button>
-				<button type="button"  style="margin-right:10px;" onclick='return sendallcard()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Card</button>
-			<?php }?>
-			<?php if($title != 'Subscriptions' && $title != 'Email Logs' && $title != 'URL Access Log' && $title != 'Providers Access Log' && $title != 'Card Access Log' && $title != 'Twillio Access Log'){ ?>
-			<a class="loadview modalview" data-title='<?php echo "Add $title"; ?>' href="#<?php echo "$active/add"?>" >
-				<button type="button" class=" btn btn-sm btn-success js-tooltip-enabled" data-toggle="tooltip" title="" data-original-title="Add">
-					<i class="fa fa-plus"></i> Add <?php echo ucfirst($title); ?>
-				</button>
-			</a>
-			<?php }?>
-			
-			
-		</div>
+		 
 		<!-- row #1 -->
-		<!-- Dynamic Table Full -->
-		<div class="block">
-				
-				
-			<?php
-			if($active=="contactsdemo"){ 
-				if($id==""){
-					
-						?>
-						<div class="block-content col-sm-12">
-							<div class="row">
-								<?php /*<div class='col-sm-3'>
-									<div class='form-group'>
-										<label>Select company</label>
-											<select class="form-control" name="company_id" required>
-												<option value="all">--Select company--</option>
-												<?php
-													foreach($companies as $company){
-														echo "<option value='$company->id'>$company->company_name</option>";
-													}
-												?>
-											</select>
-									</div>
-								</div> */ ?>
-								<?php /* <div class='col-sm-3'>
-									<div class='form-group'>
-										<label>Select Group</label>
-											<select class="form-control" name="group_id" required>
-												<option value="all">--Select group--</option>
-												<?php
-													foreach($groups as $group){
-														echo "<option value='$group->id'>$group->group_name</option>";
-													}
-												?>
-											</select>
-									</div>
-								</div> */ ?>
-								<!-- <div class='col-sm-3'>
-							<div class='form-group'>
-								<label></label>
-								<input type='submit'  class='form-control btn btn-info' value="Filter" name='filter'>
-							</div>
-						</div> -->
-							</div>
-							
-						</div>
-					
-					
-				
-				
-			<?php
-				}
-			} 
-			?>
-					
-				</div>
-					
-					
-				<?php
-			if($active=="orders"){ ?>
-				<div class="block-content ">
-					<div class="row">
-						<div class='col-sm-4'>
-							 <div class='form-group'>
-								<label>From Date</label>
-								<input type='text' class='datepicker form-control from_date' value="" name=''>
-							</div>
-						</div>
-						<div class='col-sm-4'>
-							 <div class='form-group'>
-								<label>To Date</label>
-								<input type='text'  class='datepicker form-control to_date' value="" name=''>
-							</div>
-						</div>
-						<div class='col-sm-4'>
-							<div class='form-group'>
-								<label></label>
-								<input type='submit'  class='form-control btn btn-info' value="Filter" name='filter'>
-							</div>
-						</div>
+		<!-- Dynamic Table Full -->  
+				<div class="block-content "> 
+			<div class="card card-body"> 
+					<div class="block-content block-content-full" id="listingview"> 
+						<table data-id="<?php echo @$id; ?>" data-active2="<?php echo @$active2; ?>"  data-active="<?php echo @$active; ?>" class="table table-bordered table-striped table-vcenter datatable js-dataTable-full   search-table v-middle" id="basic-datatable"> 
+							<thead>
+								<tr role="row">
+								<?php $counter=0;
+									foreach($coloumns as $key=>$coloumn){
+										if($counter==0){
+											echo "<th class='sorting_disabled'>$coloumn</th>";
+										}else{
+											echo "<th class='sorting'>$coloumn</th>";
+										}
+										$counter++;
+									}
+								?>
+								 
+								  
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
 					</div>
-				</div>
-			<?php } ?>
-				<div class="block-content ">
-					
-					
-					
-				
+				 
+			</div>	
 			
-			<div class="block-content block-content-full" id="listingview">
-				<!-- DataTables functionality is initialized with .js-dataTable-full class in js/pages/be_tables_datatables.min.js which was auto compiled from _es6/pages/be_tables_datatables.js -->
-				<table data-id="<?php echo @$id; ?>" data-active2="<?php echo @$active2; ?>"  data-active="<?php echo @$active; ?>" class="table table-bordered table-striped table-vcenter datatable js-dataTable-full" id="basic-datatable"> 
-					<thead>
-						<tr role="row">
-						<?php
-							foreach($coloumns as $coloumn){
-								echo "<th class='sorting'>$coloumn</th>";
-							}
-						?>
-						 
-						  
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
 		</div>
 		<!-- END Dynamic Table Full -->
 	<!-- end row #1 -->

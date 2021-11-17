@@ -193,7 +193,7 @@ $(document).ready(function () {
         });
 
 	// tabs
- $('.nav-tabs > li a[title]').tooltip();
+/*  $('.nav-tabs > li a[title]').tooltip(); */
     $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 
       var $target = $(e.target);

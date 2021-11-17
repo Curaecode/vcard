@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">	
     <link rel="canonical" href="<?php echo base_url();?>" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url();?>assets//images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url();?>assets/images/favicon.png">
     <!-- Custom CSS -->
     <link href="<?php echo base_url();?>assets/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,9 +88,9 @@
     <!-- -------------------------------------------------------------- -->
     <!-- All Required js -->
     <!-- -------------------------------------------------------------- -->
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="<?php echo base_url();?>assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo base_url();?>assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- -------------------------------------------------------------- -->
     <!-- This page plugin js -->
     <!-- -------------------------------------------------------------- -->

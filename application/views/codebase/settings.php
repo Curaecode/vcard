@@ -1,11 +1,14 @@
+<div class="row page-titles">
+	<div class="col-md-5 col-12 align-self-center">
+		<h3 class="text-themecolor mb-0"><?php  echo ucfirst($title); ?></h3>
+		<ol class="breadcrumb mb-0">
+			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+			<li class="breadcrumb-item active"><?php  echo ucfirst($title); ?></li>
+		</ol>
+	</div> 
+</div>
 <div class="block animated fadeIn">
-	<div class="block-header block-header-default">
-		<h3 class="block-title">
-			<?php 
-				echo ucfirst($title);
-			?>
-		</h3>
-	</div>
+	 
 	<div style='margin:20px' class="alert alert-info" role="alert" align="center">
 		Please refresh your page after updating the settings.
 	</div>
