@@ -20,8 +20,7 @@
 	<!-- Page JS Plugins CSS -->
 	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/slick/slick.css">
 	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/slick/slick.css">
-	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/slick/slick-theme.css">
-	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/sweetalert2/sweetalert2.min.css">
+	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/slick/slick-theme.css"> 
 	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/select2/css/select2.min.css"></link>
 	<link rel="stylesheet" href="<?php echo res_url(); ?>codebase/assets/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">	
 	
@@ -29,6 +28,8 @@
     <!-- Custom CSS -->
     <link href="<?php echo base_url();?>assets/css/custom.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/style.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/libs/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

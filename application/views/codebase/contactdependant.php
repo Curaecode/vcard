@@ -1,15 +1,17 @@
 <script>
  $('.modal-dialog').addClass('modal-lg');
 </script>
-<div class="block-header block-header-default">
-	 <h3 class="block-title">&nbsp;</h3>
-		<button type="button" style="margin-right:10px;" onclick="return sendallcarddependent();" class="btn btn-sm btn-success  sendcardbtn pull-right" data-original-title="Send Card">Send Card</button>  
-	
-</div>
+ <div class="alert alert-light-info text-info alert-dismissible fade show" role="alert">
+	<div class="d-flex align-items-center text-info font-weight-medium text-end d-flex justify-content-md-end justify-content-center">
+		 <button type="button" style="margin-right:10px;" onclick="return sendallcarddependent();" class="btn btn-sm btn-success  sendcardbtn pull-right" data-original-title="Send Card">Send Card</button> 
+	</div> 
+</div> 
+
 <table  class="table table-bordered table-striped table-vcenter  js-dataTable-full" id="basic-datatables">
 	<thead>
 		<tr>
-			<th><label><input type='checkbox' class='form-control' name='showhide' id='select_alldependent' onchange='selectalldependent(this)'> Select All</label></th>
+			<th>
+			<div class='form-check'><input class='form-check-input' type='checkbox' id='select_alldependent'  onchange='selectalldependent(this)'><label class='form-check-label' for='select_alldependent'>Select All</label></div> </th>
 			<th>Relation</th>
 			<th>First Name</th>
 			<th>Last Name</th>
@@ -22,7 +24,9 @@
 	<?php if(!empty($contactdependent)){?>
 		<?php foreach($contactdependent as $key => $value){?>
 			<tr>
-				<td><input type='checkbox' value='<?php echo $value->id;?>' class='checkboxdependent form-control'></td>
+				<td>
+				<div class='form-check'><input class='form-check-input checkboxdependent' value='<?php echo $value->id;?>' type='checkbox' ></div>
+				</td>
 				<td><?php echo $value->relationship;?></td>
 				<td><?php echo $value->first_name;?></td>
 				<td><?php echo $value->last_name;?></td>

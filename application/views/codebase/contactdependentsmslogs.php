@@ -30,7 +30,7 @@
 		<?php } ?>
 	<?php }else{ ?>
 		<tr>
-			<th colspan="4">No depedant Exist</th>
+			<th colspan="8">No depedant Exist</th>
 		</tr>
 	<?php } ?>
 	</tbody>

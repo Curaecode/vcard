@@ -75,6 +75,11 @@
 		<script src="<?php echo base_url();?>assets/js/feather.min.js"></script>
 		<script src="<?php echo base_url();?>assets/js/custom.min.js"></script>  
 		
+		
+		<script src="<?php echo base_url();?>assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+		<script src="<?php echo base_url();?>assets/js/pages/forms/sweetalert2/sweet-alert.init.js"></script>
+	
+		
 		 <script src="<?php echo base_url();?>assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
 		<!-- start - This is for export functionality only -->
 		<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
@@ -96,8 +101,7 @@
 		 
         <!-- Page JS Plugins -->
         <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/chartjs/Chart.bundle.min.js"></script>
-        <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/slick/slick.min.js"></script>
-        <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/sweetalert2/sweetalert2.min.js"></script>
+        <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/slick/slick.min.js"></script> 
          <script src="<?php echo res_url(); ?>codebase/assets/js/bootstrapvalidator.js"></script>
       <!-- Page JS Plugins -->
 	  <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
@@ -117,9 +121,6 @@
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/select2/js/select2.min.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/upload_file.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/custom.js?v=<?php echo time();?>"></script>
-		<script type="text/javascript" src="<?php echo base_url();?>resources/assets/js/jquery.mask.js"></script>
-		
-		
-		 
+		<script type="text/javascript" src="<?php echo base_url();?>resources/assets/js/jquery.mask.js"></script> 
     </body>
 </html>

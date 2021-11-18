@@ -605,7 +605,7 @@ function addActions($active,$id){
 	return $html;
 }
 function addActions_contact($active,$id){
-	$html="<a data-toggle='Edit' title='Edit' href='#".$active."/edit/".$id."' data-company='".$id."' data-title='Edit $active' class='loadview modalview edite contact_edit_page'><i class='fa fa-edit'></i></a><a data-toggle='Delete' title='Delete' class='delete swal ' href='".admin_url()."dashboard/".$active."/delete/$id'><i class='fa fa-remove' style='color:red;'></i></a>";
+	$html="<a data-toggle='Edit' title='Edit' href='#".$active."/edit/".$id."' data-company='".$id."' data-title='Edit $active' class='btn btn-default loadview modalview edite contact_edit_page'><i class='fa fa-edit'></i></a><a data-toggle='Delete' title='Delete' class='btn btn-danger delete swal ' href='".admin_url()."dashboard/".$active."/delete/$id'><i class='fas fa-trash' style='color:red;'></i></a>";
 	return $html;
 }
 function addActions2($active,$id){

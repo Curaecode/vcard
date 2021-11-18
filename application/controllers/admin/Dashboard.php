@@ -2368,10 +2368,11 @@ class Dashboard extends CI_Controller {
 			$data['companies']=($this->model->getData("companies"));
 			$data['groups']=($this->model->getData("groups"));
 				$coloumns=array(
-					"<label><input type='checkbox' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>",
-					"ID",
-					"First name",
-					"Last name",
+					/* "<label><input type='checkbox' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>", */
+					"<div class='form-check'><input  onchange='selectall(this)' class='form-check-input' type='checkbox' id='select_all'><label class='form-check-label' for='select_all'>Select All</label></div>",
+					/* "ID", */
+					"Name",
+					/* "Last name", */
 					"Email",
 					"Phone",  
 					//"country",
@@ -2485,34 +2486,61 @@ class Dashboard extends CI_Controller {
 							$key->phone .='<br />'.cdate($key->smsdate);
 						}
 					}
+					$key->first_name = $key->first_name.' '.$key->last_name;
 					/*
 					cdate
 					*/
+					unset($key->id);
+					unset($key->last_name);
 					unset($key->cardsend);
 					unset($key->cardemail);
 					unset($key->smsdate);  
 					unset($key->emaildate);  
 					$value=array_values((array)$key);
-					// print_r($key);die;
-					$down="<a data-toggle='Download Image' class='download' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
-					<a data-toggle='Download vCard'class='download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
-					<a data-toggle='Send vCard' class='send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
-					<a data-toggle='View Dependent' class='loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
-					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-user-plus'></i></a>
-					<a data-toggle='Edit Dependent' title='Edit Dependent' href='#contacts/editdependents/".$contract_number."' data-company='".$contract_number."' data-title='Edit Dependent' class='loadview modalview edite contact_edit_page'><i class='fa fa-pencil-square'></i></a>
+					 
+					 $down="<div class='columns columns-right mb-2 btn-group pull-right'><a data-toggle='Download Image' class='download btn btn-default' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
+					<a data-toggle='Download vCard'class='btn btn-default download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
+					<a data-toggle='Send vCard' class='btn btn-default send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
+					</div>
+					<div class='columns columns-right btn-group pull-right mb-2'>
+					<a data-toggle='View Dependent' class='btn btn-default loadview modalview edite dependant_edit_page' data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
 					
-					<a data-toggle='View Send vCard SMS Logs' class='loadview modalview edite dependant_edit_page' data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
+					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."' data-company='".$contract_number."' data-title='Add Dependent' class='btn btn-default loadview modalview edite contact_edit_page'><i class='fa fa-user-plus'></i></a>
+					<a data-toggle='Edit Dependent' title='Edit Dependent' href='#contacts/editdependents/".$contract_number."' data-company='".$contract_number."' data-title='Edit Dependent' class='btn btn-default loadview modalview edite contact_edit_page'><i class='fa fa-edit'></i></a>
+					</div>
+					<div class='columns columns-right btn-group pull-right mb-2'>
+					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default loadview modalview edite dependant_edit_page' data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
 					
-					<a data-toggle='View Send vCard SMS Logs' class='loadview modalview edite dependant_edit_page' data-title='View Send vCard SMS Logs' data-company='".$id."' title='View Send vCard SMS Logs' href='#contacts/viewsmslog/".$id."' style='background: #e18c0d;'><i class='fa fa-history'></i></a>
+					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default loadview modalview edite dependant_edit_page' data-title='View Send vCard SMS Logs' data-company='".$id."' title='View Send vCard SMS Logs' href='#contacts/viewsmslog/".$id."' style='background: #e18c0d;'><i class='fa fa-history'></i></a>
 					
-					<a data-toggle='View Send vCard Email Logs' class='loadview modalview edite dependant_edit_page' data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
+					<a data-toggle='View Send vCard Email Logs' class='btn btn-default loadview modalview edite dependant_edit_page' data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
+					</div>
+					";  
 					
-					";
-					
-					
-					$up="<input type='checkbox' value='".$id."' class='checkbox'>";
+					/* $down='<div class="btn-group">
+						<button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
+							Action
+						</button>
+						<div class="dropdown-menu" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -36px);" data-popper-placement="top-start">
+							<a class="dropdown-item download" target="_blank" href="'.base_url().'admin/dashboard/download/'.$filename.'">Download Image</a>
+							<a class="dropdown-item download-card" target="_blank" href="'.base_url().'admin/dashboard/download2/'.$vcard_name.'">Download vCard</a>
+							<a class="dropdown-item send send_contacts_email_vcard" href="'.base_url().'admin/dashboard/send_contacts_email_vcard/'.$id.'">Send vCard</a>
+							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Dependent" data-company="'.$contract_number.'" title="View Dependent" href="#contacts/dependents/'.$contract_number.'">View Dependent</a> 
+							<a class="dropdown-item loadview modalview edite contact_edit_page"  data-title="Add Dependent" data-company="'.$contract_number.'" title="Add Dependent" href="#contacts/adddependent/'.$contract_number.'">Add Dependent</a> 
+							<a class="dropdown-item loadview modalview edite contact_edit_page"  data-title="Edit Dependent" data-company="'.$contract_number.'" title="Edit Dependent" href="#contacts/editdependents/'.$contract_number.'">Edit Dependent</a> 
+							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Dependent SMS Logs" data-company="'.$contract_number.'" title="View Dependent SMS Logs" href="#contacts/viewdependentsmslog/'.$id.'">View Dependent SMS Logs</a> 
+							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Send vCard SMS Logs" data-company="'.$contract_number.'" title="View Send vCard SMS Logs" href="#contacts/viewsmslog/'.$id.'">View Send vCard SMS Logs</a> 
+							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Send vCard Email Logs" data-company="'.$contract_number.'" title="View Send vCard Email Logs" href="#contacts/viewemaaillog/'.$id.'">View Send vCard Email Logs</a> 
+							
+							<a data-toggle="Edit Contact" title="Edit Contact" href="#contacts/edit/'.$id.'" data-company="'.$id.'" data-title="Edit Contact" class="dropdown-item loadview modalview edite contact_edit_page">Edit Contact</a>
+							<div class="dropdown-divider"></div>
+							<a data-toggle="Delete" title="Delete" class="delete swal dropdown-item" href="http://localhost/vcard/admin/dashboard/contacts/delete/1"><i class="fa fa-remove" style="color:red;"></i></a>
+						</div>
+					</div>'; */
+					/* $up="<input type='checkbox' value='".$id."' class='checkbox'>"; */
+					$up="<div class='form-check'><input class='form-check-input checkbox' value='".$id."' type='checkbox'></div>";
 					array_unshift($value,$up);
-					array_push($value,$down.addActions_contact("contacts",$id));
+					array_push($value,''.$down.'<div class="columns columns-right btn-group pull-right">'.addActions_contact("contacts",$id).'</div>');
 					
 					$values[]=$value;
 				}
