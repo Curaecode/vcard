@@ -23,9 +23,9 @@
 									?>
 									<div class="col-sm-6 col-xs-6">
 										<div class="card">
-											<a href="javascript:void(0)" onclick="return openlink(<?php echo $row->id;?>)" target="_blank">
+											<a href="javascript:void(0)" <?php if($row->comingsoon==0){ ?> onclick="return openlink(<?php echo $row->id;?>)" target="_blank" <?php } ?>  <?php if($row->comingsoon==1){?>style="background: gray;"<?php }?>>
 												<img src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>" />
-												<?php echo $row->linkname;?>
+												<?php echo $row->linkname;?>  <?php if($row->comingsoon==1){echo '(Coming soon)';}?>
 											</a>
 										</div>
 									</div>

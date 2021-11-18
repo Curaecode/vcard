@@ -2368,7 +2368,7 @@ class Dashboard extends CI_Controller {
 			$data['companies']=($this->model->getData("companies"));
 			$data['groups']=($this->model->getData("groups"));
 				$coloumns=array(
-					"<label><input type='checkbox' class='form-control' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>",
+					"<label><input type='checkbox' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>",
 					"ID",
 					"First name",
 					"Last name",
@@ -2510,7 +2510,7 @@ class Dashboard extends CI_Controller {
 					";
 					
 					
-					$up="<input type='checkbox' value='".$id."' class='checkbox form-control'>";
+					$up="<input type='checkbox' value='".$id."' class='checkbox'>";
 					array_unshift($value,$up);
 					array_push($value,$down.addActions_contact("contacts",$id));
 					

@@ -27,6 +27,7 @@
 	
 		
     <!-- Custom CSS -->
+    <link href="<?php echo base_url();?>assets/css/custom.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,6 +45,16 @@
 		
 </head>
 <body>
+	<div class="pace">
+		<div class="pace-progress" data-progress-text="100%" data-progress="99" style="">
+		  <div class="pace-progress-inner"></div>
+		</div>
+		<div class="pace-activity"></div>
+	</div>
+	<div class="loader" style="display:none;">
+		<div class="loader2"></div>
+	</div>
+
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
@@ -73,15 +84,15 @@
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="<?php echo res_url();?>img/sm_logo.png" alt="homepage" class="dark-logo" />
+                            <img src="<?php echo res_url();?>img/smalllogo.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
-                            <img src="<?php echo res_url();?>img/sm_logo.png" alt="homepage" class="light-logo" />
+                            <img src="<?php echo res_url();?>img/smalllogo.png" alt="homepage" class="light-logo" />
                         </b>
 						<span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="<?php echo res_url();?>img/main_logo.png" alt="homepage" class="dark-logo">
+                            <img src="<?php echo res_url();?>img/logo.png" alt="homepage" class="dark-logo">
                             <!-- Light Logo text -->
-                            <img src="<?php echo res_url();?>img/main_logo.png" class="light-logo" alt="homepage">
+                            <img src="<?php echo res_url();?>img/logo.png" class="light-logo" alt="homepage">
                         </span>
                         <!--End Logo icon --> 
                     </a>

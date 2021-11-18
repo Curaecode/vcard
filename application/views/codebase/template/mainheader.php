@@ -149,11 +149,15 @@
 <div class="page-wrapper">
 <div class="container-fluid">
 	<div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-modern main-content-boxed">
+		<div id="overlay"></div>
+		<div id="overlayContent">
+			<img id="imgBig" src="" alt="" width="400" />
+		</div>
 		<!-- Main Container -->
             <main id="main-container">
 
                 <!-- Page Content -->
-        
+					
                     <div class="content page-content ">
 					 </div>
                 

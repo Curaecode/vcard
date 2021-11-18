@@ -306,10 +306,10 @@ $(document).ready(function(){
 	})
 
 	$(document).on("click",".imgSmall",function(){
-	$("#imgBig").attr("src",$(this).attr('src'));
-    $("#overlay").show();
-    $("#overlayContent").show();
-});
+		$("#imgBig").attr("src",$(this).attr('src'));
+		$("#overlay").show();
+		$("#overlayContent").show();
+	});
 
 
 	$(document).on("click","#overlayContent,#sidebar,#imgBig",function(){
@@ -544,24 +544,36 @@ view.refreshJs=function(datatable,page){
 		});
 	}
 	$("input,textarea,select").trigger("keyup");
-	if(datatable){
-		console.log('AAAA');
+	if(datatable){ 
 		url=base_url+"admin/dashboard/"+page+"/ajax/";
 		table = $('.datatable').DataTable({ 
 			"lengthMenu": [[100, 250, 500,1000,-1], [100, 250, 500,1000,"All"]],
 			 /* dom: 'Blfrtip', */
 			 "dom": '<"row"<"col-md-6"l><"col-md-6 text-end"B>><"table-responsive"rt><"row"<"col-md-6"i><"col-md-6 text-end"p>>',
 			buttons: [
-				'copyHtml5',
+				'copy', 'csv', 'excel', 'pdf' 
+				/* 'copyHtml5',
 				'excelHtml5',
 				'csvHtml5',
-				'pdfHtml5'
+				'pdfHtml5' */
 			],
 			"scrollY":        "300px",
 			"scrollCollapse": true, 
 			"processing": true, 
-			"serverSide": true,  
-			"order": [], 
+			"serverSide": true, 
+			"bSort" : false,	
+			"order": [],
+			"drawCallback": function(settings) {
+				console.log("drawCallback",settings);
+				/* setTimeout(function(){  
+					$(document).on("click",".imgSmall",function(){
+						 
+						$("#imgBig").attr("src",$(this).attr('src'));
+						$("#overlay").show();
+						$("#overlayContent").show();
+					});	
+				}, 1000); */
+			},
 			"ajax": {
 				"url":url ,
 				"type": "POST", 
@@ -570,11 +582,10 @@ view.refreshJs=function(datatable,page){
 					d.to_date = $('.to_date').val();
 					d.company_id = $('[name="company_id"]').val();
 					d.group_id = $('[name="group_id"]').val(); */
-				},
+				}, 
 				"initComplete": function(settings, json) {
-					console.log("settings",settings); 
+					console.log("initComplete",settings); 
 					 
-					
 				}
 			},
 			"destroy" : true 

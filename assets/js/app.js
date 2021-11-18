@@ -5,10 +5,10 @@ $.fn.AdminSettings = function (settings) {
     var defaults = {
         Theme: true, // this can be true or false ( true means dark and false means light ),
         Layout: 'vertical', // 
-        LogoBg: 'skin1', // You can change the Value to be skin1/skin2/skin3/skin4/skin5/skin6 
+        LogoBg: 'skin5', // You can change the Value to be skin1/skin2/skin3/skin4/skin5/skin6 
         NavbarBg: 'skin6', // You can change the Value to be skin1/skin2/skin3/skin4/skin5/skin6 
         SidebarType: 'full', // You can change it full / mini-sidebar
-        SidebarColor: 'skin1', // You can change the Value to be skin1/skin2/skin3/skin4/skin5/skin6
+        SidebarColor: 'skin5', // You can change the Value to be skin1/skin2/skin3/skin4/skin5/skin6
         SidebarPosition: false, // it can be true / false
         HeaderPosition: false, // it can be true / false
         BoxedLayout: false, // it can be true / false 
@@ -84,7 +84,7 @@ $.fn.AdminSettings = function (settings) {
                     $('#' + myid + ' .topbar .top-navbar .navbar-header').attr("data-logobg", lbg);
                 }
                 else {
-                    $('#' + myid + ' .topbar .top-navbar .navbar-header').attr("data-logobg", "skin1");
+                    $('#' + myid + ' .topbar .top-navbar .navbar-header').attr("data-logobg", "skin5");
                 }
             };
             setlogobg();
@@ -97,9 +97,9 @@ $.fn.AdminSettings = function (settings) {
                     $('#' + myid).attr("data-navbarbg", nbg);
                 }
                 else {
-                    $('#' + myid + ' .topbar .navbar-collapse').attr("data-navbarbg", "skin1");
-                     $('#' + myid + ' .topbar').attr("data-navbarbg", "skin1");
-                    $('#' + myid).attr("data-navbarbg", "skin1");
+                    $('#' + myid + ' .topbar .navbar-collapse').attr("data-navbarbg", "skin5");
+                     $('#' + myid + ' .topbar').attr("data-navbarbg", "skin5");
+                    $('#' + myid).attr("data-navbarbg", "skin5");
                 }
             };
             setnavbarbg();
@@ -248,7 +248,7 @@ $.fn.AdminSettings = function (settings) {
                     $('#' + myid + ' .left-sidebar').attr("data-sidebarbg", sbg);
                 }
                 else {
-                    $('#' + myid + ' .left-sidebar').attr("data-sidebarbg", "skin1");
+                    $('#' + myid + ' .left-sidebar').attr("data-sidebarbg", "skin5");
                 }
             };
             setsidebarbg();

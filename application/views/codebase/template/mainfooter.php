@@ -75,6 +75,16 @@
 		<script src="<?php echo base_url();?>assets/js/feather.min.js"></script>
 		<script src="<?php echo base_url();?>assets/js/custom.min.js"></script>  
 		
+		 <script src="<?php echo base_url();?>assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+		<!-- start - This is for export functionality only -->
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+		
 		
 		
         <script src="<?php echo res_url(); ?>codebase/assets/js/codebase.app.min.js"></script>
@@ -94,13 +104,15 @@
         <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/highcharts/highcharts.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/highcharts/highcharts-no-data.js"></script>
 
-        <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
+        <?php /* <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
         <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/dataTables.bootstrap4.min.js"></script>
         <script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/buttons-custom/buttons.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/buttons-custom/jszip.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/buttons-custom/pdfmake.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/buttons-custom/fonts.js"></script>
-		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/buttons-custom/button-html5.js"></script>
+		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/datatables/buttons-custom/button-html5.js"></script> */ ?>
+		
+		
 		<script src="<?php echo res_url(); ?>codebase/assets/js/barcode.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/select2/js/select2.min.js"></script>
 		<script src="<?php echo res_url(); ?>codebase/assets/js/upload_file.js"></script>
