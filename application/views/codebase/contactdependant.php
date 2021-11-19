@@ -1,3 +1,7 @@
+<div class="block-content "> 
+	<div class="card card-body"> 
+		<div class="block-content block-content-full"> 
+			
 <script>
  $('.modal-dialog').addClass('modal-lg');
 </script>
@@ -45,3 +49,6 @@
 	<?php } ?>
 	</tbody>
 </table>
+		</div>
+	</div>
+</div>	

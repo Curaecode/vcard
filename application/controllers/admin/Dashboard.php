@@ -83,7 +83,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,addActions("hospitals",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("hospitals",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -296,7 +296,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,addActions("users",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("users",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -714,7 +714,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,addActions("companies",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("companies",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -950,7 +950,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,addActions("subscriptions",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("subscriptions",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1117,7 +1117,7 @@ class Dashboard extends CI_Controller {
 					unset($key->latitude);
 					unset($key->longitude);
 					if($completed==0){
-						$down="<a data-toggle='Mark Complete' class='completedrec swal' style='color:#6bad1f;' title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check-square-o'></i></a>";
+						$down="<div class='columns columns-right btn-group pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					}else{
 						$down="Completed";
 					} 
@@ -1210,7 +1210,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					 
-					array_push($value,addActions("subscriptions",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("subscriptions",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1471,7 +1471,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					 
-					array_push($value,addActions("subscriptions",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("subscriptions",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1915,7 +1915,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,addActions("locations",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("locations",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2043,7 +2043,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					
-					array_push($value,addActions("salesgroups",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("salesgroups",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2169,7 +2169,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					
-					array_push($value,addActions("industries",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("industries",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2288,7 +2288,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					
-					array_push($value,addActions("states",$id));
+					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("states",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(

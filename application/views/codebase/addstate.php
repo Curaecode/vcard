@@ -1,10 +1,11 @@
-	
-
-	<div class="container">
+<div class="block-content "> 
+	<div class="card card-body"> 
+		<div class="block-content block-content-full"> 
+			<div class="container">
 						<form action="" method="post"  enctype="multipart/form-data" role="form" class="viewform" data-toggle="validator">
 					<div class="form-group row less_margin">
 						<div class="col-md-12">
-							<div class="form-material ">
+							<div class="mb-3 ">
 									<label for="name">State name</label>
 								<input type="text" class="form-control" value="<?php echo isset($edit["state_name"])?$edit["state_name"]:""; ?>" name="state_name" required>
 							</div>
@@ -13,7 +14,7 @@
 					</div>
 					<div class="form-group row less_margin">
 						<div class="col-md-12">
-							<div class="form-material ">
+							<div class="mb-3 ">
 									<label for="name">Country name</label>
 								<input type="text" class="form-control" value="<?php echo isset($edit["country"])?$edit["country"]:""; ?>" name="country" required>
 							</div>
@@ -31,4 +32,10 @@
 			   </div>
 			</form>
 		</div>
+		</div>
+	</div>
+</div>	
+	
+
+	
 				

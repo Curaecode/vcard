@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <meta name="robots" content="noindex,nofollow">
     <title>CuraeChoice</title>
-	<link rel="shortcut icon" href="<?php echo res_url(); ?>codebase/assets/media/favicons/favicon.png">
+	<link rel="shortcut icon" href="<?php echo res_url(); ?>img/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo res_url(); ?>img/smalllogo.png">
     <link rel="icon" type="image/png" sizes="192x192" href="<?php echo res_url(); ?>codebase/assets/media/favicons/favicon-192x192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="<?php echo res_url(); ?>codebase/assets/media/favicons/apple-touch-icon-180x180.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">	
     <link rel="canonical" href="<?php echo base_url();?>" />
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url();?>assets/images/favicon.png">
+    <!-- Favicon icon --> 
     <!-- Custom CSS -->
     <link href="<?php echo base_url();?>assets/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -97,13 +97,7 @@
     
     <script>
         $(".preloader").fadeOut();
-    // ==============================================================
-    // Login and Recover Password
-    // ==============================================================
-    $('#to-recover').on("click", function() {
-        $("#loginform").slideUp();
-        $("#recoverform").fadeIn();
-    });
+    
     </script>
 </body>
 

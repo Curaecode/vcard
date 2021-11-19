@@ -1,4 +1,7 @@
-<script>
+<div class="block-content "> 
+	<div class="card card-body"> 
+		<div class="block-content block-content-full"> 
+			<script>
  $('.modal-dialog').addClass('modal-lg');
 </script>
 <div class="container">
@@ -70,6 +73,11 @@
 	   </div>
 	</form>
 </div>
+		</div>
+	</div>
+</div>	
+
+
 			<script type="text/javascript">
 				/* $('.dateofbirth').mask('00/00/0000'); */
 			</script>	

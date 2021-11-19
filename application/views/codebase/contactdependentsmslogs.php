@@ -1,4 +1,8 @@
-<script>
+
+<div class="block-content "> 
+	<div class="card card-body"> 
+		<div class="block-content block-content-full"> 
+			<script>
  $('.modal-dialog').addClass('modal-lg');
 </script>
 <table  class="table table-bordered table-striped table-vcenter  js-dataTable-full" id="basic-datatables">
@@ -35,3 +39,6 @@
 	<?php } ?>
 	</tbody>
 </table>
+		</div>
+	</div>
+</div>	

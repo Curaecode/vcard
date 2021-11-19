@@ -29,3 +29,6 @@
 	vertical-align: middle;
     border-style: none;
 }
+.modal-body .card {
+    margin-bottom: 0px;
+}

@@ -7,12 +7,17 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo getSiteData('siteName')[0]->value; ?> | <?php echo @$title; ?></title>
-	<meta name="description" content="Upos - Point of Sale">
-    <meta name="author" content="pixelcave">
+	<meta name="description" content="">
+    <meta name="author" content="curaechoice">
 		  
     <link rel="canonical" href="<?php echo base_url();?>" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo base_url();?>assets/images/favicon.png">
+	
+	
+	<link rel="shortcut icon" href="<?php echo res_url(); ?>img/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="<?php echo res_url(); ?>img/smalllogo.png">
+		
+		
     <link rel="stylesheet" href="<?php echo base_url();?>assets/libs/apexcharts/dist/apexcharts.css">
 	
 	 <link href="<?php echo base_url();?>assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
