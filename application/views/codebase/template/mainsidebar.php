@@ -138,11 +138,11 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark loadview" href="#" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo res_url();?>admin/<?php echo $imageconfig->value;?>" alt="user" width="30" class="profile-pic rounded-circle" />
+                                <img src="<?php echo res_url();?>admin/<?php echo $imageconfig->value;?>" alt="user" width="100" class="profile-pic rounded-circle" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end user-dd animated flipInY">
                                 <div class="d-flex no-block align-items-center p-3 bg-info text-white mb-2">
-                                    <div class=""><img src="<?php echo res_url();?>admin/<?php echo $imageconfig->value;?>" alt="user" class="rounded-circle" width="60"></div>
+                                    <div class=""><img src="<?php echo res_url();?>admin/<?php echo $imageconfig->value;?>" alt="user" class="rounded-circle" width="100"></div>
                                     <div class="ms-2">
                                         <h4 class="mb-0 text-white"><?php echo getCurrentData()->Name;?></h4> 
                                     </div>

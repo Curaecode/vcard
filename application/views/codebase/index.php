@@ -7,109 +7,127 @@
 		</ol>
 	</div> 
 </div>
-<div class="row animated fadeIn fix_nw_box" >
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
-				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="1500"><?php echo  number_format($contacts); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Total Contacts</div>
-			</div>
-		</a>
-	</div>
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
-				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="4252"><?php echo  number_format($groups); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Total Groups</div>
-			</div>
-		</a>
-	</div>
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
-				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="4252"><?php echo  number_format($companies); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Total Companies</div>
-			</div>
-		</a>
-	</div>
-</div>
 
-<div class="row animated fadeIn fix_nw_box" >
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
+<div class="container-fluid">
+	<div class="row">
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex align-items-center justify-content-center rounded-circle bg-info">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card fill-white feather-lg"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo  number_format($contacts); ?></h3>
+							<h6 class="text-muted mb-0">Total Contacts</h6>
+						</div>
+					</div>
 				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="1500"><?php echo number_format($emails->Recipients); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Total Recipients</div>
 			</div>
-		</a>
-	</div>
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
+		</div>
+		<!-- Column -->
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex align-items-center justify-content-center rounded-circle bg-warning">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor fill-white feather-lg"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo number_format($emails->Recipients); ?></h3>
+							<h6 class="text-muted mb-0">Total Recipients</h6>
+						</div>
+					</div>
 				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="<?php echo number_format($emails->EmailTotal); ?>"><?php echo number_format($emails->EmailTotal); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Total Email</div>
 			</div>
-		</a>
-	</div>
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
+		</div>
+		<!-- Column -->
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex align-items-center justify-content-center rounded-circle bg-warning">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor fill-white feather-lg"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo number_format($emails->EmailTotal); ?></h3>
+							<h6 class="text-muted mb-0">Total Emails</h6>
+						</div>
+					</div>
 				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="<?php echo number_format($emails->EmailTotal); ?>"><?php echo number_format($emails->Delivered); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Email Delivered</div>
 			</div>
-		</a>
-	</div>
-</div>	
-<div class="row animated fadeIn fix_nw_box" >
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
+		</div>
+		<!-- Column -->
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex align-items-center justify-content-center rounded-circle bg-primary">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag fill-white feather-lg"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo number_format($emails->Delivered); ?></h3>
+							<h6 class="text-muted mb-0">Email Delivered</h6>
+						</div>
+					</div>
 				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="<?php echo number_format($emails->EmailTotal); ?>"><?php echo number_format($emails->Bounced); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Email Bounced</div>
 			</div>
-		</a>
-	</div>
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
+		</div>
+		<!-- Column -->
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex justify-content-center align-items-center rounded-circle bg-danger">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield fill-white feather-lg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo number_format($emails->Bounced); ?></h3>
+							<h6 class="text-muted mb-0">Email Bounced</h6>
+						</div>
+					</div>
 				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="<?php echo number_format($emails->EmailTotal); ?>"><?php echo number_format($emails->Opened); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Email Opened</div>
 			</div>
-		</a>
-	</div>
-	<div class="col-6 col-xl-3 box_f">
-		<a class="block block-link-shadow text-right" href="javascript:void(0)">
-			<div class="block-content block-content-full clearfix">
-				<div class="float-left mt-10 d-none d-sm-block">
-					<i class="si si-users fa-3x text-body-bg-dark"></i>
+		</div>
+		<!-- Column -->
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex justify-content-center align-items-center rounded-circle bg-danger">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield fill-white feather-lg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo number_format($emails->Opened); ?></h3>
+							<h6 class="text-muted mb-0">Email Opened</h6>
+						</div>
+					</div>
 				</div>
-				<div class="font-size-h3 font-w600" data-toggle="countTo" data-speed="1000" data-to="<?php echo number_format($emails->EmailTotal); ?>"><?php echo number_format($emails->NotDelivered); ?></div>
-				<div class="font-size-sm font-w600 text-uppercase text-muted">Email Not Delivered</div>
 			</div>
-		</a>
+		</div>
+		<!-- Column -->
+		<!-- Column -->
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex justify-content-center align-items-center rounded-circle bg-danger">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield fill-white feather-lg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo number_format($emails->NotDelivered); ?></h3>
+							<h6 class="text-muted mb-0">Email Not Delivered</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Column -->
 	</div>
-</div>
+</div> 

@@ -9,13 +9,13 @@ DirectoryIndex index.php  index.html /index403.php
  
  
 <files *.jpg>
-Order allow,deny
-Deny from all
+#Order allow,deny
+#Deny from all
 </files>
       
  
 <files *.png>
-Order allow,deny
-Deny from all
+#Order allow,deny
+#Deny from all
 </files>
  

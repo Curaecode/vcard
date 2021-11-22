@@ -15,6 +15,55 @@ class Dashboard extends CI_Controller {
 		}
 		
 	} 
+	function card($id=1){ 
+		$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
+		$data['showdependent']=$this->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
+		$data['image']=$this->model->getDatarow("config","where isVisible=1 AND name='image'"); 
+	   
+		$last_data=$this->model->getLastData2("contacts",$id);
+		$company_id= $last_data->company_id;
+		$contract_number= $last_data->contract_number;
+		$data['dependent']=$this->model->getdependents("contact_dependant",$contract_number);
+		$data['contact']=$last_data;
+		
+		$this->db->select('*');
+		$this->db->where('is_card',1);
+		$query = $this->db->get( 'care_coordination' );
+		$data['providers'] = $query->result();
+		 
+		$htmlfront =$this->load->view('card/indexfront',$data,true);
+		$htmlback =$this->load->view('card/indexback',$data,true);
+		$stylesheet =$this->load->view('card/stylesheet',[],true);   
+		 
+		$this->load->library('m_pdf'); 
+		$pdf = $this->m_pdf->load('"","A4-P",0,"",5,5,5,5,6,3,"L"');
+		$pdf->debug = true; 
+		$pdf->SetTitle('Card');
+		$pdf->WriteHTML($stylesheet,1);
+		$pdf->WriteHTML($htmlfront);
+		$pdf->addPage();		
+		$pdf->WriteHTML($stylesheet,1);
+		$pdf->WriteHTML($htmlback);  
+		$file_name='example';		
+		$pdf->Output();
+	}
+	function cardhtml($id=1){
+		$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
+		$data['showdependent']=$this->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
+		$data['image']=$this->model->getDatarow("config","where isVisible=1 AND name='image'"); 
+		 
+		$last_data=$this->model->getLastData2("contacts",$id);
+		 
+		$contract_number= $last_data->contract_number;
+		$data['dependent']=$this->model->getdependents("contact_dependant",$contract_number);
+		$data['contact']=$last_data;
+		
+		$this->db->select('*');
+		$this->db->where('is_card',1);
+		$query = $this->db->get( 'care_coordination' );
+		$data['providers'] = $query->result();
+		$this->load->view('card/index',$data); 
+	}
 	public function index()
 	{
 	    
@@ -2472,16 +2521,16 @@ class Dashboard extends CI_Controller {
 					$key->image="<img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
 					
 					if($key->cardsend>=1){
-						$key->image ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->image;
+						$key->image ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->image;
 					}
 					if($key->cardemail>=1){
-						$key->email ='<i class="fa fa-check" aria-hidden="true" style="    color: green;"></i>'.$key->email;
+						$key->email ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->email;
 						if($key->emaildate!='0000-00-00 00:00:00' && !empty($key->emaildate)){
 							$key->email .='<br />'.cdate($key->emaildate);
 						}
 					}
 					if($key->cardsend>=1){
-						$key->phone ='<i class="fa fa-check" aria-hidden="true" style="    color: green;position: absolute;"></i>'.$key->phone;
+						$key->phone ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->phone;
 						if($key->smsdate!='0000-00-00 00:00:00' && !empty($key->smsdate)){
 							$key->phone .='<br />'.cdate($key->smsdate);
 						}
@@ -2498,7 +2547,7 @@ class Dashboard extends CI_Controller {
 					unset($key->emaildate);  
 					$value=array_values((array)$key);
 					 
-					 $down="<div class='columns columns-right mb-2 btn-group pull-right'><a data-toggle='Download Image' class='download btn btn-default' style='color:#6bad1f;' title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
+					 $down="<div class='columns columns-right mb-2 btn-group pull-right'><a data-toggle='View Card' class=' btn btn-default download'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."' class='' target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
 					<a data-toggle='Download vCard'class='btn btn-default download-card' title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
 					<a data-toggle='Send vCard' class='btn btn-default send send_contacts_email_vcard' title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a>
 					</div>

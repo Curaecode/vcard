@@ -9,7 +9,7 @@
 		<!-- User profile -->
 		<div class="user-profile position-relative" style="background: url(<?php echo base_url();?>assets/images/background/user-info.jpg) no-repeat;">
 			<!-- User profile image -->
-			<div class="profile-img"> <img src="<?php echo res_url();?>admin/<?php echo $imageconfig->value;?>" alt="user" class="w-100" /> </div>
+			<div class="profile-img" style="overflow: hidden;"> <img src="<?php echo res_url();?>img/smalllogo.png" alt="user" class="w-100" width="100" /> </div>
 			<!-- User profile text-->
 			<div class="profile-text pt-1 dropdown"> 
 				<a href="#" class="dropdown-toggle u-dropdown w-100 text-white d-block position-relative" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"><?php echo getCurrentData()->Name;?></a>

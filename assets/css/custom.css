@@ -32,3 +32,6 @@
 .modal-body .card {
     margin-bottom: 0px;
 }
+.dataTables_info{
+	white-space: break-spaces !important;
+}
