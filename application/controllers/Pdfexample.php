@@ -6,7 +6,6 @@ class Pdfexample extends CI_Controller{
 		$this->load->model("admin/model");
 	} 
 	function index($id=1){ 
-		 
 		$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
 		$data['showdependent']=$this->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
 		$data['image']=$this->model->getDatarow("config","where isVisible=1 AND name='image'"); 
@@ -22,12 +21,17 @@ class Pdfexample extends CI_Controller{
 		$query = $this->db->get( 'care_coordination' );
 		$data['providers'] = $query->result();
 		 
+		$htmlfront =$this->load->view('card/indexfront',$data,true);
+		$htmlback =$this->load->view('card/indexback',$data,true);
+		$stylesheet =$this->load->view('card/stylesheet',[],true);   
+		 
 		$html =$this->load->view('card/indexmpdf',$data,true);
 		$stylesheet =$this->load->view('card/stylesheet',[],true);   
 		 
 		$this->load->library('m_pdf'); 
-		$pdf = $this->m_pdf->load();
+		$pdf = $this->m_pdf->load('"","array(54,85)",0,"",0,0,0,0,0,0,"L"');
 		$pdf->debug = true; 
+		$pdf->dpi = 300;
 		$pdf->WriteHTML($stylesheet,1);
 		$pdf->WriteHTML($html);  
 		$file_name='example';		

@@ -205,7 +205,7 @@
 			</div>
 			<div class="col-sm-6">
 				<?php /* <img style="width: 140px;margin-top: 5px;" src="<?php echo base_url().'cardassets/ph-email-white.png';?>" alt="user" /> */ ?>
-				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:18006469823"><img style="width: 140px;margin-top: 5px;margin-left: 5px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
+				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+18006469823"><img style="width: 140px;margin-top: 5px;margin-left: 5px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
 				<p style="margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width: 140px;margin-top: 3px;margin-left: 5px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
 			</div>
 		</div>
