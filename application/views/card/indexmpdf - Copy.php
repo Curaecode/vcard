@@ -14,8 +14,7 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		width: 100%;
-		
+		min-width: 0;
 		word-wrap: break-word;
 		background-color: #fff;
 		background-clip: border-box;
@@ -116,19 +115,20 @@
 			vertical-align: middle;
 		}
 		.xcard{
-			width:100%; 
-			height:100%;
+			margin:25px;
+			width:330px;
 			background-color: #fff;
 			transition: all .5s ease-in-out;
 			position: relative;
 			border: 2px solid #fff;
 			border-radius: 8px; 
-			overflow:hidden; 
+			overflow:hidden;
+			height:204px;
 			float:left;
 		}
 		.xcard .card-head{
 			background-image:url(<?php echo base_url();?>cardassets/bg.jpg);
-			height:250px;
+			height:100px;
 			width:100%; 
 			background-size: cover;
 			background-position: center center;
@@ -136,23 +136,22 @@
 			z-index: 9;
 		}
 		.avatar{
-			width:80%;
-			height:50px;
+			width:200px;
+			height:80px;
 			display:block;
 			margin: 5px auto 10px;
 			border: 5px solid #fff;
 			border-radius: 6px; 
 		}
 		.qravatar{
-			width: 123px;
+			 width: 123px;
 			height: 123px; 
 			<?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>margin: 0px auto;<?php }else{?>margin: 0px auto 20px;<?php } ?>
 			border: 0px solid #fff;
 		}
 		.avatar img{
-			width:80%;
-			height: 80%;
-			vertical-align: middle;
+			width:100%;
+			height: 100%;
 		}
 		.xcard .card-body{
 			padding:20px 5px 5px 5px;
@@ -172,21 +171,21 @@
 		.xcard .card-body .card-heading .card-title{
 			margin:0px;
 			font-weight:700;
-			font-size:28px;
+			font-size:24px;
 		}
 		.xcard .card-body .card-heading .card-text{
 			margin:0px;
-			font-size:24px;
+			font-size:14px;
 			font-weight:700;
 		}
 		.xcard .card-body .user-data dl{
 			margin:0px;
 		}
 		.xcard .card-body .user-data dt{
-			font-size:28px;
+			font-size:12px;
 		}
 		.xcard .card-body .user-data dd{
-			font-size:28px;
+			font-size:14px;
 			text-align: left;
 			margin: 0px;
 			padding: 0px;
@@ -199,31 +198,31 @@
 			position:absolute;
 		}
 		.xcard  .card-highlight p{
-			font-size:12px;
+			font-size:10px;
 			color:#fff;
 			margin:0px;
 		}
 	</style>
  </head>
 <body>
-<div class="card xcard front" style="margin:0px; position:relative; background-color: #fff; position: relative; border: 1px solid transparent; border-radius: 8px; overflow:hidden;">
+<div class="card xcard front" style="margin:25px; width:325px; background-color: #fff; transition: all .5s ease-in-out; position: relative; border: 1px solid transparent; border-radius: 8px; overflow:hidden; height: 500px; float:left;">
 	<div class="card-head" style="height:100px;border-radius: 5px 5px 0px 0px;">
 		<div class="row">
 			<div class="col-sm-5" style="float:left;">
-				<img style="width: 80%;margin-top: 5px;margin-left: 9px;" src="<?php echo base_url().'cardassets/cc-logo-white.png';?>" alt="user" />
+				<img style="width: 125px;margin-top: 5px;margin-left: 9px;" src="<?php echo base_url().'cardassets/cc-logo-white.png';?>" alt="user" />
 			</div>
 			<div class="col-sm-5" style="float:right;">
 				<?php /* <img style="width: 140px;margin-top: 5px;" src="<?php echo base_url().'cardassets/ph-email-white.png';?>" alt="user" /> */ ?>
-				<p style="text-align:right;margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+18006469823"><img style="width: 80%;margin-top: 5px;margin-right: 10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
-				<p style="text-align:right;margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width: 80%;margin-top: 3px;margin-right: 10px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
+				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+1-800-646-9823"><img style="width: 140px;margin-top: 5px;margin-left: -10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
+				<p style="margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width: 140px;margin-top: 3px;margin-left: -10px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
 			</div>
 		</div> 
 	</div>
-	 <div class="avatar" style="text-align:center;z-index: 99;width:50%; height:30px; display:block; margin: 0px auto;margin-top:-30px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
-		<center><img   src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center>
+	 <div class="avatar" style="z-index: 99;width:250px; height:50px; display:block; margin: 0px auto 10px;margin-top:-50px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
+		<img src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" />
 	</div> 
-	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:70.2%">
-		<div class="card-heading"  style="margin-top:10px;">
+	<div class="card-body" style="flex: 1 1 auto; padding: 0px 1rem;height:350px">
+		<div class="card-heading">
 			<?php if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
 			<?php } ?>
@@ -234,7 +233,7 @@
 			<div class="row">
 				<?php if($showdependent->value==1){ ?>
 					<?php if(isset($dependent) && !empty($dependent)){?>
-					<div class="col-sm-6" style="float:left;padding:0px;margin:0px;">	
+					<div class="col-sm-5" style="float:left;padding:0px;margin:0px;">	
 						<dl class="row" style="margin-top: 5px;">
 							<?php foreach($dependent as $key => $value){ ?>
 										<?php if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){?>
@@ -274,42 +273,42 @@
 				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="float:right;padding:0px;margin:0px;"<?php }?>>
 					<div class="qravatar" <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="width:100%;margin-left:40px;text-align: right;"<?php }?>><img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
 					<?php $date=date("M d,Y",strtotime($contact->active_member));?>
-					<p style="margin:0px 0px 0px 0px; font-size:24px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
+					<p style="margin:0px 0px 0px 0px; font-size:12px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
 					</div>
 					
 				</div> 
 			</div> 
 		</div> 
 	</div>  
-	<div class="card-highlight" style="position:absolute; font-size:16px; border-radius: 0px 0px 5px 5px;padding:5px 5px;">
-		<p style="margin:0px; padding:0px 0px;font-size:16px;">This card is the property of CuraeChoice, LLC. If found please return to 3179 Green Valley Rd. Suite 634, Vestavia, AL 35243-5239</p>
+	<div class="card-highlight" style="border-radius: 0px 0px 5px 5px;font-size:12px;padding:5px 5px;">
+		<p style="margin:0px; padding:0px 0px;">This card is the property of CuraeChoice, LLC. If found please return to 3179 Green Valley Rd. Suite 634, Vestavia, AL 35243-5239</p>
 	</div>
 </div> 
 
-<div class="card xcard back" style="margin:0px; position:relative; background-color: #fff; position: relative; border: 1px solid transparent; border-radius: 8px; overflow:hidden;">
+<div class="card xcard back" style="margin:25px; width:325px; background-color: #fff; transition: all .5s ease-in-out; position: relative; border: 1px solid transparent; border-radius: 5px;  overflow:hidden; height: 550px; float:left;">
 	<div class="card-head" style="height: 50px;border-radius: 5px 5px 0px 0px;">
 		<div class="row">
 			<div class="col-sm-5" style="float:left;">
-				<img style="width: 100%;margin-top: 5px;margin-left: 10px;" src="<?php echo base_url().'cardassets/cc-logo-white.png';?>" alt="user" />
+				<img style="width: 125px;margin-top: 5px;margin-left: 10px;" src="<?php echo base_url().'cardassets/cc-logo-white.png';?>" alt="user" />
 			</div>
 			<div class="col-sm-5" style="float:right;">
-				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+18006469823"><img style="width: 100%;margin-top: 5px;margin-left: -10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
-				<p style="margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width:100%;margin-top: 3px;margin-left: -10px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
+				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+1-800-646-9823"><img style="width: 140px;margin-top: 5px;margin-left: -10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
+				<p style="margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width: 140px;margin-top: 3px;margin-left: -10px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
 			</div>
 		</div> 
 	</div>
-	<div class="card-body" style="padding: 13px 10px 0px 13px;flex: 1 1 auto; height:76.5%;">
+	<div class="card-body" style="padding: 13px 10px 0px 13px;flex: 1 1 auto;height: 470px;">
 		<div class="card-heading"> 
 			<h5 class="card-title text-danger">Terms & Conditions</h5>   
 		</div>
-		<div class="user-data" style="flex: 1 1 auto; padding: 0px 25px;">
+		<div class="user-data" style="flex: 1 1 auto;">
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;">
+					<ul style="width:295px;margin: 10px 5px 0px 15px;padding: 0px; font-size:12px;text-align: justify;">
 						<li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
 						<li>No-Co-pay, Deductibles or Co-Insurance.</li>  
 						<li>Information for Providers:
-							<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;">
+							<ul style="width:295px;margin: 10px 5px 0px 15px;padding: 0px; font-size:12px;text-align: justify;">
 								<li>Send electronics claims to payer ID CC304</li>
 								<li>For eligibility verification sign up at <a href="https://monday.com/" target="_blank">Monday.com</a></li>
 							</ul>
@@ -319,25 +318,25 @@
 			</div> 
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="margin-top: 10px;padding: 0px;font-size:28px;color:#88bd23;list-style-type: none;text-align: justify;">
+					<ul style="width:295px;margin-top: 10px;padding: 0px;font-size:14px;color:#88bd23;list-style-type: none;text-align: justify;">
 						<li>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</li> 
 					</ul>
 				</div> 
 			</div> 
 		</div> 
 	</div>  
-	<div class="card-highlight" style="position:absolute; font-size:16pt; border-radius: 0px 0px 5px 5px;padding:25px 5px;">
+	<div class="card-highlight" style="width:330px;background:#242424;padding: 10px 0px;text-align: center;min-height:200px;bottom:0; position:absolute;border-radius: 0px 0px 5px 5px">
 		 <?php if(!empty($providers)){  $counter=1;?> 
 			 
 			<?php foreach($providers as $row){ ?>  
 				<span style=" padding:15px 15px !important; float:left;">
 					<?php  $mainURL = base_url(); ?>
-					<a href="<?php echo $mainURL.$row->slug;?>" target="_blank"><img width="50" height="50" alt="curaechoice" src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>"></a>
+					<a href="<?php echo $mainURL.$row->slug;?>" target="_blank"><img height="30" alt="curaechoice" src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>"></a>
 				</span> 	 
 			<?php }?>
 			 
 		<?php }?>
 	</div>
-</div> 
+</div>
 </body>
 </html>

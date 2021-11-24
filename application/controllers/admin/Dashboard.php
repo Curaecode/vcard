@@ -39,7 +39,8 @@ class Dashboard extends CI_Controller {
 		$stylesheet =$this->load->view('card/stylesheet',[],true);   
 		 
 		$this->load->library('m_pdf'); 
-		$pdf = $this->m_pdf->load('"","array(54,85)",0,"",0,0,0,0,0,0,"L"');
+		$params=array("",array(54,85),0,"",0,0,0,0,0,0,"P");
+		$pdf = $this->m_pdf->load($params);
 		$pdf->debug = true; 
 		$pdf->dpi = 300;
 		$pdf->WriteHTML($stylesheet,1);

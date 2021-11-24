@@ -1055,9 +1055,9 @@ function mPDF($mode='',$format='A4',$default_font_size=0,$default_font='',$mgl=1
 	$this->charspacing=0;
 
 	$this->autoPageBreak = true;
-
+ 
 	require(_MPDF_PATH.'config.php');	// config data
-
+	
 	$this->_setPageSize($format, $orientation);
 	$this->DefOrientation=$orientation;
 
@@ -1305,6 +1305,7 @@ function _setPageSize($format, &$orientation) {
 	}
 	else
 	{
+		 
 		if (!$format[0] || !$format[1]) { $this->Error('Invalid page format: '.$format[0].' '.$format[1]); }
 		$this->fwPt=$format[0]*_MPDFK;
 		$this->fhPt=$format[1]*_MPDFK;
