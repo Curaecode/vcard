@@ -8,8 +8,7 @@
 					<thead>
 						<tr>
 							<th>Sr.</th> 
-							<th>First Name</th>
-							<th>Last Name</th>
+							<th>Full Name</th> 
 							<th>Current Phone Number</th>
 							<th>Phone Number</th>
 							<th>SMS Date</th>
@@ -21,8 +20,7 @@
 						<?php foreach($smslogs as $key => $value){?>
 							<tr>
 								<td><?php echo $counter++;?></td> 
-								<td><?php echo $value->first_name;?></td>
-								<td><?php echo $value->last_name;?></td>
+								<td><?php echo $value->first_name;?> <?php echo $value->last_name;?></td> 
 								<td><?php echo $value->phonenumber;?></td>
 								<td><?php echo $value->phone_number;?></td> 
 								<td><?php echo cdate($value->added_date);?></td> 

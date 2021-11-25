@@ -4,7 +4,7 @@
 			<script>
  $('.modal-dialog').addClass('modal-lg');
 </script>
-<div class="container">
+<div class="containers">
 	<form action="" method="post" role="form" class="viewform">
 		  
 		<div class="form-group row less_margin">
@@ -17,7 +17,7 @@
 							<th style="width:200px;">Last name</th>
 							<th style="width:200px;">Phone</th>
 							<th style="width:100px;">Date of Birth</th> 
-							<th>Action</th> 
+							<th>&nbsp;</th> 
 						</tr>
 					</thead>
 					<tbody id="dependent_table"> 

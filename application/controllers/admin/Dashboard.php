@@ -2454,13 +2454,13 @@ class Dashboard extends CI_Controller {
 					/* "<label><input type='checkbox' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>", */
 					"<div class='form-check'><input  onchange='selectall(this)' class='form-check-input' type='checkbox' id='select_all'><label class='form-check-label' for='select_all'>Select All</label></div>",
 					/* "ID", */
-					"Name",
+					"Name <br />Account code",
 					/* "Last name", */
 					"Email",
 					"Phone",  
 					//"country",
 					"Dependent",
-					"Account code",
+					/* "Account code", */
 					"image",
 					//"Date",
 					"Actions",
@@ -2569,7 +2569,7 @@ class Dashboard extends CI_Controller {
 							$key->phone .='<br />'.cdate($key->smsdate);
 						}
 					}
-					$key->first_name = $key->first_name.' '.$key->last_name;
+					$key->first_name = '<span style="white-space: nowrap;">'.$key->first_name.' '.$key->last_name.' <br />'.$key->account_code.'</span>';
 					/*
 					cdate
 					*/
@@ -2579,6 +2579,7 @@ class Dashboard extends CI_Controller {
 					unset($key->cardemail);
 					unset($key->smsdate);  
 					unset($key->emaildate);  
+					unset($key->account_code);  
 					$value=array_values((array)$key);
 					 
 					 $down="<div class='columns columns-right mb-2 btn-group pull-right'><a data-toggle='View Card' class=' btn btn-default download'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."' class='' target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
@@ -2798,7 +2799,7 @@ class Dashboard extends CI_Controller {
 				break;
 			case "viewemaaillog":
 				$contract_number=$id;  
-				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
+				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber,c.email from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
 				
 				 
 				generatePageView('contactemaillogs',$data);

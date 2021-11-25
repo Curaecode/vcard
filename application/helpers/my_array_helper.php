@@ -665,7 +665,7 @@ function validateData($table,$data,$id){
 }
 
 function cdate($date){
-	return date('D M d Y h:i:s a', strtotime($date));
+	return date('D M d Y h:i a', strtotime($date));
 }
 function customdate($date){
 	return date('D, M d Y ', strtotime($date));
