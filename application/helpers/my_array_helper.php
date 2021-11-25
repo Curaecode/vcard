@@ -889,4 +889,44 @@ function uniquestring($phone){
 	
 	return $string;
 }
+function createpdfcard($id=0){
+	$CI =& get_instance();
+	$data['showname']=$CI->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
+	$data['showdependent']=$CI->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
+	$data['image']=$CI->model->getDatarow("config","where isVisible=1 AND name='image'"); 
+   
+	$last_data=$CI->model->getLastData2("contacts",$id);
+	$company_id= $last_data->company_id;
+	$contract_number= $last_data->contract_number;
+	$data['dependent']=$CI->model->getdependents("contact_dependant",$contract_number);
+	$data['contact']=$last_data;
+	
+	$CI->db->select('*');
+	$CI->db->where('is_card',1);
+	$query = $CI->db->get( 'care_coordination' );
+	$data['providers'] = $query->result();
+	 
+	$htmlfront =$CI->load->view('card/indexfront',$data,true);
+	$htmlback =$CI->load->view('card/indexback',$data,true);
+	$stylesheet =$CI->load->view('card/stylesheet',[],true);   
+	 
+	$html =$CI->load->view('card/indexmpdf',$data,true);
+	$stylesheet =$CI->load->view('card/stylesheet',[],true);   
+	
+	$file_name='card_'.md5($id).'.pdf';		
+	if (file_exists('vcardpdf/'.$file_name)) {
+		 unlink('vcardpdf/'.$file_name);
+	}
+	
+	$CI->load->library('m_pdf'); 
+	$params=array("",array(54,85),0,"",0,0,0,0,0,0,"P");
+	$pdf = $CI->m_pdf->load($params);
+	$pdf->debug = true; 
+	$pdf->dpi = 300;
+	$pdf->WriteHTML($stylesheet,1);
+	$pdf->WriteHTML($html);  
+	$file_name='card_'.md5($id).'.pdf';	 
+	$pdf->Output('vcardpdf/'.$file_name,'F');
+	return $file_name;
+}
 ?>

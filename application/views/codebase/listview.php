@@ -17,6 +17,7 @@
 			</div>
 			<div class="col-md-8 col-xl-10 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
 				 <?php if($title == 'Contact'){ ?>
+					<button type="button"  style="margin-right:10px;" onclick='return sendpdfmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send PDF Email</button>
 					<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Email</button>
 					<button type="button"  style="margin-right:10px;" onclick='return sendallcard()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Card</button>
 				 <?php } ?>

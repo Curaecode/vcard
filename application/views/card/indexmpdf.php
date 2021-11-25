@@ -222,7 +222,7 @@
 	 <div class="avatar" style="text-align:center;z-index: 99;width:50%; height:30px; display:block; margin: 0px auto;margin-top:-30px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
 		<center><img   src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center>
 	</div> 
-	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:70.2%">
+	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:73.2%">
 		<div class="card-heading"  style="margin-top:10px;">
 			<?php if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
@@ -282,7 +282,7 @@
 		</div> 
 	</div>  
 	<div class="card-highlight" style="position:absolute; font-size:16px; border-radius: 0px 0px 5px 5px;padding:5px 5px;">
-		<p style="margin:0px; padding:0px 0px;font-size:16px;">This card is the property of CuraeChoice, LLC. If found please return to 3179 Green Valley Rd. Suite 634, Vestavia, AL 35243-5239</p>
+		<p style="margin:0px; padding:0px 0px;font-size:20px;color:#fff;">This card is the property of CuraeChoice, LLC. If found please return to 3179 Green Valley Rd. Suite 634, Vestavia, AL 35243-5239</p>
 	</div>
 </div> 
 
@@ -305,10 +305,10 @@
 		<div class="user-data" style="flex: 1 1 auto; padding: 0px 25px;">
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;">
+					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;list-style-type: none;">
 						<li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
 						<li>No-Co-pay, Deductibles or Co-Insurance.</li>  
-						<li>Information for Providers:
+						<li><strong style="font-weight:700;">Information for Providers:</strong>
 							<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;">
 								<li>Send electronics claims to payer ID CC304</li>
 								<li>For eligibility verification sign up at <a href="https://monday.com/" target="_blank">Monday.com</a></li>
@@ -319,8 +319,8 @@
 			</div> 
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="margin-top: 10px;padding: 0px;font-size:28px;color:#88bd23;list-style-type: none;text-align: justify;">
-						<li>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</li> 
+					<ul style="margin-top: 10px;padding: 0px;font-size:28px;color:#88bd23;list-style-type: none;text-align: justify;font-weight:bold;">
+						<li><strong>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</strong></li> 
 					</ul>
 				</div> 
 			</div> 
