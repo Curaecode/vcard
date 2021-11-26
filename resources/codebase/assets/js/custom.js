@@ -689,9 +689,14 @@ view.formSubmit=function(page,formData){
 				$(".modalcontent").modal('hide');
 				swal("Success",data.msg,"success");
 				page=window.location.href.split("#")[1];
-				//console.log(page);
-				view.load(page);
-				$(document).find('#member_select').val(data.dependent)
+				console.log("page = "+page);
+				if(page=='cardsettings' || page=='#cardsettings' || page=='cardsettings/'){
+					window.location.href=base_url+"admin/dashboard#"+page;
+				}else{
+					view.load(page);
+					$(document).find('#member_select').val(data.dependent)
+				}
+				 
 	
 			}
 			else{
