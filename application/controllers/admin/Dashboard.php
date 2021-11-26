@@ -2696,7 +2696,7 @@ class Dashboard extends CI_Controller {
 				$data['groups']=($this->model->getData("groups"));
 				$data['companies']=($this->model->getData("companies"));
 				$data['locations']=($this->model->getData("locations"));
-				$data['states']=($this->model->getData("states"));
+				$data['states']=($this->model->getData("states","WHERE country_id=233"));
 				$data['countries']=($this->model->getData("country"));
 				$data['industries']=($this->model->getData("industries"));
 				$data['dependent']=($this->model->getData("dependent"));

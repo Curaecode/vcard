@@ -150,8 +150,8 @@
 			border: 0px solid #fff;
 		}
 		.avatar img{
-			width:80%;
-			height: 80%;
+			width:80%; 
+			height:50px;
 			vertical-align: middle;
 		}
 		.xcard .card-body{
@@ -219,10 +219,11 @@
 			</div>
 		</div> 
 	</div>
-	 <div class="avatar" style="text-align:center;z-index: 99;width:50%; height:30px; display:block; margin: 0px auto;margin-top:-30px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
-		<center><img   src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center>
+	 <div class="avatar" style="text-align:center;z-index: 99;width:80%; height:30px; display:block; margin: 0px auto;margin-top:-30px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
+		<center><img height="132"  src="<?php echo base_url().'resources/admin/'.$image->value;?>" alt="user" /></center>
+		<?php /* <center><img   src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center> */ ?>
 	</div> 
-	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:73.2%">
+	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:65.5%">
 		<div class="card-heading"  style="margin-top:10px;">
 			<?php if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
@@ -281,8 +282,17 @@
 			</div> 
 		</div> 
 	</div>  
-	<div class="card-highlight" style="position:absolute; font-size:16px; border-radius: 0px 0px 5px 5px;padding:5px 5px;">
-		<p style="margin:0px; padding:0px 0px;font-size:20px;color:#fff;">This card is the property of CuraeChoice, LLC. If found please return to 3179 Green Valley Rd. Suite 634, Vestavia, AL 35243-5239</p>
+	<div class="card-highlight" style="position:absolute; font-size:16pt; border-radius: 0px 0px 5px 5px;padding:25px 5px;">
+		 <?php if(!empty($providers)){  $counter=1;?> 
+			 
+			<?php foreach($providers as $row){ ?>  
+				<span style=" padding:15px 15px !important; float:left;">
+					<?php  $mainURL = base_url(); ?>
+					<a href="<?php echo $mainURL.$row->slug;?>" target="_blank"><img width="50" height="50" alt="curaechoice" src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>"></a>
+				</span> 	 
+			<?php }?>
+			 
+		<?php }?>
 	</div>
 </div> 
 
@@ -298,7 +308,7 @@
 			</div>
 		</div> 
 	</div>
-	<div class="card-body" style="padding: 13px 10px 0px 13px;flex: 1 1 auto; height:76.5%;">
+	<div class="card-body" style="padding: 13px 10px 0px 13px;flex: 1 1 auto; height:84%;">
 		<div class="card-heading"> 
 			<h5 class="card-title text-danger">Terms & Conditions</h5>   
 		</div>
@@ -306,9 +316,14 @@
 			<div class="row"> 
 				<div class="col-sm-12">	
 					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;list-style-type: none;">
-						<li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
-						<li>No-Co-pay, Deductibles or Co-Insurance.</li>  
-						<li><strong style="font-weight:700;">Information for Providers:</strong>
+						<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li>
+						<?php /* <li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
+						<li>No-Co-pay, Deductibles or Co-Insurance.</li>  */  ?> 
+					</ul>
+				</div>	
+				<div class="col-sm-12">	
+					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;list-style-type: none;">
+						<li><strong style="font-weight:bold;font-size:30px;">Information for providers:</strong>
 							<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;">
 								<li>Send electronics claims to payer ID CC304</li>
 								<li>For eligibility verification sign up at <a href="https://monday.com/" target="_blank">Monday.com</a></li>
@@ -326,18 +341,10 @@
 			</div> 
 		</div> 
 	</div>  
-	<div class="card-highlight" style="position:absolute; font-size:16pt; border-radius: 0px 0px 5px 5px;padding:25px 5px;">
-		 <?php if(!empty($providers)){  $counter=1;?> 
-			 
-			<?php foreach($providers as $row){ ?>  
-				<span style=" padding:15px 15px !important; float:left;">
-					<?php  $mainURL = base_url(); ?>
-					<a href="<?php echo $mainURL.$row->slug;?>" target="_blank"><img width="50" height="50" alt="curaechoice" src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>"></a>
-				</span> 	 
-			<?php }?>
-			 
-		<?php }?>
+	<div class="card-highlight" style="position:absolute; font-size:16px; border-radius: 0px 0px 5px 5px;padding:5px 5px;">
+		<p style="margin:0px; padding:0px 0px;font-size:20px;color:#fff;">This card is the property of CuraeChoice, LLC. If found please return to 3179 Green Valley Rd. Suite 634, Vestavia, AL 35243-5239</p>
 	</div>
+	
 </div> 
 </body>
 </html>

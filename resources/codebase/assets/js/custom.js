@@ -149,21 +149,21 @@ $(document).ready(function(){
 		var index = tbody.find('tr').length;
 		var html = '';
 		html+='<tr>';
-			html+='<td>';
-				html+='<select style="margin: 0px !important;" class="form-control" id="member_select" name="dependent['+index+'][dependent]" required>';
+			html+='<td style="padding:0.75rem 0px;">';
+				html+='<select style="margin: 0px !important;" class="form-select" id="member_select" name="dependent['+index+'][dependent]" required>';
 					html+='<option value="">Please Select</option>';
 					/* html+='<option value="Member">Member</option>'; */
 					html+='<option value="Spouse">Spouse</option>';
 					html+='<option value="Dependent">Dependent</option>';
 				html+='</select>';
 			html+='</td>';
-			html+='<td>';
+			html+='<td style="padding:0.75rem 0px;">';
 				html+='<input type="text" class="form-control" value="" name="dependent['+index+'][dependant_name]">';
 			html+='</td>';
-			html+='<td>';
+			html+='<td style="padding:0.75rem 0px;">';
 				html+='<input type="text" class="form-control" value="" name="dependent['+index+'][dep_f_name]">';
 			html+='</td>';
-			html+='<td>';
+			html+='<td style="padding:0.75rem 0px;">';
 			
 				html+='<div class="input-group">'+
 						  '<div class="input-group-prepend">'+
@@ -175,7 +175,7 @@ $(document).ready(function(){
 						'</div>';
 				/* html+='<input type="text" class="form-control" value="" name="dependent['+index+'][phone]">'; */
 			html+='</td>';
-			html+='<td>';
+			html+='<td style="padding:0.75rem 0px;">';
 				html+='<input type="date" class="form-control" value="" name="dependent['+index+'][dob]">';
 			html+='</td>';
 			html+='<td>';

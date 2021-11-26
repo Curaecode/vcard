@@ -23,7 +23,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="add-contact-box">
-							<div class="add-contact-content popupcontent" style="padding: 8px 11px;">
+							<div class="add-contact-content popupcontent">
 								
 							</div>
 						</div>

@@ -41,7 +41,7 @@
 								<div class="col-md-6">
 									<div class="mb-3 ">
 										<label for="is_card">Show on Card</label>
-										<select name="is_card" class="form-control">
+										<select name="is_card" class="form-select">
 											<option value="1" <?php if(isset($edit["is_card"]) && $edit["is_card"] == 1){ ?>selected<?php } ?>>Show</option>
 											<option value="0" <?php if(isset($edit["is_card"]) && $edit["is_card"] == 0){ ?>selected<?php } ?>>Hide</option>
 										</select> 
@@ -51,7 +51,7 @@
 								<div class="col-md-6">
 									<div class="mb-3 ">
 										<label for="comingsoon">Coming Soon</label>
-										<select name="comingsoon" class="form-control">
+										<select name="comingsoon" class="form-select">
 											<option value="0" <?php if(isset($edit["comingsoon"]) && $edit["comingsoon"] == 0){ ?>selected<?php } ?>>No</option>
 											<option value="1" <?php if(isset($edit["comingsoon"]) && $edit["comingsoon"] == 1){ ?>selected<?php } ?>>Yes</option> 
 										</select> 

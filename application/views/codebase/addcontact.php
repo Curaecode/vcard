@@ -66,11 +66,12 @@
 								<div class="mb-3 ">
 									<div class='form-group'>
 										<label>Country Name<span style="color: red;">*</span></label>
-										<select class="form-control select2 " name="country_id" required>
+										<select class="form-select select2 " name="country_id" required>
 											<option value="">--Select country name--</option>
 											<?php
 											foreach($countries as $val){
 											$selected=isset($edit["country_id"])&&$val->id==$edit["country_id"]?"selected":"";
+											if(!isset($edit["country_id"]) && $val->id==233){$selected="selected";}
 												echo "<option value='$val->id' $selected>$val->country_name </option>";
 											}
 											?>
@@ -83,7 +84,7 @@
 								<div class="mb-3 ">
 									<div class='form-group'>
 										<label>State<span style="color: red;">*</span></label>
-										<select class="form-control select2 select_state" name="state_id" required>
+										<select class="form-select select2 select_state" name="state_id" required>
 											<?php foreach ($states as $key => $singleState) {?>
 												<option <?php if (isset($edit['state_id']) && $edit['state_id']==$singleState->id) { echo "selected"; } ?> value="<?php echo $singleState->id; ?>"><?php echo $singleState->state_name; ?></option>
 											<?php } ?>
