@@ -579,13 +579,9 @@ view.refreshJs=function(datatable,page){
 		table = $('.datatable').DataTable({ 
 			"lengthMenu": [[100, 250, 500,1000,-1], [100, 250, 500,1000,"All"]],
 			 /* dom: 'Blfrtip', */
-			 "dom": '<"row"<"col-md-6"l><"col-md-6 text-end"B>><"'+responsive+'"rt><"row"<"col-md-6"i><"col-md-6 text-end"p>>',
+			 "dom": '<"row"<"col-md-6"l><"col-md-6 text-end"B>><"row"<"col-md-12"<"'+responsive+'"rt>><"row"<"col-md-6"i><"col-md-6 text-end"p>>',
 			buttons: [
 				'copy', 'csv', 'excel', 'pdf' 
-				/* 'copyHtml5',
-				'excelHtml5',
-				'csvHtml5',
-				'pdfHtml5' */
 			],
 			/* "scrollY":        "300px",
 			"scrollCollapse": true,  */
@@ -595,14 +591,10 @@ view.refreshJs=function(datatable,page){
 			"order": [],
 			"drawCallback": function(settings) {
 				console.log("drawCallback",settings);
-				/* setTimeout(function(){  
-					$(document).on("click",".imgSmall",function(){
-						 
-						$("#imgBig").attr("src",$(this).attr('src'));
-						$("#overlay").show();
-						$("#overlayContent").show();
-					});	
-				}, 1000); */
+				setTimeout(function(){  
+					$('[data-toggle="tooltip"]').tooltip();
+				}, 1000); 
+				
 			},
 			"ajax": {
 				"url":url ,
@@ -615,6 +607,7 @@ view.refreshJs=function(datatable,page){
 				}, 
 				"initComplete": function(settings, json) {
 					console.log("initComplete",settings); 
+					 $('[data-toggle="tooltip"]').tooltip();
 					 
 				}
 			},

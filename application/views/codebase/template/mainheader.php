@@ -116,8 +116,11 @@
 							<li class="sidebar-item"><a href="#urllogs/" class="sidebar-link loadview"><i
 										class="mdi mdi-book-multiple"></i><span class="hide-menu"> Web Access Logs
 									</span></a></li> 
-							<li class="sidebar-item"><a href="#twillio/" class="sidebar-link loadview"><i
+							<li class="sidebar-item"><a href="#twilliologs/" class="sidebar-link loadview"><i
 										class="mdi mdi-book-multiple"></i><span class="hide-menu"> Twillio Logs
+									</span></a></li> 
+							<li class="sidebar-item"><a href="#twillio/" class="sidebar-link loadview"><i
+										class="mdi mdi-book-multiple"></i><span class="hide-menu"> SMS Logs
 									</span></a></li> 
 						</ul>
 					</li> 

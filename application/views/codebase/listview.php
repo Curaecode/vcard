@@ -37,7 +37,7 @@
 				<div class="block-content "> 
 			<div class="card card-body"> 
 					<div class="block-content block-content-full" id="listingview"> 
-						<table data-id="<?php echo @$id; ?>" data-active2="<?php echo @$active2; ?>"  data-active="<?php echo @$active; ?>" class="table table-bordered table-striped table-vcenter datatable js-dataTable-full   search-table v-middle" id="basic-datatable"> 
+						<table data-id="<?php echo @$id; ?>" data-active2="<?php echo @$active2; ?>"  data-active="<?php echo @$active; ?>" <?php /*  class="table table-bordered table-striped table-vcenter datatable js-dataTable-full search-table v-middle" */ ?> id="basic-datatable"  class="table table-bordered table-striped table-vcenter datatable " > 
 							<thead>
 								<tr role="row">
 								<?php $counter=0;

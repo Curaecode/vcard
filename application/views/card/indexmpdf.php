@@ -3,6 +3,7 @@
 <head>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<meta name="format-detection" content="telephone=yes">
 <style type="text/css">
 	@font-face {
 		font-family: 'Roboto';
@@ -171,13 +172,13 @@
 		}
 		.xcard .card-body .card-heading .card-title{
 			margin:0px;
-			font-weight:700;
-			font-size:28px;
+			font-weight:bold;
+			font-size:32px;
 		}
 		.xcard .card-body .card-heading .card-text{
 			margin:0px;
-			font-size:24px;
-			font-weight:700;
+			font-size:28px;
+			font-weight:bold;
 		}
 		.xcard .card-body .user-data dl{
 			margin:0px;
@@ -213,18 +214,18 @@
 				<img style="width: 80%;margin-top: 5px;margin-left: 9px;" src="<?php echo base_url().'cardassets/cc-logo-white.png';?>" alt="user" />
 			</div>
 			<div class="col-sm-5" style="float:right;">
-				<?php /* <img style="width: 140px;margin-top: 5px;" src="<?php echo base_url().'cardassets/ph-email-white.png';?>" alt="user" /> */ ?>
-				<p style="text-align:right;margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+18006469823"><img style="width: 80%;margin-top: 5px;margin-right: 10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
+				<?php /* <img style="width: 80%;margin-top: 5px;margin-right: 10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" />*/ ?>
+				<p style="text-align:right;margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="<?php echo base_url();?>callus/" ><img style="width: 80%;margin-top: 5px;margin-right: 10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
 				<p style="text-align:right;margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width: 80%;margin-top: 3px;margin-right: 10px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
 			</div>
 		</div> 
 	</div>
-	 <div class="avatar" style="text-align:center;z-index: 99;width:80%; height:30px; display:block; margin: 0px auto;margin-top:-30px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
-		<center><img height="132"  src="<?php echo base_url().'resources/admin/'.$image->value;?>" alt="user" /></center>
-		<?php /* <center><img   src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center> */ ?>
+	 <div class="avatar" style="text-align:center;z-index: 99;width:70%; height:35px; display:block; margin: 0px auto;margin-top:-30px; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 4px 2px rgb(0 0 0 / 15%);background:#fff;">
+		<?php /* <center><img width="60%" src="<?php echo base_url().'resources/admin/'.$image->value;?>" alt="user" /></center> */ ?>
+		<center><img  width="60%"  src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center> 
 	</div> 
-	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:65.5%">
-		<div class="card-heading"  style="margin-top:10px;">
+	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:67.5%">
+		<div class="card-heading"  style="margin-top:10px;"> 
 			<?php if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
 			<?php } ?>
@@ -235,7 +236,7 @@
 			<div class="row">
 				<?php if($showdependent->value==1){ ?>
 					<?php if(isset($dependent) && !empty($dependent)){?>
-					<div class="col-sm-6" style="float:left;padding:0px;margin:0px;">	
+					<div class="col-sm-6" style="float:left;padding:0px;margin:25px 0px 0px 0px; ">	
 						<dl class="row" style="margin-top: 5px;">
 							<?php foreach($dependent as $key => $value){ ?>
 										<?php if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){?>
@@ -303,40 +304,46 @@
 				<img style="width: 100%;margin-top: 5px;margin-left: 10px;" src="<?php echo base_url().'cardassets/cc-logo-white.png';?>" alt="user" />
 			</div>
 			<div class="col-sm-5" style="float:right;">
-				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="tel:+18006469823"><img style="width: 100%;margin-top: 5px;margin-left: -10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
+				<p style="margin-top: 4px; padding: 0px;  margin-bottom: 0px;"><a href="<?php echo base_url();?>callus/" ><img style="width: 100%;margin-top: 5px;margin-left: -10px;" src="<?php echo base_url().'cardassets/phone.png';?>" alt="user" /></a></p>
 				<p style="margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width:100%;margin-top: 3px;margin-left: -10px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
 			</div>
 		</div> 
 	</div>
-	<div class="card-body" style="padding: 13px 10px 0px 13px;flex: 1 1 auto; height:84%;">
-		<div class="card-heading"> 
-			<h5 class="card-title text-danger">Terms & Conditions</h5>   
-		</div>
-		<div class="user-data" style="flex: 1 1 auto; padding: 0px 25px;">
+	<div class="card-body" style="padding: 13px 10px 0px 13px;flex: 1 1 auto; height:84%;"> 
+		<div class="user-data" style="flex: 1 1 auto; padding: 0px 15px;">
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;list-style-type: none;">
-						<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li>
-						<?php /* <li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
-						<li>No-Co-pay, Deductibles or Co-Insurance.</li>  */  ?> 
-					</ul>
+					 <div class="avatar" style="text-align:center;z-index: 99;width:100%; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:  0px 2px 2px 2px rgb(0 0 0 / 15%);background:#fff;margin-bottom:20px;"> 
+						<ul style="margin: 10px 5px 0px 0px;padding: 15px 15px 0px 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
+							<li><strong style="font-weight:bold;font-size:30px;">Terms & Conditions</strong> </li>  
+						</ul>
+						<ul style="margin: 10px 5px 0px 0px;padding: 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
+							<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li>
+							<?php /* <li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
+							<li>No-Co-pay, Deductibles or Co-Insurance.</li>  */  ?> 
+						</ul>
+					</div>	
 				</div>	
 				<div class="col-sm-12">	
-					<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;list-style-type: none;">
-						<li><strong style="font-weight:bold;font-size:30px;">Information for providers:</strong>
-							<ul style="margin: 10px 5px 0px 15px;padding: 0px; font-size:28px;text-align: justify;">
-								<li>Send electronics claims to payer ID CC304</li>
-								<li>For eligibility verification sign up at <a href="https://monday.com/" target="_blank">Monday.com</a></li>
-							</ul>
-						</li>  
-					</ul>
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%;; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:  0px 2px 2px 2px rgb(0 0 0 / 15%);background:#fff;margin-bottom:20px;">
+						<ul style="margin: 10px 5px 0px 0px;padding: 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
+							<li><strong style="font-weight:bold;font-size:30px;">Information for providers:</strong>
+								<ul style="color:#5a5a5a;list-style-type: none;margin: 10px 5px 0px 0px;padding: 0px; font-size:28px;text-align: justify;">
+									<li>Send electronics claims to payer ID CC304</li>
+									<li>For eligibility verification sign up at <a href="https://monday.com/" style="color:#5a5a5a;" target="_blank">Monday.com</a></li>
+								</ul>
+							</li>  
+						</ul>
+					</div>
 				</div>	 	 
 			</div> 
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="margin-top: 10px;padding: 0px;font-size:28px;color:#88bd23;list-style-type: none;text-align: justify;font-weight:bold;">
-						<li><strong>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</strong></li> 
-					</ul>
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%;  display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:  0px 2px 2px 2px rgb(0 0 0 / 15%);background:#fff;">
+						<ul style="margin-top: 10px;padding: 15px;font-size:28px;color:#88bd23;list-style-type: none;text-align: justify;font-weight:bold;">
+							<li><strong>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</strong></li> 
+						</ul>
+					</div> 
 				</div> 
 			</div> 
 		</div> 

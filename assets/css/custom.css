@@ -35,3 +35,6 @@
 .dataTables_info{
 	white-space: break-spaces !important;
 }
+.dataTable .columns a:focus, .dataTable .columns a:hover {
+    background-color: rgb(57, 164, 227); 
+}
