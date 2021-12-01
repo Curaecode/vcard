@@ -38,3 +38,6 @@
 .dataTable .columns a:focus, .dataTable .columns a:hover {
     background-color: rgb(57, 164, 227); 
 }
+.nowrap{
+	white-space: nowrap;
+}

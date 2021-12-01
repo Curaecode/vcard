@@ -2541,12 +2541,12 @@ class Dashboard extends CI_Controller {
 							}else{
 								$dependent_datas = 'S';
 							}
-							$string = $dependent_datas.': '.$dependent_data2.' - '.count($datadependent);
+							$string = '<div class="d-block nowrap">'.$dependent_datas.': '.$dependent_data2.'</div>';
 							array_push($dependent_data,$string);
 							/* $dependent_data .= $dependent_datas.': '.$dependent_data2.' <br />'; */
 						}
 					}
-					$key->dependent = implode(' <br />',$dependent_data);
+					$key->dependent = implode('',$dependent_data);
 					
 					$contract_number = $key->contract_number;
 					 unset($key->contract_number);  
@@ -2560,13 +2560,13 @@ class Dashboard extends CI_Controller {
 					if($key->cardemail>=1){
 						$key->email ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->email;
 						if($key->emaildate!='0000-00-00 00:00:00' && !empty($key->emaildate)){
-							$key->email .='<br />'.cdate($key->emaildate);
+							$key->email .='<div class="d-block nowrap">'.cdate($key->emaildate).'</div>';
 						}
 					}
 					if($key->cardsend>=1){
 						$key->phone ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->phone;
 						if($key->smsdate!='0000-00-00 00:00:00' && !empty($key->smsdate)){
-							$key->phone .='<br />'.cdate($key->smsdate);
+							$key->phone .='<div class="d-block nowrap">'.cdate($key->smsdate).'</div>';
 						}
 					}
 					$key->first_name = '<span style="white-space: nowrap;">'.$key->first_name.' '.$key->last_name.' <br />'.$key->account_code.'</span>';
