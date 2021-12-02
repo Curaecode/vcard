@@ -30,15 +30,20 @@ class Dashboard extends CI_Controller {
 		$this->db->where('is_card',1);
 		$query = $this->db->get( 'care_coordination' );
 		$data['providers'] = $query->result();
+		
+		
+		$this->db->select('*'); 
+		$query = $this->db->get( 'cardconfig' );
+		$data['cardconfig'] = $query->result();
 		 
-		$htmlfront =$this->load->view('card/indexfront',$data,true);
+		/* $htmlfront =$this->load->view('card/indexfront',$data,true);
 		$htmlback =$this->load->view('card/indexback',$data,true);
+		$stylesheet =$this->load->view('card/stylesheet',[],true);   */ 
+		 
+		  $html =$this->load->view('card/indexmpdf',$data,true);
 		$stylesheet =$this->load->view('card/stylesheet',[],true);   
 		 
-		$html =$this->load->view('card/indexmpdf',$data,true);
-		$stylesheet =$this->load->view('card/stylesheet',[],true);   
-		 
-		$this->load->library('m_pdf'); 
+	  $this->load->library('m_pdf'); 
 		$params=array("",array(54,85),0,"",0,0,0,0,0,0,"P");
 		$pdf = $this->m_pdf->load($params);
 		$pdf->debug = true; 
@@ -46,7 +51,7 @@ class Dashboard extends CI_Controller {
 		$pdf->WriteHTML($stylesheet,1);
 		$pdf->WriteHTML($html);  
 		$file_name='example';		
-		$pdf->Output();
+		$pdf->Output(); 
 	}
 	function cardnormal($id=0){ 
 		$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
@@ -166,7 +171,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("hospitals",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("hospitals",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -379,7 +384,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("users",$id).'</div>');
+					array_push($value,'<div class="columns columns-right  w100 pull-right">'.addActions("users",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -797,7 +802,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("companies",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("companies",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1033,7 +1038,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("subscriptions",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("subscriptions",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1200,7 +1205,7 @@ class Dashboard extends CI_Controller {
 					unset($key->latitude);
 					unset($key->longitude);
 					if($completed==0){
-						$down="<div class='columns columns-right btn-group pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
+						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					}else{
 						$down="Completed";
 					} 
@@ -1293,7 +1298,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					 
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("subscriptions",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("subscriptions",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1554,7 +1559,7 @@ class Dashboard extends CI_Controller {
 					    
 					$value=array_values((array)$key);
 					 
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("subscriptions",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("subscriptions",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -1998,7 +2003,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					// print_r($key);die;
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("locations",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("locations",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2126,7 +2131,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("salesgroups",$id).'</div>');
+					array_push($value,'<div class="columns columns-right w100  pull-right">'.addActions("salesgroups",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2252,7 +2257,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("industries",$id).'</div>');
+					array_push($value,'<div class="columns columns-right  pull-right w100">'.addActions("industries",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2371,7 +2376,7 @@ class Dashboard extends CI_Controller {
 					$key->date=cdate($key->date);
 					$value=array_values((array)$key);
 					
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.addActions("states",$id).'</div>');
+					array_push($value,'<div class="columns columns-right  pull-right w100">'.addActions("states",$id).'</div>');
 					$values[]=$value;
 				}
 				$output = array(
@@ -2452,7 +2457,7 @@ class Dashboard extends CI_Controller {
 			$data['groups']=($this->model->getData("groups"));
 				$coloumns=array(
 					/* "<label><input type='checkbox' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>", */
-					"<div class='form-check'><input  onchange='selectall(this)' class='form-check-input' type='checkbox' id='select_all'><label class='form-check-label' for='select_all'>Select All</label></div>",
+					"<div class='form-check'><input  onchange='selectall(this)' class='form-check-input' type='checkbox' id='select_all'></div>",
 					/* "ID", */
 					"Name <br />Account code",
 					/* "Last name", */
@@ -2582,19 +2587,23 @@ class Dashboard extends CI_Controller {
 					unset($key->account_code);  
 					$value=array_values((array)$key);
 					 
-					 $down="<a data-toggle='View Card' class=' btn btn-default download' data-bs-toggle='tooltip'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."' class='' target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
-					<a data-toggle='Download vCard'class='btn btn-default download-card' data-bs-toggle='tooltip'   title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."' class='' target='_blank'><i class='fa fa-id-card'></i> </a>
-					<a data-toggle='Send vCard' class='btn btn-default send send_contacts_email_vcard' data-bs-toggle='tooltip'  title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a> 
-					<a data-toggle='View Dependent' class='btn btn-default loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Dependent' data-company='".$contract_number."' title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
+					 $down="<a data-toggle='View Card' class=' btn btn-default waves-effect waves-light download' data-bs-toggle='tooltip'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."' class='' target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default waves-effect waves-light'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
+					<a data-toggle='Download vCard'class='btn btn-default waves-effect waves-light download-card' data-bs-toggle='tooltip'   title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."'  target='_blank'><i class='fa fa-id-card'></i> </a>
+					<a data-toggle='Send vCard' class='btn btn-default waves-effect waves-light send send_contacts_email_vcard' data-bs-toggle='tooltip'  title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a> 
 					
-					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."'  data-bs-toggle='tooltip'  data-company='".$contract_number."' data-title='Add Dependent' class='btn btn-default loadview modalview edite contact_edit_page'><i class='fa fa-user-plus'></i></a>
-					<a data-toggle='Edit Dependent' title='Edit Dependent' href='#contacts/editdependents/".$contract_number."'  data-bs-toggle='tooltip'  data-company='".$contract_number."' data-title='Edit Dependent' class='btn btn-default loadview modalview edite contact_edit_page'><i class='fa fa-edit'></i></a>
+					
+					<a data-toggle='View Dependent' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page dependentsm'  data-bs-toggle='tooltip'  data-title='View Dependent' data-company='".$contract_number."'  title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
+					
+					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."'   data-bs-toggle='tooltip'  data-company='".$contract_number."' data-title='Add Dependent' class='btn btn-default waves-effect waves-light loadview modalview edite contact_edit_page dependentsm'><i class='fa fa-user-plus'></i></a>
+					
+					
+					<a data-toggle='Edit Dependent' title='Edit Dependent' href='#contacts/editdependents/".$contract_number."'  data-bs-toggle='tooltip'  data-company='".$contract_number."' data-title='Edit Dependent' class='btn btn-default waves-effect waves-light loadview modalview edite contact_edit_page'><i class='fa fa-edit'></i></a>
 					 
-					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
+					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
 					
-					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard SMS Logs' data-company='".$id."' title='View Send vCard SMS Logs' href='#contacts/viewsmslog/".$id."' style='background: #e18c0d;'><i class='fa fa-history'></i></a>
+					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard SMS Logs' data-company='".$id."' title='View Send vCard SMS Logs' href='#contacts/viewsmslog/".$id."' style='background: #e18c0d;'><i class='fa fa-history'></i></a>
 					
-					<a data-toggle='View Send vCard Email Logs' class='btn btn-default loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
+					<a data-toggle='View Send vCard Email Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
 				 
 					";  
 					
@@ -2621,7 +2630,7 @@ class Dashboard extends CI_Controller {
 					/* $up="<input type='checkbox' value='".$id."' class='checkbox'>"; */
 					$up="<div class='form-check'><input class='form-check-input checkbox' value='".$id."' type='checkbox'></div>";
 					array_unshift($value,$up);
-					array_push($value,'<div class="columns columns-right btn-group pull-right">'.$down.''.addActions_contact("contacts",$id).'</div>');
+					array_push($value,'<div class="columns columns-right pull-right w300">'.$down.''.addActions_contact("contacts",$id).'</div>');
 					
 					$values[]=$value;
 				}
@@ -3044,8 +3053,8 @@ public function settings($action="update",$id=null){
 							$config['create_thumb'] = TRUE;
 							//$config['thumb_marker'] = false;
 							$config['maintain_ratio'] = FALSE;
-							$config['width'] = 235;
-							$config['height'] = 125;
+							$config['width'] = 241;
+							$config['height'] = 100;
 							 
 							$this->load->library('image_lib', $config); 
 							$this->image_lib->resize(); 

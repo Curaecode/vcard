@@ -13,6 +13,7 @@ class Qrcode extends CI_Controller {
 		}
 		$data['qrname']=$this->model->getDatarow("config","where isVisible=1 AND name='qrname'");
 		$data['qrdob']=$this->model->getDatarow("config","where isVisible=1 AND name='qrdob'");
+		$data['cardno']=$this->model->getDatarow("config","where isVisible=1 AND name='cardno'");
 		$this->load->view('qrcode/index',$data);
 	}
 	public function detail(){

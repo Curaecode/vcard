@@ -228,6 +228,9 @@ class Subscriptions extends CI_Controller {
 			if($this->input->post('email')){
 				$cols['email']=$this->db->escape_str($this->input->post('email'));
 			}
+			if($this->input->post('cardno')){
+				$cols['cardno']=$this->db->escape_str($this->input->post('cardno'));
+			}
 			if($this->input->post('area_code') && $this->input->post('phone_first') && $this->input->post('phone_second')){
 				$cols['phone']=$this->db->escape_str($this->input->post('area_code')).''.$this->db->escape_str($this->input->post('phone_first')).''.$this->db->escape_str($this->input->post('phone_second'));
 			}

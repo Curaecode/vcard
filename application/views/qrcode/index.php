@@ -33,9 +33,15 @@
 							</div> 
 						<?php } ?>	
 							<div class="form-group">
-								<label class="pb-0" for="exampleInputPassword1">Email</label>
+								<label class="pb-0" for="email">Email</label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="" required>
 							</div> 
+							<?php if($cardno->value == 1){?>
+							<div class="form-group">
+								<label class="pb-0" for="cardno">Card #</label>
+								<input class="form-control" name="cardno" id="cardno" placeholder="" required>
+							</div> 
+							<?php } ?>	
 							<div class="form-group">
 								<div class="row">
 									<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Mobile Number</label>  

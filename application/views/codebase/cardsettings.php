@@ -114,15 +114,20 @@
 <script>
         
 	if ($(".mymce").length > 0) {
-		tinymce.init({
+		 tinymce.init({
 			selector: "textarea.mymce",
-			theme: "modern",
+			theme: "modern", 
+			valid_elements: '+*[*]',
+			width: '100%',
+			inline_styles: true,
+			keep_styles: true,  
+			verify_html: false,
 			height: 100,
 			max_chars: 200, // max. allowed chars
 			plugins: [
-				"advlist autolink link  lists charmap print preview hr anchor spellchecker",
-				"searchreplace wordcount visualblocks visualchars code fullscreen nonbreaking",
-				"table contextmenu directionality emoticons template paste textcolor"
+				'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+				'searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking',
+				'save table contextmenu directionality emoticons template paste textcolor'
 			],
 			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print preview fullpage | forecolor backcolor emoticons",
 			setup: function(ed) { 
@@ -164,7 +169,7 @@
 					tinymce_updateCharCounter(editor, len + text.length);
 				}
 			}	
-		});
+		}); 
 	} 
 		
 		function tinymce_updateCharCounter(el, len) {

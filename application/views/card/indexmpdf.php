@@ -274,7 +274,8 @@
 				<?php } ?>
 				<?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){  $col='5'; }else{$col='12'; } ?>
 				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="float:right;padding:0px;margin:0px;"<?php }?>>
-					<div class="qravatar" <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="width:100%;margin-left:40px;text-align: right;"<?php }?>><img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
+					<div class="qravatar" <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="width:100%;margin-left:40px;text-align: right;"<?php }else{?>style="width:100%;text-align:center;"<?php }?>>
+						<img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
 					<?php $date=date("M d,Y",strtotime($contact->active_member));?>
 					<p style="margin:0px 0px 0px 0px; font-size:24px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
 					</div>
@@ -313,24 +314,22 @@
 		<div class="user-data" style="flex: 1 1 auto; padding: 0px 15px;">
 			<div class="row"> 
 				<div class="col-sm-12">	
-					 <div class="avatar" style="text-align:center;z-index: 99;width:100%; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:  0px 2px 2px 2px rgb(0 0 0 / 15%);background:#fff;margin-bottom:20px;"> 
+					 <div class="avatar" style="text-align:center;z-index: 99;width:100%; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;margin-bottom:20px;"> 
 						<ul style="margin: 10px 5px 0px 0px;padding: 15px 15px 0px 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
 							<li><strong style="font-weight:bold;font-size:30px;">Terms & Conditions</strong> </li>  
 						</ul>
 						<ul style="margin: 10px 5px 0px 0px;padding: 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
-							<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li>
-							<?php /* <li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
-							<li>No-Co-pay, Deductibles or Co-Insurance.</li>  */  ?> 
+							<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li> 
 						</ul>
 					</div>	
 				</div>	
 				<div class="col-sm-12">	
-					<div class="avatar" style="text-align:center;z-index: 99;width:100%;; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:  0px 2px 2px 2px rgb(0 0 0 / 15%);background:#fff;margin-bottom:20px;">
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%;; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;margin-bottom:20px;">
 						<ul style="margin: 10px 5px 0px 0px;padding: 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
 							<li><strong style="font-weight:bold;font-size:30px;">Information for providers:</strong>
 								<ul style="color:#5a5a5a;list-style-type: none;margin: 10px 5px 0px 0px;padding: 0px; font-size:28px;text-align: justify;">
 									<li>Send electronics claims to payer ID CC304</li>
-									<li>For eligibility verification sign up at <a href="https://monday.com/" style="color:#5a5a5a;" target="_blank">Monday.com</a></li>
+									<li>For eligibility verification sign up at <a href="mailto:providersupport@curaechoice.com" style="color:#5a5a5a;" target="_blank">providersupport@curaechoice.com</a></li>
 								</ul>
 							</li>  
 						</ul>
@@ -339,7 +338,7 @@
 			</div> 
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<div class="avatar" style="text-align:center;z-index: 99;width:100%;  display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:  0px 2px 2px 2px rgb(0 0 0 / 15%);background:#fff;">
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%;  display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;">
 						<ul style="margin-top: 10px;padding: 15px;font-size:28px;color:#88bd23;list-style-type: none;text-align: justify;font-weight:bold;">
 							<li><strong>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</strong></li> 
 						</ul>

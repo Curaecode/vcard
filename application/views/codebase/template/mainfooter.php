@@ -82,7 +82,8 @@
 		
 		<script src="<?php echo res_url(); ?>codebase/assets/js/plugins/sweetalert2/sweetalert2.min.js"></script>
 	
-		 <script src="<?php echo base_url();?>assets/libs/tinymce/tinymce.min.js"></script>
+		<?php /*  <script src="<?php echo base_url();?>assets/libs/tinymce/tinymce.min.js"></script> */ ?>
+		 <script src="https://cdn.tiny.cloud/1/no-origin/tinymce/5.10.2-1095-dev/tinymce.min.js"></script>
 		 <script src="<?php echo base_url();?>assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
 		 
 		 
