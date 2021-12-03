@@ -4063,13 +4063,13 @@ public function cardsettings($action="update",$id=null){
 								</tr>
 								<tr>
 									<td align="center" valign="top" style="margin: 0; padding: 0;">
-										<img style="display: block;max-width:100%" src="'.base_url().'resources/img/image_logo.png" alt="" width="370" height="140">
+										<img style="display: block;max-width:100%" src="'.base_url().'resources/img/image_logo.png" alt="">
 									</td>
 								</tr>
 								 
 								<tr>
 									<td align="center" valign="top" style="margin: 0; padding: 0;">
-										 <p style="font-size:10px;line-height:13px;letter-spacing:-0.01em;margin:0px;padding:0;color: #727272;">You are subscribed as '.$tomail.'. To ensure delivery of Curaehchoice vCard to your inbox, please add support@curaechoice.com to your address book.</p>
+										 <p style="margin-top:20px;font-size:10px;line-height:13px;letter-spacing:-0.01em;padding:0;color: #727272;">You are subscribed as '.$tomail.'. To ensure delivery of Curaehchoice vCard to your inbox, please add support@curaechoice.com to your address book.</p>
 									</td>
 								</tr>								
 							</table>
@@ -4194,13 +4194,13 @@ public function cardsettings($action="update",$id=null){
 								</tr>
 								<tr>
 									<td align="center" valign="top" style="margin: 0; padding: 0;">
-										<img style="display: block;max-width:100%" src="'.base_url().'resources/img/image_logo.png" alt="" width="370" height="140">
+										<img style="display: block;max-width:100%" src="'.base_url().'resources/img/image_logo.png" alt="">
 									</td>
 								</tr>
 								 
 								<tr>
 									<td align="center" valign="top" style="margin: 0; padding: 0;">
-										 <p style="font-size:10px;line-height:13px;letter-spacing:-0.01em;margin:0px;padding:0;color: #727272;">You are subscribed as '.$tomail.'. To ensure delivery of Curaehchoice vCard to your inbox, please add support@curaechoice.com to your address book.</p>
+										 <p style="margin-top:20px;font-size:10px;line-height:13px;letter-spacing:-0.01em;padding:0;color: #727272;">You are subscribed as '.$tomail.'. To ensure delivery of Curaehchoice vCard to your inbox, please add support@curaechoice.com to your address book.</p>
 									</td>
 								</tr>								
 							</table>

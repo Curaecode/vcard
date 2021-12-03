@@ -170,7 +170,8 @@
 		}
 		.xcard .card-body .card-heading .card-text{
 			margin:0px;
-			font-size:12px;
+			font-weight:bold;
+			font-size:14px;
 		}
 		.xcard .card-body .user-data dl{
 			margin:0px;
@@ -289,32 +290,39 @@
 			</div>
 		</div> 
 	</div>
-	<div class="card-body" style="padding: 13px 5px 5px 13px;">
-		<div class="card-heading">
-			 
-			<h5 class="card-title text-danger">Terms & Conditions</h5> 
-			 
-		</div>
+	<div class="card-body" style="padding: 13px 5px 5px 13px;"> 
 		<div class="user-data">
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="width:308px;margin: 0px;padding: 0px; list-style-type: none;text-align: justify;">
-						<li>CuraeChoice is a benefit plan optimizer provider by and through your employer.</li>
-						<li>No-Co-pay, Deductibles or Co-Insurance.</li>  
-						<li>Information for Providers:
-							<ul>
-								<li>Send electronics claims to payer ID CC304</li>
-								<li>For eligibility verification sign up at <a href="https://monday.com/" target="_blank">Monday.com</a></li>
-							</ul>
-						</li>  
-					</ul>
-				</div>	 	 
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;margin-bottom:15px;"> 
+						<ul style="margin: 0px 5px 0px 0px;padding: 0px 10px 0px 10px; text-align: justify;list-style-type: none;color:#5a5a5a;">
+							<li><strong style="font-weight:bold;font-size:16px;">Terms & Conditions</strong> </li>  
+						</ul>
+						<ul style="margin: 0px 5px 0px 0px;padding: 0px 10px 0px 10px; font-size:12px;text-align: justify;list-style-type: none;color:#5a5a5a;">
+							<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li> 
+						</ul>
+					</div>
+				</div>	
+				<div class="col-sm-12">	
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%;; display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow: 0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;margin-bottom:15px;">
+						<ul style="margin: 0px 5px 0px 0px;padding: 10px; font-size:16px;text-align: justify;list-style-type: none;color:#5a5a5a;">
+							<li><strong style="font-weight:bold;">Information for providers:</strong>
+								<ul style="color:#5a5a5a;list-style-type: none;margin: 0px 5px 0px 0px;padding: 0px; font-size:12px;text-align: justify;">
+									<li>Send electronics claims to payer ID CC304</li>
+									<li>For eligibility verification sign up at <a href="mailto:providersupport@curaechoice.com" style="color:#5a5a5a;" target="_blank">providersupport@curaechoice.com</a></li>
+								</ul>
+							</li>  
+						</ul>
+					</div>
+				</div>		
 			</div> 
 			<div class="row"> 
 				<div class="col-sm-12">	
-					<ul style="width:308px;margin-top: 10px;padding: 0px;color:#88bd23;list-style-type: none;text-align: justify;">
-						<li>The Right choice, The best Choice, The only Choice, CuraeChoice.</li> 
-					</ul>
+					<div class="avatar" style="text-align:center;z-index: 99;width:100%;  display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;">
+						<ul style="margin-top: 0px;padding: 10px;font-size:14px;color:#88bd23;list-style-type: none;text-align: justify;font-weight:bold;">
+							<li><strong>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</strong></li> 
+						</ul>
+					</div>  
 				</div> 
 			</div> 
 		</div> 

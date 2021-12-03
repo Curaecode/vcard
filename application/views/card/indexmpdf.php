@@ -225,7 +225,7 @@
 		<center><img  width="60%"  src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" /></center> 
 	</div> 
 	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:67.5%">
-		<div class="card-heading"  style="margin-top:10px;"> 
+		<div class="card-heading"  style="margin-top:25px;"> 
 			<?php if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
 			<?php } ?>
