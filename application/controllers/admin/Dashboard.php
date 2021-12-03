@@ -1134,9 +1134,33 @@ class Dashboard extends CI_Controller {
 		 
 		$formData=escapeArray($this->input->post());
 		$data['active']="subscriptions";
+		$dataqrname=$this->model->getDatarow("config","where isVisible=1 AND name='qrname'");
+		$dataqrdob=$this->model->getDatarow("config","where isVisible=1 AND name='qrdob'");
+		$datacardno=$this->model->getDatarow("config","where isVisible=1 AND name='cardno'");
+		
 		switch($action){
 			case "view":
-				$coloumns=array(
+			$coloumns=array();
+			$coloumns[]='ID';
+			if($dataqrname->value==1){
+				$coloumns[]='First Name';
+				$coloumns[]='Last Name';
+			}
+			
+			$coloumns[]='Email';
+			if($datacardno->value==1){
+				$coloumns[]='Card #';
+			}
+			$coloumns[]='Phone';
+			if($dataqrdob->value==1){
+				$coloumns[]='DOB';
+			}
+			$coloumns[]='IP';
+			$coloumns[]='Access Date Time';
+			$coloumns[]='Address';
+			$coloumns[]='Action';
+			
+				/* $coloumns=array(
 					"ID",
 					"First Name",
 					"Last Name", 
@@ -1147,14 +1171,14 @@ class Dashboard extends CI_Controller {
 					"Access Date Time",
 					"Address"	,
 					"Action"	
-				);
+				); */
 				$data['id']=$id;
 				$data['title']="Subscriptions";
 				$data['coloumns']=$coloumns;
 				generatePageView('listview',$data);
 				break;
 			case "ajax":
-			$coloumns=array(
+			/* $coloumns=array(
 			    "id",
 				"first_name",
 				"last_name",
@@ -1165,12 +1189,35 @@ class Dashboard extends CI_Controller {
 				"latitude",
 				"longitude",
 				"completed",
-				"addeddate" 
+				"addeddate"  
+				); */
 				
-				);
+				
+				$coloumns=array();
+				$coloumns[]='id';
+				if($dataqrname->value==1){
+					$coloumns[]='first_name';
+					$coloumns[]='last_name';
+				}
+				
+				$coloumns[]='email';
+				if($datacardno->value==1){
+					$coloumns[]='cardno';
+				}
+				$coloumns[]='phone';
+				if($dataqrdob->value==1){
+					$coloumns[]='dob';
+				}
+				$coloumns[]='ipaddress';
+				$coloumns[]='latitude';
+				$coloumns[]='longitude';
+				$coloumns[]='completed';
+				$coloumns[]='addeddate';
+				
 				$searchFields=array(
 			    "id",
 				"ipaddress",
+				"cardno",
 				"first_name",
 				"last_name",
 				"phone",
@@ -1191,8 +1238,9 @@ class Dashboard extends CI_Controller {
 				foreach($results as &$key){
 					$id=$key->id;
 					//unset($key->id); //we cant get id in datatable cause its unset if u remove unset u can get id in datatable 
-					$key->dob=usadate($key->dob);
-					
+					if($dataqrdob->value==1){
+						$key->dob=usadate($key->dob);
+					}
 					$key->address='<a href="https://www.google.com/maps/@'.$key->latitude.','.$key->longitude.',19z" target="_blank"> Latitude:'.$key->latitude.'  Longitude:'.$key->longitude.'</a>';
 					if($key->addeddate=='0000-00-00 00:00:00'){
 						$key->addeddate='';

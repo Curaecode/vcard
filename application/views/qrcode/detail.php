@@ -134,14 +134,14 @@
 	<script type="text/javascript"> 
 		var returned = true;
 		function openlink(linkid){
-			if(returned==false){
+			/* if(returned==false){
 				 Swal.fire({
 					title: 'CuraeChoiceCard',
 					text: 'Please enable your location to view detail.',
 					type: 'error'
 				});
 				return false;
-			}
+			} */
 			$('#linktype').val(linkid); 
 			document.getElementById("linkform").submit();
 			return false
