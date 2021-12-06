@@ -11,19 +11,19 @@ class Card extends CI_Controller{
 			$this->load->helper('url');
 			$filename="cc_ex_f_".md5($id).".png";
 			$url =  base_url()."card/front/$id/".md5($id);
-			$filenamepath="/pngfiles/".$filename;
+			$filenamepath="/resources/cards/".$filename;
 			
 			if(!rasterize_wrapper($url,  dirname(dirname(dirname(__FILE__))).$filenamepath)){
-				echo  'PNG Generation failed';
-				exit;
+				/* echo  'PNG Generation failed';
+				exit; */
 			} 
 			$filename="cc_ex_b_".md5($id).".png";
 			$url =  base_url()."card/back/$id/".md5($id);
-			$filenamepath="/pngfiles/".$filename;
+			$filenamepath="/resources/cards/".$filename;
 			
 			if(!rasterize_wrapper($url,  dirname(dirname(dirname(__FILE__))).$filenamepath)){
-				echo  'PNG Generation failed';
-				exit;
+				/* echo  'PNG Generation failed';
+				exit; */
 			} 
 		}
 		 
@@ -74,6 +74,10 @@ class Card extends CI_Controller{
 			$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
 			$data['showdependent']=$this->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
 			$data['image']=$this->model->getDatarow("config","where isVisible=1 AND name='image'"); 
+			
+			$data['lineone']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='lineone'"); 
+			$data['linetwo']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='linetwo'"); 
+			$data['linethree']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='linethree'"); 
 			 
 			$last_data=$this->model->getLastData2("contacts",$id);
 			$company_id= $last_data->company_id;

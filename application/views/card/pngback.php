@@ -176,7 +176,7 @@
 							<li><strong style="font-weight:bold;font-size:16px;">Terms & Conditions</strong> </li>  
 						</ul>
 						<ul style="margin: 0px 5px 0px 0px;padding: 0px 10px 0px 10px; font-size:12px;text-align: justify;list-style-type: none;color:#5a5a5a;">
-							<li>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers</li> 
+							<li><?php if(!empty($lineone->value)){ echo $lineone->value; }else{?>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers<?php } ?></li> 
 						</ul>
 					</div>
 				</div>	
@@ -185,8 +185,12 @@
 						<ul style="margin: 0px 5px 0px 0px;padding: 10px; font-size:16px;text-align: justify;list-style-type: none;color:#5a5a5a;">
 							<li><strong style="font-weight:bold;">Information for providers:</strong>
 								<ul style="color:#5a5a5a;list-style-type: none;margin: 0px 5px 0px 0px;padding: 0px; font-size:12px;text-align: justify;">
+									<?php if(!empty($linetwo->value)){ 
+										echo $linetwo->value; 	
+									}else{ ?>
 									<li>Send electronics claims to payer ID CC304</li>
 									<li>For eligibility verification sign up at <a href="mailto:providersupport@curaechoice.com" style="color:#5a5a5a;" target="_blank">providersupport@curaechoice.com</a></li>
+									<?php } ?>
 								</ul>
 							</li>  
 						</ul>
@@ -197,7 +201,7 @@
 				<div class="col-sm-12">	
 					<div class="avatar" style="text-align:center;z-index: 99;width:98%;  display:block; margin: 0px auto; border: 2px solid #fff; border-radius: 6px; box-shadow:0px 2px 0px 4px rgb(0 0 0 / 35%);background:#fff;border-width: 2px; border-color:rgba(14,14,14, 0.25); border-style: solid;">
 						<ul style="margin-top: 0px;padding: 10px;font-size:14px;color:#88bd23;list-style-type: none;text-align: justify;font-weight:bold;">
-							<li><strong>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.</strong></li> 
+							<li><strong><?php if(!empty($linethree->value)){ echo $linethree->value; }else{ ?>The Right Choice, The Best Choice, The Only Choice, CuraeChoice.<?php } ?></strong></li> 
 						</ul>
 					</div>  
 				</div> 

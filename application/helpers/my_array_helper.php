@@ -240,7 +240,31 @@ function genrate_qrcode($id=null,$lastid=0)
 	return $qrimage_new_name;
 
 }
-function genrate_image($id=null)
+function genrate_image($id=null){
+	if($id>0){
+		$CI =& get_instance();
+		$CI->load->helper('phantomjs');
+		$CI->load->helper('url');
+		$filename="cc_ex_f_".md5($id).".png";
+		$url =  base_url()."card/front/$id/".md5($id);
+		$filenamepath="/resources/cards/".$filename;
+		
+		if(!rasterize_wrapper($url,  dirname(dirname(dirname(__FILE__))).$filenamepath)){
+			 
+		} 
+		$filename="cc_ex_b_".md5($id).".png";
+		$url =  base_url()."card/back/$id/".md5($id);
+		$filenamepath="/resources/cards/".$filename;
+		
+		if(!rasterize_wrapper($url,  dirname(dirname(dirname(__FILE__))).$filenamepath)){
+			 
+		} 
+		
+		return "cc_ex_f_".md5($id).".png";
+	}
+	
+}
+function genrateimage($id=null)
 {
 	ini_set('max_execution_time', 180000);
 	ini_set('fastcgi_read_timeout', 99999999);

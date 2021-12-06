@@ -2605,7 +2605,9 @@ class Dashboard extends CI_Controller {
 					 unset($key->contract_number);  
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
-					$key->image="<img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class='imgSmall img-responsive rounded-circle' >";
+					
+					$key->image="<a data-toggle='View Card' title='View Card' data-title='View Card' class='btn  waves-effect waves-light loadview modalview' data-bs-toggle='tooltip'  title='View Card' href='#contacts/cardview/".$id."'><img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class=' img-responsive rounded-circle' ></a>";
+					
 					
 					if($key->cardsend>=1){
 						$key->image ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->image;
@@ -2635,8 +2637,8 @@ class Dashboard extends CI_Controller {
 					unset($key->account_code);  
 					$value=array_values((array)$key);
 					 
-					 $down="<a data-toggle='View Card' class=' btn btn-default waves-effect waves-light download' data-bs-toggle='tooltip'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."' class='' target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default waves-effect waves-light'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
-					<a data-toggle='Download vCard'class='btn btn-default waves-effect waves-light download-card' data-bs-toggle='tooltip'   title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."'  target='_blank'><i class='fa fa-id-card'></i> </a>
+					 $down="<a data-toggle='View Card' class=' btn btn-default waves-effect waves-light download' data-bs-toggle='tooltip'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."'  target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default waves-effect waves-light'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
+					<a data-toggle='Download vCard' class='btn btn-default waves-effect waves-light download-card' data-bs-toggle='tooltip'   title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."'  target='_blank'><i class='fa fa-id-card'></i> </a>
 					<a data-toggle='Send vCard' class='btn btn-default waves-effect waves-light send send_contacts_email_vcard' data-bs-toggle='tooltip'  title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a> 
 					
 					
@@ -2761,6 +2763,12 @@ class Dashboard extends CI_Controller {
 				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
 				generatePageView('contactdependant',$data);
 			
+				break;
+			case "cardview":
+				$contract_number=$id;  
+				$data['title']="View Card";
+				$data['contactid']=$contract_number;
+				 generatePageView('viewcard',$data);
 				break;
 			case "editdependents":
 				$contract_number=$id;  
@@ -3180,11 +3188,8 @@ public function cardsettings($action="update",$id=null){
 					}
 					foreach($formData as $name=>$value){
 						$i++; 
-						if($name=='image'){
-							 
-							
-						}else{
-							$this->db->where('name',$name)->update('cardconfig', array("value"=>$value));
+						if($name!=='image'){ 
+							$this->db->where('name',$name)->update('cardconfig', array("value"=>nl2br($value)));
 						}
 						
 					}

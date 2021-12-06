@@ -73,7 +73,7 @@
 											
 											<?php }elseif($field->type=='textarea'){ ?>
 												<div class="form-group">
-													 <textarea class="mymce" id="mymce<?php echo $field->id; ?>" name="<?php echo $field->name; ?>"><?php echo $field->value; ?></textarea>
+													 <textarea class="mymce form-control" id="mymce<?php echo $field->id; ?>" name="<?php echo $field->name; ?>"><?php echo str_replace('<br />', "\n",$field->value); ?></textarea>
 												</div>
 											<?php }else{ ?>
 												<div class="form-group">
@@ -114,69 +114,21 @@
 <script>
         
 	if ($(".mymce").length > 0) {
-		 tinymce.init({
-			selector: "textarea.mymce",
-			theme: "modern", 
-			valid_elements: '+*[*]',
-			width: '100%',
-			inline_styles: true,
-			keep_styles: true,  
-			verify_html: false,
-			height: 100,
-			max_chars: 200, // max. allowed chars
-			plugins: [
-				'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-				'searchreplace wordcount visualblocks visualchars code insertdatetime media nonbreaking',
-				'save table contextmenu directionality emoticons template paste textcolor'
-			],
-			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | print preview fullpage | forecolor backcolor emoticons",
-			setup: function(ed) { 
-				var allowedKeys = [8, 37, 38, 39, 40, 46]; 
-				ed.on("keydown", function(e) { 
-					if (allowedKeys.indexOf(e.keyCode) != -1) return true;
-					if (tinymce_getContentLength() + 1 > this.settings.max_chars) {
-						e.preventDefault();
-						e.stopPropagation();
-						swal({
-						  title: "Failure",
-						  text: 'Pasting this exceeds the maximum allowed number of ' + this.settings.max_chars + ' characters.',
-						  type: "warning" 
-						}); 
-						return false;
-					}
-					return true; 
-				});
-				ed.on('keyup', function (e) {
-					tinymce_updateCharCounter(this, tinymce_getContentLength());
-				});
-			},
-			init_instance_callback: function () { 
-				$('#' + this.id).prev().append('<div class="char_count" style="text-align:right"></div>');
-				tinymce_updateCharCounter(this, tinymce_getContentLength());
-			},
-			paste_preprocess: function (plugin, args) {
-				var editor = tinymce.get(tinymce.activeEditor.id);
-				var len = editor.contentDocument.body.innerText.length;
-				var text = $(args.content).text();
-				if (len + text.length > editor.settings.max_chars) {
+		 var allowedKeys = [8, 35, 36, 37, 38, 39, 40, 46]; 
+		 var max_chars=200;
+			$(".mymce").on("keydown", function(e) { 
+				if (allowedKeys.indexOf(e.keyCode) != -1) return true;
+				if ($(this).val().length > max_chars) {
+					e.preventDefault();
+					e.stopPropagation();
 					swal({
 					  title: "Failure",
-					  text: 'Pasting this exceeds the maximum allowed number of ' + editor.settings.max_chars + ' characters.',
+					  text: 'Pasting this exceeds the maximum allowed number of ' +max_chars + ' characters.',
 					  type: "warning" 
 					}); 
-					args.content = '';
-				} else {
-					tinymce_updateCharCounter(editor, len + text.length);
+					return false;
 				}
-			}	
-		}); 
-	} 
-		
-		function tinymce_updateCharCounter(el, len) {
-			$('#' + el.id).prev().find('.char_count').text(len + '/' + el.settings.max_chars);
-		}
-
-		function tinymce_getContentLength() {
-			return tinymce.get(tinymce.activeEditor.id).contentDocument.body.innerText.length;
-		}
+				return true; 
+			});
+	}  
     </script>
