@@ -219,18 +219,20 @@ class Curaechoice extends CI_Controller {
 		}
 	}	
 	public function download($filename=''){ 
+		 /*  $this->session->set_userdata(array('cardimage'=>$filename));   */
 		if($this->session->userdata('cardimage') && $this->session->userdata('cardimage')!=$filename){
 			$this->session->unset_userdata('cardimage'); 
-		}
-		if($this->session->userdata('cardimage')){ 
+		}  
+		
+		  if($this->session->userdata('cardimage')){ 
 			$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
 			if(!empty($rec) && !empty($rec->image)){ 
 				$path= "resources/cards/".$rec->image;
-				$type = pathinfo($path, PATHINFO_EXTENSION);
-				 $data['type']=$type;
-				$data['image']=file_get_contents($path);
+				 
 				$data['filename']=$filename;
-				$this->session->unset_userdata('cardimage');
+				$data['id']=$rec->id; 
+				$data['contactid']=$rec->id; 
+				$this->session->unset_userdata('cardimage'); 
 				$this->load->view('qrcode/cardimage',$data);
 			}else{
 				header("content-type: image/jpg");
@@ -241,6 +243,7 @@ class Curaechoice extends CI_Controller {
 				$rec = $this->db->query("SELECT * FROM contacts where md5(id) ='".$this->db->escape_str($filename)."'")->row();
 				if(!empty($rec) && !empty($rec->image)){ 
 					$data['filename']=$filename; 
+					$data['id']=$rec->id; 
 					$this->load->view('qrcode/card',$data);
 				}else{
 					$type = pathinfo('resources/img/default.jpg', PATHINFO_EXTENSION);
@@ -258,7 +261,7 @@ class Curaechoice extends CI_Controller {
 				$this->load->view('qrcode/access404',$data);
 			} 
 			
-		}
+		}  
 		
 	} 
 	
@@ -348,6 +351,15 @@ class Curaechoice extends CI_Controller {
 		$data = file_get_contents($path); */
 		/* header("content-type: image/". $type);
 		echo file_get_contents($path); */
+		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+		header("Content-type: image/png");
+		readfile($path);	
+	}
+	public function cardimage($filename='')
+	{   
+		$path= "resources/cards/".$filename; 
 		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");

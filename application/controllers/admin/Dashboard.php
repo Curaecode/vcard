@@ -32,10 +32,13 @@ class Dashboard extends CI_Controller {
 		$data['providers'] = $query->result();
 		
 		
-		$this->db->select('*'); 
+		/* $this->db->select('*'); 
 		$query = $this->db->get( 'cardconfig' );
-		$data['cardconfig'] = $query->result();
-		 
+		$data['cardconfig'] = $query->result(); */
+		  
+		$data['lineone']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='lineone'"); 
+		$data['linetwo']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='linetwo'"); 
+		$data['linethree']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='linethree'"); 
 		/* $htmlfront =$this->load->view('card/indexfront',$data,true);
 		$htmlback =$this->load->view('card/indexback',$data,true);
 		$stylesheet =$this->load->view('card/stylesheet',[],true);   */ 

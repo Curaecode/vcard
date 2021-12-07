@@ -1,4 +1,3 @@
-
 <style>
 .modal .modal-dialog{
 	width: 350px;
