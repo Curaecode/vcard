@@ -77,6 +77,12 @@
 							</a>
 						</li> 
 						<li class="sidebar-item">
+							<a href="#cardsettings/" class="sidebar-link loadview">
+								<i class="mdi mdi-adjust"></i>
+								<span class="hide-menu"> Card Settings </span>
+							</a>
+						</li> 
+						<li class="sidebar-item">
 							<a href="#users/" class="sidebar-link loadview">
 								<i class="mdi mdi-adjust"></i>
 								<span class="hide-menu"> Users </span>
