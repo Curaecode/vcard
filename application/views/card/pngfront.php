@@ -63,7 +63,7 @@
 		}
 		.xcard{
 			margin:0px;
-			width:330px;
+			width:340px;
 			background-color: #fff;
 			transition: all .5s ease-in-out;
 			position: relative;
@@ -84,7 +84,7 @@
 			    z-index: 9;
 		}
 		.xcard .card-head .avatar{
-			width:241px;
+			width:315px;
 			height:100px;
 			display:block;
 			margin: 20px auto 10px;
@@ -167,7 +167,7 @@
 				<p style="margin: 0px; margin-top: -8px;"><a href="mailto:support@curaechoice.com"><img style="width: 140px;margin-top: 3px;margin-left: 5px;" src="<?php echo base_url().'cardassets/email.png';?>" alt="user" /></a></p>
 			</div>
 		</div>
-		<div class="avatar" style="border: 2px solid #0e0e0e21;margin-top:5px;position: absolute;top:45px;left:40px;border-width: 2px; border-color:rgba(14,14,14, 0.25); border-style: solid;">
+		<div class="avatar" style="border: 2px solid #0e0e0e21;margin-top:5px;position: absolute;top:45px;left:12px;border-width: 2px; border-color:rgba(14,14,14, 0.25); border-style: solid;">
 			<img src="<?php echo base_url().'resources/admin/'.str_replace('_thumb.','.',$image->value);?>" alt="user" />
 		</div>
 	</div>
@@ -183,7 +183,7 @@
 			<div class="row" style="width:100%;">
 				<?php if($showdependent->value==1){ ?>
 					<?php if(isset($dependent) && !empty($dependent)){?>
-					<div class="col-sm-7" style="float:left">	
+					<div class="col-sm-7" style="float:left;width: 58%;">	
 						<dl class="row" style="margin-top: 10px;margin-left: 10px;">
 							<?php foreach($dependent as $key => $value){ ?>
 										<?php if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){?>
@@ -220,9 +220,9 @@
 					<?php } ?> 
 				<?php } ?>
 				<?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){  $col='4'; }else{$col='12'; } ?>
-				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){ ?>style="float:left" <?php } ?>>
+				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){ ?>style="float:left;width: 33%;" <?php } ?>>
 					<div class="qravatar"><img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
-					<?php $date=date("M d,Y",strtotime($contact->active_member));?>
+					<?php $date=date("M d,Y",strtotime($regdate->value));?>
 					<p style="margin:0px 0px 0px 0px; font-size:12px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
 					</div>
 					

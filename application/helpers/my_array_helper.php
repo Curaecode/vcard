@@ -918,7 +918,7 @@ function createpdfcard($id=0){
 	$data['showname']=$CI->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
 	$data['showdependent']=$CI->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
 	$data['image']=$CI->model->getDatarow("config","where isVisible=1 AND name='image'"); 
-   
+   $data['regdate']=$CI->model->getDatarow("config","where isVisible=1 AND name='regdate'"); 
 	$last_data=$CI->model->getLastData2("contacts",$id);
 	$company_id= $last_data->company_id;
 	$contract_number= $last_data->contract_number;

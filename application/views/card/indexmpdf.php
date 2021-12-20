@@ -276,7 +276,7 @@
 				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="float:right;padding:0px;margin:0px;"<?php }?>>
 					<div class="qravatar" <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="width:100%;margin-left:40px;text-align: right;"<?php }else{?>style="width:100%;text-align:center;"<?php }?>>
 						<img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
-					<?php $date=date("M d,Y",strtotime($contact->active_member));?>
+					<?php $date=date("M d,Y",strtotime($regdate->value));?>
 					<p style="margin:0px 0px 0px 0px; font-size:24px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
 					</div>
 					
@@ -319,7 +319,7 @@
 							<li><strong style="font-weight:bold;font-size:30px;">Terms & Conditions</strong> </li>  
 						</ul>
 						<ul style="margin: 10px 5px 0px 0px;padding: 15px; font-size:28px;text-align: justify;list-style-type: none;color:#5a5a5a;">
-							<li><?php if(!empty($lineone->value)){ echo $lineone->value; }else{?>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provider by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers<?php } ?></li> 
+							<li><?php if(!empty($lineone->value)){ echo $lineone->value; }else{?>CuraeChoice is not health insurance. CuraeChoice is a benefit plan optimizer provided by and through your employer with No-Co-pay, Deductibles or Co-Insurance at participating providers<?php } ?></li> 
 						</ul>
 					</div>	
 				</div>	

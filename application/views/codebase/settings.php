@@ -37,7 +37,7 @@
 								</div>
 								
 							<?php }else{ ?>
-							<div class='col-sm-<?php if($field->type=='file'){?>12<?php }else{?>6<?php }?> <?php /* if($field->type=='radio'){?>fix_radio<?php } */ ?>'>
+							<div class='col-sm-<?php if($field->type=='file'){?>6<?php }else{?>6<?php }?> <?php /* if($field->type=='radio'){?>fix_radio<?php } */ ?>'>
 									<div class='form-group  py-2'>
 										<label><?php echo ucfirst($field->label); ?></label>
 										<?php

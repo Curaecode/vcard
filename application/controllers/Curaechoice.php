@@ -219,7 +219,7 @@ class Curaechoice extends CI_Controller {
 		}
 	}	
 	public function download($filename=''){ 
-		 /*  $this->session->set_userdata(array('cardimage'=>$filename));    */
+		    /* $this->session->set_userdata(array('cardimage'=>$filename)); */    
 		if($this->session->userdata('cardimage') && $this->session->userdata('cardimage')!=$filename){
 			$this->session->unset_userdata('cardimage'); 
 		}  

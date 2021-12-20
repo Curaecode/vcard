@@ -5,18 +5,19 @@
 body {
     background: transparent;
 	background-image: none;
-} 
- 
+}
+</style>
+	<body>
+<style> 
 .flip-card {
   background-color: transparent;
-  width: 315px;
-  height: 429px;
+  width: 320px;
+  height: 480px;
   border: 1px solid #f1f1f1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  perspective: 1000px;  
   margin: 20px auto;
 }
-
-/* This container is needed to position the front and back side */
+ 
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -25,35 +26,45 @@ body {
   transition: transform 0.8s;
   transform-style: preserve-3d;
 }
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flip-card.flip .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-/* Position the front and back side */
+ 
+ 
+ 
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden;  
   backface-visibility: hidden;
-}
-
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-  background-color: #bbb;
-  color: black;
-}
-
-/* Style the back side */
-.flip-card-back {
-  background-color: dodgerblue;
-  color: white;
-  transform: rotateY(180deg);
+  
 } 
  
-.quick-detail { 
+.flip-card-front { 
+  color: black;
+}
+ 
+.flip-card-back { 
+  color: white;
+  transform: rotateY(180deg);
+}
+
+ 
+
+.flip-card.flip .flip-card-front {
+  -webkit-transform: perspective(180px) rotateY(-180deg);
+  transform: perspective(180px) rotateY(-180deg);
+}
+.flip-card.flip .flip-card-back {
+  -webkit-transform: perspective(180px) rotateY(0deg);
+  transform: perspective(180px) rotateY(0deg);
+  height: 480px;
+}
+.quick-detail {
+ /*  background-color: #242424; 
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  margin:20px auto; */
   box-shadow:inset 0px 1px 3px 0px #91b8b3;
 	background:linear-gradient(to bottom, #1fa1d5 5%, #1fa1d5 100%);
 	background-color:#1fa1d5;
@@ -93,7 +104,7 @@ body {
     background-color:#242424; 
 }
 </style>
-<body>
+
   <div class="flip-card">
   <div class="flip-card-inner">
     <div class="flip-card-front">

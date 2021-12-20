@@ -39,6 +39,7 @@ class Dashboard extends CI_Controller {
 		$data['lineone']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='lineone'"); 
 		$data['linetwo']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='linetwo'"); 
 		$data['linethree']=$this->model->getDatarow("cardconfig","where isVisible=1 AND name='linethree'"); 
+		$data['regdate']=$this->model->getDatarow("config","where isVisible=1 AND name='regdate'"); 
 		/* $htmlfront =$this->load->view('card/indexfront',$data,true);
 		$htmlback =$this->load->view('card/indexback',$data,true);
 		$stylesheet =$this->load->view('card/stylesheet',[],true);   */ 
@@ -60,7 +61,7 @@ class Dashboard extends CI_Controller {
 		$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
 		$data['showdependent']=$this->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
 		$data['image']=$this->model->getDatarow("config","where isVisible=1 AND name='image'"); 
-	   
+	    $data['regdate']=$this->model->getDatarow("config","where isVisible=1 AND name='regdate'"); 
 		$last_data=$this->model->getLastData2("contacts",$id);
 		$company_id= $last_data->company_id;
 		$contract_number= $last_data->contract_number;

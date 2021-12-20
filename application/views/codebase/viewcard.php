@@ -1,12 +1,12 @@
 <style>
 .modal .modal-dialog{
-	width: 350px;
-    max-width: 350px;
+	width: 370px;
+    max-width: 370px;
 }
 .flip-card {
   background-color: transparent;
   width: 300px;
-  height: 429px;
+  height: 452px;
   border: 1px solid #f1f1f1;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }

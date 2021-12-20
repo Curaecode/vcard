@@ -16,7 +16,7 @@ if (args.length < 2 || args.length > 3) {
 	 
   
 page.viewportSize = {
-width: 300,
+width: 335,
 height: 400
 };    
 
@@ -50,7 +50,7 @@ page.paperSize = {
 						})
 					  } 
 				};
-page.zoomFactor = 0.95;	
+page.zoomFactor = 1;	
 
 page.settings.userAgent = 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:94.0) Gecko/20100101 Firefox/94.0'; 
 /* page.settings.userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36';  */
