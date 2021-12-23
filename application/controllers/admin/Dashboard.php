@@ -4045,10 +4045,10 @@ public function cardsettings($action="update",$id=null){
 		print_r($returned);
 	}
 	function sendmail($tomail='',$toname='',$url='',$cardimage=''){
-        $body = '<table width="100%" align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0">
+        $html = '<table width="100%" align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0">
 					<tr>
 						<td align="center" valign="top" style="margin: 0; padding: 0;">
-							<table width="600" align="center" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0"
+							<table align="center" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0"
 								   style="font-family:Arial, Helvetica, sans-serif;">
 								
 
@@ -4085,6 +4085,9 @@ public function cardsettings($action="update",$id=null){
 						</td>
 					</tr>
 				</table>';
+				
+		$data['html'] = $html;
+		$body = $this->load->view('email/template',$data,true);		
 		$mainsubject="CuraeChoice vcard.";
         $message = 'This is test email.\nThis is test email.\nThis is test email.\n';
 		
@@ -4176,10 +4179,10 @@ public function cardsettings($action="update",$id=null){
     }
 	
 	function sendpdfmail($tomail='',$toname='',$url='',$cardimage=''){
-        $body = '<table width="100%" align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0">
+        $html = '<table  align="center" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0">
 					<tr>
 						<td align="center" valign="top" style="margin: 0; padding: 0;">
-							<table width="600" align="center" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0"
+							<table align="center" bgcolor="#ffffff" border="0" cellspacing="0" cellpadding="0"
 								   style="font-family:Arial, Helvetica, sans-serif;">
 								
 
@@ -4216,6 +4219,8 @@ public function cardsettings($action="update",$id=null){
 						</td>
 					</tr>
 				</table>';
+		$data['html'] = $html;		
+		$body = $this->load->view('email/template',$data,true);			
 		$mainsubject="CuraeChoice vcard.";
         $message = 'This is test email.\nThis is test email.\nThis is test email.\n';
 		
