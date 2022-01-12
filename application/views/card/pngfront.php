@@ -102,6 +102,8 @@
 		.xcard .card-head .avatar img{
 			width:100%;
 			height: 100%;
+			padding: 0px 2px 0px 0px;
+			background: white;
 		}
 		.xcard .card-body{
 			padding:60px 5px 5px 5px;
