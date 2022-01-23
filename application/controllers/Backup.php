@@ -18,7 +18,7 @@ class Backup extends CI_Controller {
 		$myfile_path = dirname(dirname(dirname(__FILE__))).'/resources/backup/';
 		$command = "$mysqldump --opt -h $dbhost -u $dbuser -p$dbpass $dbname > $myfile_path".$dbname."_backup_".$time.".sql";
 		exec($command);
-		$zipcommand="zip ".$myfile_path."BD-backup_".$time.".zip  ".$myfile_path.$dbname."_backup_".$time.".sql";
+		$zipcommand="zip --junk-paths ".$myfile_path."BD-backup_".$time.".zip  ".$myfile_path.$dbname."_backup_".$time.".sql";
 		exec($zipcommand);
 		 
 		unlink($myfile_path.$dbname."_backup_".$time.".sql");  	
