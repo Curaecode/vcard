@@ -100,9 +100,13 @@
 			border: 0px solid #fff;
 		}
 		.xcard .card-head .avatar img{
-			width:100%;
+			/* width:100%;
 			height: 100%;
 			padding: 0px 2px 0px 0px;
+			background: white; */
+			width: 100%;
+			height: 90%;
+			padding: 10px 2px 0px 0px;
 			background: white;
 		}
 		.xcard .card-body{

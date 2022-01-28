@@ -3112,8 +3112,8 @@ public function settings($action="update",$id=null){
 							$config['source_image'] = $imageDetailArray['full_path'];
 							$config['create_thumb'] = TRUE;
 							//$config['thumb_marker'] = false;
-							$config['maintain_ratio'] = FALSE;
-							$config['width'] = 241;
+							$config['maintain_ratio'] = false;
+							$config['width'] = 200;
 							$config['height'] = 100;
 							 
 							$this->load->library('image_lib', $config); 
