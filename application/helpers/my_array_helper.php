@@ -902,6 +902,9 @@ function uniquestring($phone){
 		$datafile= $query->row_array();
 		if(!empty($datafile)){
 			$exist=true;
+			$string=random_string('nozero', 6);
+		}else{
+			$exist=false;
 		} 
 	}while($exist);
 	

@@ -3345,7 +3345,7 @@ public function cardsettings($action="update",$id=null){
 					foreach ($value as $key => $values){
 						if($values==null){$newvalues='';}else{$newvalues=$values;}
 						
-						if(strtolower($data['header'][1][$key]) == 'group number/division' ){
+						if(trim(strtolower($data['header'][1][$key])) == 'group number/division' ){
 							$getIdQuery = "SELECT * from groups where group_name = '".$newvalues."'";
 							$getIdRows = $this->db->query($getIdQuery);
 							if ($getIdRows->num_rows() > 0){
@@ -3361,7 +3361,7 @@ public function cardsettings($action="update",$id=null){
 							$datas['group_number']=$newvalues;
 							$datas['group_id']=$getgroupId;
 						}
-						if(strtolower($data['header'][1][$key]) == 'company' ){
+						if(trim(strtolower($data['header'][1][$key])) == 'company' ){
 							$getIdQuery = $this->db->query("SELECT * from companies where company_name = '".$newvalues."'")->row(); 
 							if (!empty($getIdQuery)) {
 								$getId = $getIdQuery->id;
@@ -3385,35 +3385,35 @@ public function cardsettings($action="update",$id=null){
 						  
 						}
 						
-						if(strtolower($data['header'][1][$key]) == 'contract number' || strtolower($data['header'][1][$key]) == 'contract number 1' ){
+						if(trim(strtolower($data['header'][1][$key])) == 'contract number' || trim(strtolower($data['header'][1][$key])) == 'contract number 1' ){
 							if(!empty($newvalues)){$datas['contract_number']=$newvalues;}
 						}
-						if(strtolower($data['header'][1][$key]) == 'first name'){
+						if(trim(strtolower($data['header'][1][$key])) == 'first name'){
 							$datas['first_name']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'last name'){
+						if(trim(strtolower($data['header'][1][$key])) == 'last name'){
 							$datas['last_name']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'mi'){
+						if(trim(strtolower($data['header'][1][$key])) == 'mi'){
 							$datas['miname']=$newvalues;
 						}
 						 
 						/* if(strtolower($data['header'][1][$key]) == 'ssn'){
 							$datas['ssn']=$newvalues; 
 						} */
-						if(strtolower($data['header'][1][$key]) == 'relation'){
+						if(trim(strtolower($data['header'][1][$key])) == 'relation'){
 							$datas['relationship']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'dob'){
+						if(trim(strtolower($data['header'][1][$key])) == 'dob'){
 							$datas['dob']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'address'){
+						if(trim(strtolower($data['header'][1][$key])) == 'address'){
 							$datas['address']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'city'){
+						if(trim(strtolower($data['header'][1][$key])) == 'city'){
 							$datas['city']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'state'){
+						if(trim(strtolower($data['header'][1][$key])) == 'state'){
 							$datas['state_name']=$newvalues;
 							/*
 							states
@@ -3429,10 +3429,10 @@ public function cardsettings($action="update",$id=null){
 								$datas['country_id']=$country_id;
 							}
 						}
-						if(strtolower($data['header'][1][$key]) == 'zip code'){
+						if(trim(strtolower($data['header'][1][$key])) == 'zip code'){
 							$datas['zipcode']=$newvalues;
 						}
-						if(strtolower($data['header'][1][$key]) == 'phone' || strtolower($data['header'][1][$key]) == 'mobile (cell) number' || strtolower($data['header'][1][$key]) == 'phone number' || strtolower($data['header'][1][$key]) == 'Phone - CELL'){
+						if(trim(strtolower($data['header'][1][$key])) == 'phone' || trim(strtolower($data['header'][1][$key])) == 'mobile (cell) number' || trim(strtolower($data['header'][1][$key])) == 'phone number' || trim(strtolower($data['header'][1][$key])) == 'Phone - CELL'){
 							/* $newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
 							$mystring = $newvalues; 
 							$findme   = '+1';
@@ -3447,7 +3447,7 @@ public function cardsettings($action="update",$id=null){
 							}
 							
 						}
-						if(strtolower($data['header'][1][$key]) == 'area code'){
+						if(trim(strtolower($data['header'][1][$key])) == 'area code'){
 							/* $newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
 							$mystring = $newvalues; 
 							$findme   = '+1';
@@ -3460,7 +3460,7 @@ public function cardsettings($action="update",$id=null){
 							$phonenumber1=$newvalues;
 						}
 						
-						if(strtolower($data['header'][1][$key]) == 'email address' || strtolower($data['header'][1][$key]) == 'email'){
+						if(trim(strtolower($data['header'][1][$key])) == 'email address' || trim(strtolower($data['header'][1][$key])) == 'email'){
 							$datas['email']=$newvalues;
 						} 
 					} 
@@ -3475,18 +3475,29 @@ public function cardsettings($action="update",$id=null){
 						}
 						$datas['phone']=$newvalues;
 					}
-					if( $datas['dob'] <= MIN_DATES_DIFF) { 
-						$datas['dob']='';	
+					$mystring=$datas['dob'];
+					$findme   = '/';
+					$pos = strpos($mystring, $findme);
+					if ($pos === false) { 
+						if( $datas['dob'] <= MIN_DATES_DIFF) { 
+							$datas['dob']='';	
+						}else{
+							$datetime= ( $datas['dob'] - MIN_DATES_DIFF) * SEC_IN_DAY;
+							$datas['dob']=date('Y-m-d',$datetime);
+						} 
 					}else{
-						$datetime= ( $datas['dob'] - MIN_DATES_DIFF) * SEC_IN_DAY;
-						$datas['dob']=date('Y-m-d',$datetime);
-					} 
+						$mystring=explode('/',$datas['dob']);
+						$datas['dob']=$mystring[2].'-'.$mystring[0].'-'.$mystring[1];
+					}
+					
 					$newvalues = $datas['relationship'];
 					$mystring = $newvalues; 
 					$findme   = 'SUBSCRIBER';
 					$pos = strpos($mystring, $findme);
+					$findme   = 'EMPLOYEE';
+					$pos1 = strpos($mystring, $findme);
 					
-					if ($pos === false) { 
+					if ($pos === false && $pos1 === false) { 
 						unset($datas['company_id']); 
 						unset($datas['industry_id']);
 						unset($datas['country_id']);
@@ -3494,12 +3505,20 @@ public function cardsettings($action="update",$id=null){
 						unset($datas['group_id']);
                       	$last_id = $this->model->add('contact_dependant',$datas); 
 					}else{
-						 
+						if(!isset($datas['company_id'])){
+							$datas['company_id']=1;
+						}
+						if(!isset($datas['industry_id'])){
+							$datas['industry_id']=1;
+						}
+						if(!isset($datas['group_id'])){
+							$datas['group_id']=1;
+						} 
 						$datas['location_id'] = 22;
 						$datas['qrimage'] = '';
 						$datas['patient_id'] = $datas['contract_number'];
 						$datas['active_member'] = date('Y-m-d');
-						$query="Select * from `contacts` WHERE patient_id='".$datas['contract_number']."'";
+						$query='Select * from `contacts` WHERE patient_id="'.$datas['contract_number'].'"';
 						$getIdRows = $this->db->query($query)->row();
 						if($this->db->affected_rows()>0){
 							if ($this->model->updateDataContact('contacts',$datas['contract_number'],$datas)){
@@ -3516,7 +3535,14 @@ public function cardsettings($action="update",$id=null){
 				}
 			} 
 			  
-			 
+			$results = $this->db->query("select * from contacts")->result();
+			if(!empty($results)){
+				foreach($results as $row){
+					$id=$row->id;
+					$account_id = generateID($id);
+					$query=$this->db->query("update `contacts` set qrimage='', account_code= '".$account_id."' where id='".$id."'");
+				}
+			}
 				$result = true;
 				if($result){
 					$array = array(
