@@ -68,7 +68,7 @@
 													<input type='<?php echo $field->type; ?>' value='<?php echo $field->value; ?>' class='form-control' name='<?php echo $field->name; ?>' > 
 												</div> 
 											</div>  
-											<div class="help-block red">Only JPG allowed<br />Width:309px<br />Height:100px</div>
+											<div class="help-block red">Only JPG allowed<br />Width:311px<br />Height:100px</div>
 											<img style="width: 50px;padding: 9px;margin: 0 0 5px;"  id="blah1" src="<?php echo res_url()."admin/";echo isset($field->value) && $field->value!=="" ?$field->value:'defaultlogo.png'; ?>" class="profile-img" style=""  >
 											
 											<?php }else{ ?>

@@ -2557,9 +2557,8 @@ class Dashboard extends CI_Controller {
 				);
 			$fields=implode(",",$coloumns);
 			$sql="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
-			/* if($formData['company_id']!=="all"){
-					$sql.= " and contacts.company_id='".$formData['company_id']."'";
-			} */
+			
+			$sql1="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 group by contacts.id";
 				 
 			if($id!==""){
 				$sql.=" and id=$id";	
@@ -2660,28 +2659,7 @@ class Dashboard extends CI_Controller {
 					<a data-toggle='View Send vCard Email Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
 				 
 					";  
-					
-					/* $down='<div class="btn-group">
-						<button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> 
-							Action
-						</button>
-						<div class="dropdown-menu" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate(0px, -36px);" data-popper-placement="top-start">
-							<a class="dropdown-item download" target="_blank" href="'.base_url().'admin/dashboard/download/'.$filename.'">Download Image</a>
-							<a class="dropdown-item download-card" target="_blank" href="'.base_url().'admin/dashboard/download2/'.$vcard_name.'">Download vCard</a>
-							<a class="dropdown-item send send_contacts_email_vcard" href="'.base_url().'admin/dashboard/send_contacts_email_vcard/'.$id.'">Send vCard</a>
-							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Dependent" data-company="'.$contract_number.'" title="View Dependent" href="#contacts/dependents/'.$contract_number.'">View Dependent</a> 
-							<a class="dropdown-item loadview modalview edite contact_edit_page"  data-title="Add Dependent" data-company="'.$contract_number.'" title="Add Dependent" href="#contacts/adddependent/'.$contract_number.'">Add Dependent</a> 
-							<a class="dropdown-item loadview modalview edite contact_edit_page"  data-title="Edit Dependent" data-company="'.$contract_number.'" title="Edit Dependent" href="#contacts/editdependents/'.$contract_number.'">Edit Dependent</a> 
-							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Dependent SMS Logs" data-company="'.$contract_number.'" title="View Dependent SMS Logs" href="#contacts/viewdependentsmslog/'.$id.'">View Dependent SMS Logs</a> 
-							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Send vCard SMS Logs" data-company="'.$contract_number.'" title="View Send vCard SMS Logs" href="#contacts/viewsmslog/'.$id.'">View Send vCard SMS Logs</a> 
-							<a class="dropdown-item loadview modalview edite dependant_edit_page"  data-title="View Send vCard Email Logs" data-company="'.$contract_number.'" title="View Send vCard Email Logs" href="#contacts/viewemaaillog/'.$id.'">View Send vCard Email Logs</a> 
-							
-							<a data-toggle="Edit Contact" title="Edit Contact" href="#contacts/edit/'.$id.'" data-company="'.$id.'" data-title="Edit Contact" class="dropdown-item loadview modalview edite contact_edit_page">Edit Contact</a>
-							<div class="dropdown-divider"></div>
-							<a data-toggle="Delete" title="Delete" class="delete swal dropdown-item" href="http://localhost/vcard/admin/dashboard/contacts/delete/1"><i class="fa fa-remove" style="color:red;"></i></a>
-						</div>
-					</div>'; */
-					/* $up="<input type='checkbox' value='".$id."' class='checkbox'>"; */
+					 
 					$up="<div class='form-check'><input class='form-check-input checkbox' value='".$id."' type='checkbox'></div>";
 					array_unshift($value,$up);
 					array_push($value,'<div class="columns columns-right pull-right w300">'.$down.''.addActions_contact("contacts",$id).'</div>');
@@ -2690,7 +2668,7 @@ class Dashboard extends CI_Controller {
 				}
 				$output = array(
 					"draw" => $formData['draw'],
-					"recordsTotal" => $this->db->query("$sql")->num_rows(),
+					"recordsTotal" => $this->db->query($sql1)->num_rows(),
 					"recordsFiltered" => $sql2['countFiltered'],
 					"data" => isset($values)?$values:array(),
 				);
