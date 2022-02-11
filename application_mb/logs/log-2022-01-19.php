@@ -1,0 +1,35 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2022-01-19 08:18:23 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 08:42:27 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 10:23:50 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 11:33:11 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 11:34:01 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 12:04:27 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 13:07:14 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 13:09:48 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 13:09:48 --> 404 Page Not Found: Apple-touch-icon-precomposedpng/index
+ERROR - 2022-01-19 13:09:48 --> 404 Page Not Found: Apple-touch-iconpng/index
+ERROR - 2022-01-19 13:41:43 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 14:04:21 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 14:16:58 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 15:19:36 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 16:02:33 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 18:00:05 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 19:06:36 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 19:13:36 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 19:17:05 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 19:17:35 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-icon-120x120-precomposedpng/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-icon-120x120png/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-icon-precomposedpng/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-iconpng/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-icon-120x120-precomposedpng/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-icon-120x120png/index
+ERROR - 2022-01-19 19:54:32 --> 404 Page Not Found: Apple-touch-icon-precomposedpng/index
+ERROR - 2022-01-19 19:54:33 --> 404 Page Not Found: Apple-touch-iconpng/index
+ERROR - 2022-01-19 19:54:33 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 20:07:46 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 21:47:51 --> 404 Page Not Found: Faviconico/index
+ERROR - 2022-01-19 23:14:43 --> 404 Page Not Found: Faviconico/index

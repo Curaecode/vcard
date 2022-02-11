@@ -1,0 +1,25 @@
+BEGIN:VCARD
+VERSION:3.0
+CLASS:PUBLIC
+PRODID:-//Vcard Extended Class from carlos.alcala@upandrunningsoftware.com//NONSGML Version 1//EN
+REV:2022-02-10 08:50:55
+FN:71e3c4bb9269bf2724c7dc9b992b8541
+N:Choice;Curae;;;
+
+ADR;TYPE=work:;;3179 Green Valley Road Suite 634 Birmingham, AL 35243;;;;
+EMAIL;TYPE=internet,pref:support@curaechoice.com
+TEL;TYPE=cell,voice:1-800-646-9823
+URL;TYPE=CuraeChoiceCard:http://localhost/vcard/curaechoice_73c03186765e199c116224b68adc5fa0
+URL;TYPE=Hospital---ER:http://localhost/vcard/hospital-er
+URL;TYPE=Physical-Therapy:http://localhost/vcard/physical-therapy
+URL;TYPE=Radiology:http://localhost/vcard/radiology
+URL;TYPE=Cardiovascular:http://localhost/vcard/cardiovascular
+URL;TYPE=Urology:http://localhost/vcard/urology
+URL;TYPE=Surgery:http://localhost/vcard/surgery
+URL;TYPE=Oncology:http://localhost/vcard/oncology
+URL;TYPE=OB-Gyn:http://localhost/vcard/ob-gyn
+URL;TYPE=Chiropractors:http://localhost/vcard/chiropractors
+PHOTO;ENCODING=b;TYPE=JPEG:
+
+TZ:+0100
+END:VCARD
