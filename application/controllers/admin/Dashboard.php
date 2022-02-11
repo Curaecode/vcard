@@ -3534,7 +3534,10 @@ public function cardsettings($action="update",$id=null){
 					}  
 				}
 			} 
-			  
+			
+			$this->db->query("UPDATE `contacts` c INNER JOIN `contact_dependant` d ON d.`contract_number` = c.`contract_number` SET d.`contract_number` = c.id, c.`contract_number` = c.id");  
+			$this->db->query("UPDATE `contacts` c   SET c.`contract_number` = c.id");
+			
 			$results = $this->db->query("select * from contacts")->result();
 			if(!empty($results)){
 				foreach($results as $row){
@@ -4044,6 +4047,24 @@ public function cardsettings($action="update",$id=null){
 		}else{ 
 			$response['status']=0;
 			$response['message']='Please select some contact to send card';
+			echo json_encode($response);exit(); 
+		}  
+	}
+	function deletecontacts(){
+		 
+		if($this->input->post('id')){
+			$response['status']=1;
+			$response['message']='Sent successfully';
+			$ids=$this->input->post('id');
+			foreach($ids as $id){
+				$this->model->deleteData("contacts",$id);  
+				$this->db->query("UPDATE `contact_dependant` where contract_number='".$id."'");
+			} 
+			echo json_encode($response);exit(); 
+			
+		}else{ 
+			$response['status']=0;
+			$response['message']='Please select some contact to delete';
 			echo json_encode($response);exit(); 
 		}  
 	}
