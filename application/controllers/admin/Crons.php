@@ -139,10 +139,10 @@ class crons extends CI_Controller {
 					unset($col['gender']);
 					$query='Select * from `contact_dependant` WHERE monday_id="'.$col['monday_id'].'"';
 					$getIdRows = $this->db->query($query)->row();
-					if($this->db->affected_rows()==0){ 
+					if(empty($getIdRows)){ 
 						$last_id = $this->model->add('contact_dependant',$col);
 					}
-					 
+					echo  $query.';<br />';
 				}else{
 						if(!isset($col['company_id'])){
 							$col['company_id']=1;
@@ -159,10 +159,11 @@ class crons extends CI_Controller {
 						$col['active_member'] = date('Y-m-d');
 						$query='Select * from `contacts` WHERE monday_id="'.$col['monday_id'].'"';
 						$getIdRows = $this->db->query($query)->row();
-						if($this->db->affected_rows()>0){
-							if ($this->model->updateDataContact('contacts',$col['contract_number'],$col)){
+						if(!empty($getIdRows)){
+							/* if ($this->model->updateDataContact('contacts',$col['contract_number'],$col)){
 								$last_id=$getIdRows->id;
-							}
+							} */
+							$last_id=$getIdRows->id;
 						}else{
 							$last_id = $this->model->add('contacts',$col);
 						}
@@ -171,10 +172,10 @@ class crons extends CI_Controller {
 					}
 				
 			} 
-			 $this->db->query("update `monday_records` set page_no= page_no+1"); 
+			 $this->db->query("update `monday_records` set page_no= ".($page+1).", date_added='".date('Y-m-d H:i:s')."' "); 
 		
 		}else{
-			$this->db->query("update `monday_records` set page_no= 1"); 
+			$this->db->query("update `monday_records` set page_no= 1, date_added='".date('Y-m-d H:i:s')."'"); 
 		}
 		
 	} 
