@@ -2514,6 +2514,7 @@ class Dashboard extends CI_Controller {
 					"Name <br />Account code",
 					/* "Last name", */
 					"Email",
+					"Secondary Email",
 					"Phone",  
 					//"country",
 					"Dependent",
@@ -2533,6 +2534,7 @@ class Dashboard extends CI_Controller {
 				"contacts.first_name",
 				"contacts.last_name",
 				"contacts.email",
+				"contacts.secondaryemail",
 				"contacts.emaildate",
 				"contacts.smsdate",
 				"contacts.phone",     
@@ -2553,6 +2555,7 @@ class Dashboard extends CI_Controller {
 				"contacts.first_name",
 				"contacts.last_name",
 				"contacts.email",
+				"contacts.secondaryemail",
 				"contacts.phone"
 				);
 			$fields=implode(",",$coloumns);

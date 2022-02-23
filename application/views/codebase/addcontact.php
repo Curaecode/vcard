@@ -111,6 +111,25 @@
 								<div class="help-block with-errors"></div>
 							</div> 
 						</div> 
+						
+						<div class="form-group row less_margin">
+							<div class="col-sm-6">
+								<div class="mb-3 ">
+									<label for="secondaryemail">Secondary Email</label>
+									<input type='email' value='<?php echo isset($edit["secondaryemail"])?$edit["secondaryemail"]:""; ?>' class='form-control' name='secondaryemail'>
+								</div> 
+							</div>
+							<div class="col-sm-12">
+								<div class="mb-3 ">
+									<label for="notes">Notes</label>
+									<div class="input-group"> 
+									  <textarea class="form-control" name="notes"><?php echo isset($edit["notes"])?$edit["notes"]:""; ?></textarea> 
+									</div>
+									
+								</div>
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
 						<div class="row text-center">
 							<div class='col-sm-3'>
 								<div class='form-group'>
