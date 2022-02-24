@@ -15,7 +15,9 @@ class crons extends CI_Controller {
 	function getrecords(){
 		$boardconfig=$this->model->getDatarow("config","where isVisible=1 AND name='boardid'");
 		$board_id = $boardconfig->value;
-		
+		if(empty($board_id)){
+			$board_id = 2280948755;
+		}
 		$pageconfig=$this->model->getDatarow("monday_records");
 		
 		$page=$pageconfig->page_no;
@@ -49,13 +51,15 @@ class crons extends CI_Controller {
 		if(!empty($items['boards'][0]['items'])){
 			$item= $items['boards'][0]['items'];
 			$columnheader = $item[0]['column_values'];
-			foreach($item as $cr){
+			foreach($item as $critem){
 				$phonenumber1='';
 				$phonenumber2='';
 				$col=array();
-				$columnheader = $cr['column_values'];
-				$col['last_name']=$cr['name'];
-				$col['monday_id']=$cr['id'];
+				$columnheader = $critem['column_values'];
+				$col['last_name']=$critem['name'];
+				$col['monday_id']=$critem['id'];
+				/* $col['mondid']=$critem['id']; */
+				print_r($col);
 				foreach($columnheader as $cols){
 					if(strtolower(trim($cols['title']))=='first name'){$col['first_name']=$cols['text'];} 
 					if(strtolower(trim($cols['title']))=='dob'){$col['dob']=$cols['text'];}
@@ -107,21 +111,7 @@ class crons extends CI_Controller {
 						$newvalues = '+1'.$newvalues;
 					}
 					$col['phone']=$newvalues;
-				}
-				/* $mystring=$col['dob'];
-				$findme   = '/';
-				$pos = strpos($mystring, $findme);
-				if ($pos === false) { 
-					if( $col['dob'] <= MIN_DATES_DIFF) { 
-						$col['dob']='';	
-					}else{
-						$datetime= ( $col['dob'] - MIN_DATES_DIFF) * SEC_IN_DAY;
-						$col['dob']=date('Y-m-d',$datetime);
-					} 
-				}else{
-					$mystring=explode('/',$col['dob']);
-					$col['dob']=$mystring[2].'-'.$mystring[0].'-'.$mystring[1];
-				} */ 
+				} 
 				
 				$newvalues = $col['relationship'];
 				$mystring = $newvalues; 
@@ -137,12 +127,21 @@ class crons extends CI_Controller {
 					unset($col['state_id']);
 					unset($col['group_id']);
 					unset($col['gender']);
-					$query='Select * from `contact_dependant` WHERE monday_id="'.$col['monday_id'].'"';
-					$getIdRows = $this->db->query($query)->row();
+					
+					$col['last_name']=$critem['name'];
+					$col['monday_id']=$critem['id'];
+					$col['patient_id'] = $col['monday_id'];
+					  $SQL='Select * from `contact_dependant` WHERE patient_id="'.$col['monday_id'].'"';
+					/* $getIdRows = $this->db->query($SQL)->row(); */
+					$query = $this->db->query($SQL);
+					$getIdRows = $query->row();
 					if(empty($getIdRows)){ 
+						$col['last_name']=$critem['name'];
+						$col['monday_id']=$critem['id'];
 						$last_id = $this->model->add('contact_dependant',$col);
+						$col['monday_id']=0;
 					}
-					echo  $query.';<br />';
+					 
 				}else{
 						if(!isset($col['company_id'])){
 							$col['company_id']=1;
@@ -157,25 +156,37 @@ class crons extends CI_Controller {
 						$col['qrimage'] = '';
 						$col['patient_id'] = $col['monday_id'];
 						$col['active_member'] = date('Y-m-d');
-						$query='Select * from `contacts` WHERE monday_id="'.$col['monday_id'].'"';
-						$getIdRows = $this->db->query($query)->row();
-						if(!empty($getIdRows)){
-							/* if ($this->model->updateDataContact('contacts',$col['contract_number'],$col)){
+						$col['last_name']=$critem['name'];
+						$col['monday_id']=$critem['id'];
+						if(isset($col['monday_id'])){
+							/* $query='Select * from `contacts` WHERE monday_id="'.$col['monday_id'].'"';
+							$getIdRows = $this->db->query($query)->row(); */
+							echo $SQL='Select * from `contacts` WHERE patient_id="'.$col['monday_id'].'"';
+							$query = $this->db->query($SQL);
+							$getIdRows = $query->row();
+					
+							if(!empty($getIdRows)){
+								/* if ($this->model->updateDataContact('contacts',$col['contract_number'],$col)){
+									$last_id=$getIdRows->id;
+								} */
 								$last_id=$getIdRows->id;
-							} */
-							$last_id=$getIdRows->id;
-						}else{
-							$last_id = $this->model->add('contacts',$col);
+							}else{
+								$col['last_name']=$critem['name'];
+								$col['monday_id']=$critem['id'];
+								$last_id = $this->model->add('contacts',$col);
+								$col['monday_id']=0;
+								$account_id = generateID($last_id);
+								$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id.""); 
+							} 	
 						}
-						$account_id = generateID($last_id);
-						$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");   
+						  
 					}
 				
 			} 
 			 $this->db->query("update `monday_records` set page_no= ".($page+1).", date_added='".date('Y-m-d H:i:s')."' "); 
 		
 		}else{
-			$this->db->query("update `monday_records` set page_no= 1, date_added='".date('Y-m-d H:i:s')."'"); 
+			/* $this->db->query("update `monday_records` set page_no= 1, date_added='".date('Y-m-d H:i:s')."'");  */
 		}
 		
 	} 
