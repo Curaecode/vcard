@@ -41,6 +41,7 @@
 								<label class="pb-0" for="cardno">Card #</label>
 								<input class="form-control" name="cardno" id="cardno" placeholder="" required>
 							</div> 
+							<p style="color: #151515;">For help please email <a style="color: #151515;" href="mailto:suppport@curaechoice.com">suppport@curaechoice.com</a></p>
 							<?php } ?>	
 							<div class="form-group">
 								<div class="row">
