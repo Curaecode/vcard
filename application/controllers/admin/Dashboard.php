@@ -3103,6 +3103,8 @@ public function settings($action="update",$id=null){
 							$formData['image'] = str_ireplace('.', '_thumb.',$formData['image']);
 							
 							$this->db->where('name','image')->update('config', array("value"=>$formData['image']));
+							
+							$this->db->update('contacts', array("qrimage"=>''));
 						}
 					}
 					foreach($formData as $name=>$value){

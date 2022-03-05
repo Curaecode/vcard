@@ -276,7 +276,7 @@
 				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="float:right;padding:0px;margin:0px;"<?php }?>>
 					<div class="qravatar" <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="width:100%;margin-left:40px;text-align: right;"<?php }else{?>style="width:100%;text-align:center;"<?php }?>>
 						<img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
-					<?php $date=date("M d,Y",strtotime($regdate->value));?>
+					<?php $date=date("M d, Y",strtotime($regdate->value));?>
 					<p style="margin:0px 0px 0px 0px; font-size:24px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
 					</div>
 					
