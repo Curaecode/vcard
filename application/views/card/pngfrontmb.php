@@ -64,7 +64,7 @@
 		.xcard {
 			margin: 0px;
 			width: 337px;
-			background-image:url(<?php echo base_url();?>resources/img/formate.jpg);
+			background-image:url(<?php echo base_url();?>resources/img/format.png);
 			transition: all .5s ease-in-out;
 			position: relative;
 			border: 0px solid transparent;
