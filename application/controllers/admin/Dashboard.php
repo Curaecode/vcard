@@ -1147,11 +1147,10 @@ class Dashboard extends CI_Controller {
 		
 		switch($action){
 			case "view":
-			$coloumns=array();
 			$coloumns[]='ID';
 			if($dataqrname->value==1){
-				$coloumns[]='First Name';
-				$coloumns[]='Last Name';
+				$coloumns[]='Name';
+				/* $coloumns[]='Last Name'; */
 			}
 			
 			$coloumns[]='Email';
@@ -1162,84 +1161,61 @@ class Dashboard extends CI_Controller {
 			if($dataqrdob->value==1){
 				$coloumns[]='DOB';
 			}
-			$coloumns[]='IP';
-			$coloumns[]='Access Date Time';
-			$coloumns[]='Address';
+			$coloumns[]='IP / Access Date Time';
+			$coloumns[]='Subscription';
+			/* $coloumns[]='Access Date Time';
+			$coloumns[]='Address'; */
 			$coloumns[]='Action';
-			
-				/* $coloumns=array(
-					"ID",
-					"First Name",
-					"Last Name", 
-					"Email",  
-					"Phone", 
-					"DOB", 
-					"IP",   
-					"Access Date Time",
-					"Address"	,
-					"Action"	
-				); */
-				$data['id']=$id;
-				$data['title']="Subscriptions";
-				$data['coloumns']=$coloumns;
-				generatePageView('listview',$data);
-				break;
+			 
+			$data['id']=$id;
+			$data['title']="Subscriptions";
+			$data['coloumns']=$coloumns;
+			generatePageView('listview',$data);
+			break;
 			case "ajax":
-			/* $coloumns=array(
-			    "id",
-				"first_name",
-				"last_name",
-				"email",
-				"phone",
-				"dob",
-				"ipaddress",
-				"latitude",
-				"longitude",
-				"completed",
-				"addeddate"  
-				); */
-				
-				
-				$coloumns=array();
-				$coloumns[]='id';
+			 $coloumns=array();
+				$coloumns[]='sa.id';
 				if($dataqrname->value==1){
-					$coloumns[]='first_name';
-					$coloumns[]='last_name';
+					$coloumns[]='concat(sa.first_name," ",sa.last_name) as first_name';
+					/* $coloumns[]='last_name'; */
 				}
 				
-				$coloumns[]='email';
+				$coloumns[]='sa.email';
 				if($datacardno->value==1){
-					$coloumns[]='cardno';
+					$coloumns[]='sa.cardno';
 				}
-				$coloumns[]='phone';
+				$coloumns[]='sa.phone';
 				if($dataqrdob->value==1){
-					$coloumns[]='dob';
+					$coloumns[]='sa.dob';
 				}
-				$coloumns[]='ipaddress';
-				$coloumns[]='latitude';
-				$coloumns[]='longitude';
-				$coloumns[]='completed';
-				$coloumns[]='addeddate';
+				$coloumns[]='sa.ipaddress';
+				$coloumns[]='sa.latitude';
+				/* $coloumns[]='longitude'; */
+				$coloumns[]='sa.completed';
+				$coloumns[]='sa.completed';
+				$coloumns[]='c.id AS contactid';
+				$coloumns[]='cd.id AS depid';
 				
 				$searchFields=array(
-			    "id",
-				"ipaddress",
-				"cardno",
-				"first_name",
-				"last_name",
-				"phone",
-				"email"
+			    "sa.id",
+				"sa.ipaddress",
+				"sa.cardno",
+				"sa.first_name",
+				"sa.last_name",
+				"sa.phone",
+				"sa.email"
 				
 				);
 			$fields=implode(",",$coloumns);
-			$sql="select $fields from subscription_access where 1=1";
+			$sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed=0  AND (c.id is null AND  cd.id is null)";
 			
 			if($id!==""){
 			$sql.=" and id=$id";	
 			}
 			// die($sql);
 			
-				$sql2=getRecords($sql,$formData,$coloumns,$searchFields);
+				/* $sql2=getRecords($sql,$formData,$coloumns,$searchFields); */
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields,array(),' GROUP BY sa.id');
 				$results=$this->db->query($sql2['sql'])->result();
 				$values=array();
 				foreach($results as &$key){
@@ -1252,13 +1228,28 @@ class Dashboard extends CI_Controller {
 					if($key->addeddate=='0000-00-00 00:00:00'){
 						$key->addeddate='';
 					}else{
-						$key->addeddate=cdate($key->addeddate);
+						if(!empty($key->ipaddres)){
+							$key->addeddate=' / '.cdate($key->addeddate);
+						}else{
+							$key->addeddate=cdate($key->addeddate);
+						}
+						
 					}
-					
+					$key->subscriptions='<span class="badge bg-light-danger text-danger fw-normal">New</span>';
+					if(!empty($key->contactid)){
+						$key->subscriptions='<span class="badge bg-light-info text-info fw-normal">Already Exist</span>';
+					}elseif(!empty($key->depid)){
+						$key->subscriptions='<span class="badge bg-light-info text-info fw-normal">Already Exist</span>';
+					}
+					$key->ipaddress=$key->ipaddres.''.$key->addeddate;
 					$completed = $key->completed;
 					unset($key->completed);
 					unset($key->latitude);
 					unset($key->longitude);
+					unset($key->addeddate);
+					unset($key->address);
+					unset($key->contactid);
+					unset($key->depid);
 					if($completed==0){
 						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					}else{
@@ -1282,6 +1273,7 @@ class Dashboard extends CI_Controller {
 			 
 		}
 	}
+	
 	
 	
 	public function detaillogs($action="view",$id=""){

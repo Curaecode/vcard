@@ -620,7 +620,7 @@ view.refreshJs=function(datatable,page){
 			"drawCallback": function(settings) {
 				console.log("drawCallback",settings);
 				if(settings.json.Totaldependents){
-					$("div.toolbar").html('Total Contacts - '+(settings.json.recordsTotal)+ ' <br /> Total Dependents - '+(settings.json.Totaldependents));
+					$("div.toolbar").html('Total Contacts - '+(settings.json.recordsTotal)+ ' <br /> Total Dependents - '+(settings.json.Totaldependents)+ ' <br /> Total - '+(settings.json.Totaldependents+settings.json.recordsTotal));
 				}
 				setTimeout(function(){  
 					$('[data-toggle="tooltip"]').tooltip();

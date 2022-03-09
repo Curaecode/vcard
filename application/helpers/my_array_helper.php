@@ -283,7 +283,9 @@ function genrateimage($id=null)
 	$dependconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='showdependent'");
  
 	$imageconfig=$CI->model->getDatarow("config","where isVisible=1 AND name='image'");
-	 
+	
+	$regdate=$CI->model->getDatarow("config","where isVisible=1 AND name='regdate'"); 
+	
 	$font=realpath('resources/font/Facit Regular.otf');
 	$image=imagecreatefromjpeg("resources/img/formate.jpg");
 	$color=imagecolorallocate($image, 50, 51, 50);
@@ -399,7 +401,8 @@ function genrateimage($id=null)
 	
 		imagecopy($image, $watermark_qr, imagesx($image) - $watermark_qr_width - $margin_right, imagesy($image) - $watermark_qr_height - $margin_bottom, 0, 0, $watermark_qr_width, $watermark_qr_height);
 		
-		$date=date("M d,Y",strtotime($last_data->active_member));
+		/* $date=date("M d,Y",strtotime($last_data->active_member)); */
+		$date=date("M d, Y",strtotime($regdate->value));
 		imagettftext($image, 12, 0, ((imagesx($image) - $watermark_qr_width - $margin_right) +18), 460, $color,$font, $date);
 		
 	}

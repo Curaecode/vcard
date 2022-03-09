@@ -25,7 +25,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> 
 		<div class="col-lg-3 col-md-6">
 			<div class="card">
 				<div class="card-body">
@@ -36,6 +36,21 @@
 						<div class="ms-2 align-self-center">
 							<h3 class="mb-0"><?php echo  number_format($dependents); ?></h3>
 							<h6 class="text-muted mb-0">Total Dependents</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> 
+		<div class="col-lg-3 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-row">
+						<div class="round round-lg text-white d-flex align-items-center justify-content-center rounded-circle bg-info">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card fill-white feather-lg"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+						</div>
+						<div class="ms-2 align-self-center">
+							<h3 class="mb-0"><?php echo  number_format(($dependents+$contacts)); ?></h3>
+							<h6 class="text-muted mb-0" title="Total Contacts + Dependents"> Contacts + Dependents</h6>
 						</div>
 					</div>
 				</div>
