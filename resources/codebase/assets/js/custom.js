@@ -607,7 +607,7 @@ view.refreshJs=function(datatable,page){
 		table = $('.datatable').DataTable({ 
 			"lengthMenu": [[100, 250, 500,1000,-1], [100, 250, 500,1000,"All"]],
 			 /* dom: 'Blfrtip', */
-			 "dom": '<"row"<"col-md-6"l><"col-md-6 text-end"B>><"row"<"col-md-12"<"'+responsive+'"rt>>><"row"<"col-md-6"i><"col-md-6 text-end"p>>',
+			 "dom": '<"row"<"col-md-6"l><"col-md-6 text-end"B>><"row"<"col-md-12"<"'+responsive+'"rt>>><"row"<"col-md-6"i<"toolbar">><"col-md-6 text-end"p>>',
 			buttons: [
 				'copy', 'csv', 'excel', 'pdf' 
 			],
@@ -619,6 +619,9 @@ view.refreshJs=function(datatable,page){
 			"order": [],
 			"drawCallback": function(settings) {
 				console.log("drawCallback",settings);
+				if(settings.json.Totaldependents){
+					$("div.toolbar").html('Total Contacts - '+(settings.json.recordsTotal)+ ' <br /> Total Dependents - '+(settings.json.Totaldependents));
+				}
 				setTimeout(function(){  
 					$('[data-toggle="tooltip"]').tooltip();
 				}, 1000); 

@@ -590,6 +590,9 @@ class Dashboard extends CI_Controller {
 			$data['contacts']=count($this->model->getData("contacts"));
 			$data['companies']=count($this->model->getData("companies"));
 			
+			$dependents=$this->db->query("select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number")->result();
+			$data['dependents']=count($dependents);
+			
 			$url = 'https://api.elasticemail.com/v4/statistics?from=2001-01-01T01:01:01&apikey=00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125'; 
 			/* Init cURL resource */
 			$ch = curl_init($url);
@@ -2669,9 +2672,19 @@ class Dashboard extends CI_Controller {
 					
 					$values[]=$value;
 				}
+				
+				$sql3="select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
+				
+				$sql4=getRecords($sql3,$formData,$coloumns,$searchFields,array(),'group by cd.id');
+				#echo $sql4['sql'];
+				 
+				$totaldependent="select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 group by cd.id";
 				$output = array(
 					"draw" => $formData['draw'],
+					  "Totaldependents" => $this->db->query($totaldependent)->num_rows(),  
+					"Filtereddependents" => $this->db->query($sql4['sql'])->num_rows(), 
 					"recordsTotal" => $this->db->query($sql1)->num_rows(),
+					"Filteredrecords" => $this->db->query($sql2['sql'])->num_rows(),
 					"recordsFiltered" => $sql2['countFiltered'],
 					"data" => isset($values)?$values:array(),
 				);
