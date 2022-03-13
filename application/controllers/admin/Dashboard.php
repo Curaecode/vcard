@@ -1207,7 +1207,8 @@ class Dashboard extends CI_Controller {
 				
 				);
 			$fields=implode(",",$coloumns);
-			$sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed=0  AND (c.id is null AND  cd.id is null)";
+			/* $sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed=0  AND (c.id is null AND  cd.id is null)"; */
+			$sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed >=0 ";
 			
 			if($id!==""){
 			$sql.=" and id=$id";	
