@@ -1189,6 +1189,7 @@ class Dashboard extends CI_Controller {
 					$coloumns[]='sa.dob';
 				}
 				$coloumns[]='sa.ipaddress';
+				$coloumns[]='sa.addeddate';
 				$coloumns[]='sa.latitude';
 				/* $coloumns[]='longitude'; */
 				$coloumns[]='sa.completed';
@@ -1207,7 +1208,7 @@ class Dashboard extends CI_Controller {
 				
 				);
 			$fields=implode(",",$coloumns);
-			/* $sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed=0  AND (c.id is null AND  cd.id is null)"; */
+			/* $sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed=0  AND (c.id is null AND  cd.id is null) "; */
 			$sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed >=0 ";
 			
 			if($id!==""){
@@ -1216,7 +1217,7 @@ class Dashboard extends CI_Controller {
 			// die($sql);
 			
 				/* $sql2=getRecords($sql,$formData,$coloumns,$searchFields); */
-				$sql2=getRecords($sql,$formData,$coloumns,$searchFields,array(),' GROUP BY sa.id');
+				$sql2=getRecords($sql,$formData,$coloumns,$searchFields,array(),' GROUP BY sa.id',' oder BY sa.id DESC');
 				$results=$this->db->query($sql2['sql'])->result();
 				$values=array();
 				foreach($results as &$key){
@@ -1229,7 +1230,7 @@ class Dashboard extends CI_Controller {
 					if($key->addeddate=='0000-00-00 00:00:00'){
 						$key->addeddate='';
 					}else{
-						if(!empty($key->ipaddres)){
+						if(!empty($key->ipaddress)){
 							$key->addeddate=' / '.cdate($key->addeddate);
 						}else{
 							$key->addeddate=cdate($key->addeddate);
@@ -1242,7 +1243,7 @@ class Dashboard extends CI_Controller {
 					}elseif(!empty($key->depid)){
 						$key->subscriptions='<span class="badge bg-light-info text-info fw-normal">Already Exist</span>';
 					}
-					$key->ipaddress=$key->ipaddres.''.$key->addeddate;
+					$key->ipaddress=$key->ipaddress.''.$key->addeddate;
 					$completed = $key->completed;
 					unset($key->completed);
 					unset($key->latitude);
@@ -1274,7 +1275,6 @@ class Dashboard extends CI_Controller {
 			 
 		}
 	}
-	
 	
 	
 	public function detaillogs($action="view",$id=""){
