@@ -10,7 +10,9 @@
 						<h3 class="logo_text">Your Ally in Care Coordination</h3>
 						<h1 class="hide-mobile">Welcome!</h1>
 						<div class="sapp hide-mobile"></div>
-						<p>Click on any specialty button to view the map of providers</p>
+						<p>Thank you for registering your card!</p>
+						<p>Your registration is complete once you receive your V-card.</p>
+						<?php /* <p>Click on any specialty button to view the map of providers</p> */ ?>
 					</div>
 				</div>	
 				<div class="col-md-6 col-lg-5">
@@ -106,11 +108,22 @@
 									</a>
 								</div>
 							</div> */ ?>
+							<div class="col-sm-6 col-xs-12" >
+							<div class="card" style="padding: 9px;"><p style="margin-bottom: 0px;">Click on any specialty button to view the map of providers</p></div>
+							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="card">
 									<a href="mailto:support@curaechoice.com" target="">
 										<img src="<?php echo base_url();?>resources/assets/images/customer-support.png" />
 										Customer Service
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-6 col-xs-6">
+								<div class="card">
+									<a href="tel:+1-800-646-9823" target="">
+										<img src="<?php echo base_url();?>resources/assets/images/phone.png" />
+										800-646-9823
 									</a>
 								</div>
 							</div>

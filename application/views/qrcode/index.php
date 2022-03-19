@@ -20,32 +20,32 @@
 							<div class="row"> 
 								<div class="col-6">
 									<div class="form-group">
-										<label class="pb-0">First Name</label>
+										<label class="pb-0">First Name <span class="red">*</span></label>
 										<input type="text" class="form-control" name="first_name" placeholder="" required>
 									</div>
 								</div>
 								<div class="col-6 ">
 									<div class="form-group">
-										<label class="pb-0">Last Name</label>
+										<label class="pb-0">Last Name <span class="red">*</span></label>
 										<input type="text" class="form-control" name="last_name" placeholder="" required>
 									</div>
 								</div> 
 							</div> 
 						<?php } ?>	
 							<div class="form-group">
-								<label class="pb-0" for="email">Email</label>
+								<label class="pb-0" for="email">Email <span class="red">*</span></label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="" required>
 							</div> 
 							<?php if($cardno->value == 1){?>
 							<div class="form-group">
 								<label class="pb-0" for="cardno">Plastic Card ID#</label>
-								<input class="form-control" name="cardno" id="cardno" placeholder="" required>
+								<input class="form-control" name="cardno" id="cardno" placeholder="" >
 							</div> 
 							<p style="color: #151515;">For help <a style="color: #151515;" href="mailto:suppport@curaechoice.com">suppport@curaechoice.com</a></p>
 							<?php } ?>	
 							<div class="form-group">
 								<div class="row">
-									<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Mobile Number</label>  
+									<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Mobile Number <span class="red">*</span></label>  
 									<div class="col-3 pr-2">
 										<input type="number" class="form-control" maxlength="3" id="area_code" name="area_code" placeholder="xxx" required>
 									</div>
@@ -65,7 +65,7 @@
 								<div class="row">
 									<div class="col-<?php if($qrdob->value == 1){?>5<?php }else{ ?>12<?php }?> pr-2">
 										<div class="row">
-											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0 ">Verification Code</label>   
+											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0 ">Verification Code <span class="red">*</span></label>   
 											<div class="col-sm-12">
 												<input type="number" class="form-control" maxlength="6" id="vcode" name="vcode" placeholder="xxxxxx" required>
 											</div> 
@@ -74,7 +74,7 @@
 									<?php if($qrdob->value == 1){?>
 									<div class="col-7">
 										<div class="row">
-											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Date of Birth:</label> 
+											<label for="exampleInputNumer" class="col-sm-12 col-form-label pb-0">Date of Birth: <span class="red">*</span></label> 
 											<div class="col-12 pl-2 pr-2"> 
 												<input type="text" name="dob" id="dob" class="form-control" required  type="text" data-mask="00/00/0000" data-mask-selectonfocus="true" placeholder="mm/dd/yyyy"> 
 											</div>
