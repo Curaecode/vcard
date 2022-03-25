@@ -715,9 +715,11 @@ view.formSubmit=function(page,formData){
 				page=window.location.href.split("#")[1];
 				console.log("page = "+page);
 				if(page=='cardsettings' || page=='#cardsettings' || page=='cardsettings/'){
-					window.location.href=base_url+"admin/dashboard#"+page;
+					/* window.location.href=base_url+"admin/dashboard#"+page; */
+					$('.datatable').DataTable().ajax.reload(); 
 				}else{
-					view.load(page);
+					/* view.load(page); */
+					$('.datatable').DataTable().ajax.reload(); 
 					$(document).find('#member_select').val(data.dependent)
 				}
 				 
