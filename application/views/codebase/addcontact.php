@@ -86,7 +86,7 @@
 										<label>State<span style="color: red;">*</span></label>
 										<select class="form-select select2 select_state" name="state_id" required>
 											<?php foreach ($states as $key => $singleState) {?>
-												<option <?php if (isset($edit['state_id']) && $edit['state_id']==$singleState->id) { echo "selected"; } if(!isset($edit) && $singleState->id=1456){ echo "selected"; } ?> value="<?php echo $singleState->id; ?>"><?php echo $singleState->state_name; ?></option>
+												<option <?php if (isset($edit['state_id']) && $edit['state_id']==$singleState->id) { echo "selected"; } if(!isset($edit) && $singleState->id==1456){ echo "selected"; } ?> value="<?php echo $singleState->id; ?>"><?php echo $singleState->state_name; ?></option>
 											<?php } ?>
 										</select>
 										<div class="help-block with-errors"></div>
