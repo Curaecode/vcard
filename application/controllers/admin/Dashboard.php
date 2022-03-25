@@ -1129,6 +1129,14 @@ class Dashboard extends CI_Controller {
 	}
 	
 	
+	function contactebupdated($id){
+		$recdata=array();
+		$recdata['ebupdated']=1;
+		$this->model-> updateData("contacts",$id,$recdata); 
+		$msg['success']="E/B Updated successfully."; 
+		$msg['return']=true; 	
+		echo json_encode($msg);
+	}
 	function completesubscriptionaccess($id){
 		$recdata=array();
 		$recdata['completed']=1;
@@ -2539,7 +2547,8 @@ class Dashboard extends CI_Controller {
 				"contacts.account_code",
 				"contacts.cardsend",
 				"contacts.cardemail",
-				"contacts.image"
+				"contacts.image",
+				"contacts.ebupdated"
 				//"contacts.date"
 				);
 				$searchFields=array(
@@ -2628,8 +2637,12 @@ class Dashboard extends CI_Controller {
 					}
 					$key->first_name = '<span style="white-space: nowrap;">'.$key->first_name.' '.$key->last_name.' <br />'.$key->account_code.'</span>';
 					/*
-					cdate
+					cdate 
 					*/
+					$completed = $key->ebupdated;
+					unset($key->ebupdated);
+					
+					
 					unset($key->id);
 					unset($key->last_name);
 					unset($key->cardsend);
@@ -2659,6 +2672,12 @@ class Dashboard extends CI_Controller {
 				 
 					";  
 					 
+					 if($completed==0){
+						$down .="<a data-toggle='Mark E/B Updated' class='btn btn-default completedrec swal'  title='Mark E/B Updated' href='".base_url()."admin/dashboard/contactebupdated/".$id."' class='' target='_blank'><i class='fa fa-check'></i></a>";
+					}else{
+						$down .="<a data-toggle='Mark E/B Updated' class='btn btn-default'  title='Mark E/B Updated' href='javascript:void(0);' class=''><i class='fa fa-check'></i> E/B Updated</a>";
+					}
+					
 					$up="<div class='form-check'><input class='form-check-input checkbox' value='".$id."' type='checkbox'></div>";
 					array_unshift($value,$up);
 					array_push($value,'<div class="columns columns-right pull-right w300">'.$down.''.addActions_contact("contacts",$id).'</div>');
