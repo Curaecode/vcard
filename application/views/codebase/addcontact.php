@@ -86,7 +86,7 @@
 										<label>State<span style="color: red;">*</span></label>
 										<select class="form-select select2 select_state" name="state_id" required>
 											<?php foreach ($states as $key => $singleState) {?>
-												<option <?php if (isset($edit['state_id']) && $edit['state_id']==$singleState->id) { echo "selected"; } ?> value="<?php echo $singleState->id; ?>"><?php echo $singleState->state_name; ?></option>
+												<option <?php if (isset($edit['state_id']) && $edit['state_id']==$singleState->id) { echo "selected"; } if(!isset($edit) && $singleState->id=1456){ echo "selected"; } ?> value="<?php echo $singleState->id; ?>"><?php echo $singleState->state_name; ?></option>
 											<?php } ?>
 										</select>
 										<div class="help-block with-errors"></div>
@@ -115,19 +115,17 @@
 						<div class="form-group row less_margin">
 							<div class="col-sm-6">
 								<div class="mb-3 ">
-									<label for="secondaryemail">Secondary Email</label>
+									<label for="name">Secondary Email</label>
 									<input type='email' value='<?php echo isset($edit["secondaryemail"])?$edit["secondaryemail"]:""; ?>' class='form-control' name='secondaryemail'>
 								</div> 
 							</div>
 							<div class="col-sm-12">
 								<div class="mb-3 ">
-									<label for="notes">Notes</label>
+									<label for="name">Notes</label>
 									<div class="input-group"> 
-									  <textarea class="form-control" name="notes"><?php echo isset($edit["notes"])?$edit["notes"]:""; ?></textarea> 
-									</div>
-									
-								</div>
-								<div class="help-block with-errors"></div>
+									  <textarea class="form-control" name="notes" ><?php echo isset($edit["notes"])?$edit["notes"]:""; ?></textarea>
+									</div> 
+								</div> 
 							</div>
 						</div>
 						<div class="row text-center">
