@@ -615,6 +615,7 @@ view.refreshJs=function(datatable,page){
 			"scrollCollapse": true,  */
 			"processing": true, 
 			"serverSide": true, 
+			"stateSave":true,
 			"bSort" : false,	
 			"order": [],
 			"drawCallback": function(settings) {
@@ -683,7 +684,7 @@ view.load=function(page,type,title){
 				$(".popuptitle").html(title)
 				$(".popupcontent").html(data)
 				$('.modalcontent').modal('toggle');
-				view.refreshJs(false,page);
+				/* view.refreshJs(false,page); */
 			
 			}
 			else{
@@ -713,13 +714,13 @@ view.formSubmit=function(page,formData){
 				$(".modalcontent").modal('hide');
 				swal("Success",data.msg,"success");
 				page=window.location.href.split("#")[1];
-				console.log("page = "+page);
+				console.log("page Form = "+page);
 				if(page=='cardsettings' || page=='#cardsettings' || page=='cardsettings/'){
 					/* window.location.href=base_url+"admin/dashboard#"+page; */
-					$('.datatable').DataTable().ajax.reload(); 
+					$('.datatable').DataTable().ajax.reload(null,false); 
 				}else{
+					$('.datatable').DataTable().ajax.reload(null,false); 
 					/* view.load(page); */
-					$('.datatable').DataTable().ajax.reload(); 
 					$(document).find('#member_select').val(data.dependent)
 				}
 				 
