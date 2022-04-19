@@ -83,8 +83,8 @@ class Subscriptions extends CI_Controller {
 				$data['msg']="Security code sent.";
 				$data['status']=true;
 			}else{
-				$response['status']=0;
-				$response['message']=$response;
+				$data['status']=0;
+				$data['message']=$response;
 			}  
 			
 			echo json_encode($data);
@@ -140,8 +140,8 @@ class Subscriptions extends CI_Controller {
 					$data['msg']="Security code sent.";
 					$data['status']=true;
 				}else{
-					$response['status']=0;
-					$response['message']=$response;
+					$data['status']=0;
+					$data['message']=$response;
 				}
 			}else{
 				$data['msg']="Please enter phone number.";
@@ -203,8 +203,8 @@ class Subscriptions extends CI_Controller {
 					$data['msg']="Security code sent.";
 					$data['status']=true;
 				}else{
-					$response['status']=0;
-					$response['message']=$response;
+					$data['status']=0;
+					$data['message']=$response;
 				}
 			}else{
 				$data['msg']="Please enter phone number.";
