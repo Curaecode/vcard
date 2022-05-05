@@ -15,6 +15,183 @@ class Dashboard extends CI_Controller {
 		}
 		
 	} 
+	function exportcontacts(){
+		 
+		$path = 'resources/uploads/';  
+		if (!is_dir(dirname(dirname(dirname(dirname(__FILE__)))).'/resources/uploads')) {
+			mkdir(dirname(dirname(dirname(dirname(__FILE__)))).'/resources/uploads',0777,TRUE);
+		}
+	 
+		$coloumnsheader=array(
+					"A"=>"Last Name", 
+					"B"=>"First Name",
+					"C"=>"DOB",
+					"D"=>"PH#",     
+					"E"=>"Email",     
+					"F"=>"Secondary Email", 
+					"G"=>"Account Code", 
+					"H"=>"Spouse", 
+					"I"=>"Dependent_1", 
+					"J"=>"Dependent_2", 
+					"K"=>"Dependent_3", 
+					"L"=>"Dependent_4", 
+					"M"=>"Dependent_5", 
+					"N"=>"Dependent_6", 
+					"O"=>"Dependent_7", 
+					"P"=>"Dependent_8", 
+					"Q"=>"Dependent_9", 
+					"R"=>"Dependent_10", 
+					"R"=>"Time Stamp"   
+				);
+		$coloumnskeys=array( 
+				"A"=>"last_name",
+				"B"=>"first_name",
+				"C"=>"dob",
+				"D"=>"phone",
+				"E"=>"email",
+				"F"=>"secondaryemail",
+				"G"=>"account_code",
+				"H"=>"spouse",
+				"I"=>"dependent_2",
+				"J"=>"dependent_3",
+				"K"=>"dependent_4",
+				"L"=>"dependent_5",
+				"M"=>"dependent_6",
+				"N"=>"dependent_7",
+				"O"=>"dependent_8",
+				"P"=>"dependent_9",
+				"Q"=>"dependent_10",
+				"R"=>"dependent_11",
+				"R"=>"date" 
+				); 
+				
+		 $coloumns=array(
+			    "contacts.id",
+				"contacts.first_name",
+				"contacts.last_name",
+				"contacts.email",
+				"contacts.dob",
+				"contacts.secondaryemail", 
+				"contacts.phone",     
+				"contacts.dependent",
+				"contacts.contract_number",
+				"contacts.account_code",
+				"contacts.cardsend",
+				"contacts.cardemail",
+				"contacts.image",
+				"contacts.ebupdated",
+				"contacts.date"
+				 
+				);
+				$searchFields=array(
+			    "contacts.id",
+				"contacts.account_code",
+				"contacts.contract_number",
+				"cd.first_name",
+				"cd.last_name",
+				"contacts.first_name",
+				"contacts.last_name",
+				"contacts.email",
+				"contacts.secondaryemail",
+				"contacts.phone"
+				);
+			$fields=implode(",",$coloumns);
+			$searching="";
+			if($this->input->post('search')){
+				$where .= " AND ( contacts.account_code LIKE '%".$this->input->post('search')."%' OR contacts.contract_number LIKE '%".$this->input->post('search')."%' OR cd.first_name LIKE '%".$this->input->post('search')."%' OR cd.last_name LIKE '%".$this->input->post('search')."%' OR contacts.first_name LIKE '%".$this->input->post('search')."%' OR contacts.last_name LIKE '%".$this->input->post('search')."%' OR contacts.email LIKE '%".$this->input->post('search')."%' OR contacts.secondaryemail LIKE '%".$this->input->post('search')."%' OR contacts.phone LIKE '%".$this->input->post('search')."%' )"; 
+			}
+			$sql="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where contacts.id > 0 $where";
+			 
+				$fields=implode(",",$coloumns);
+				$sql2=getRecords($sql,array('length'=>-1),$coloumns,$searchFields,array(),'group by contacts.id');
+				$results=$this->db->query($sql2['sql'])->result();
+				 
+			 $this->load->library('excel'); 
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel->setActiveSheetIndex(0);
+			$rowCount = 1;
+			foreach($coloumnsheader as $key=>$header){
+				$objPHPExcel->getActiveSheet()->SetCellValue($key.$rowCount, trim($header));
+			} 
+			$rowCount = 2;
+			$Encounter = 1;	
+			$subEncounter = 1;	
+				$values=array();
+				foreach($results as $key){
+					$id=$key->id;
+					$dependent_data = array();
+					 
+					$contract_number= $key->contract_number;
+					  
+					$contract_number = $key->contract_number;
+					 $key->dob = usadate($key->dob); 
+					$filename=$key->image;
+					$vcard_name=getvcardname($id);
+					
+					/* $key->image="<a data-toggle='View Card' title='View Card' data-title='View Card' class='btn  waves-effect waves-light loadview modalview' data-bs-toggle='tooltip'  title='View Card' href='#contacts/cardview/".$id."'><img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class=' img-responsive rounded-circle' ></a>"; */
+					
+					 
+					 
+					$completed = $key->ebupdated;
+					
+					$value=(array)$key;
+					
+					
+					$sqlOcc = "SELECT contact_dependant.*,
+									  @rownum := @rownum + 1 AS ROW_NUMBER
+								FROM `contact_dependant`
+								CROSS JOIN (SELECT @rownum := 0) r
+								WHERE contract_number='$contract_number'
+								ORDER BY CASE when relationship = 'Male Spouse' OR relationship = 'Female Spouse' THEN 1 ELSE 2 END  ASC";
+								
+						$dependant_data = $this->db->query($sqlOcc)->result();
+					if(!empty($dependant_data)){
+						foreach($dependant_data as $row){
+							$dependent_data2=''; 
+							$dependent_data2.=(isset($row->first_name) && !empty($row->first_name)) ? ucwords($row->first_name):'';
+							$dependent_data2.=(isset($row->last_name)  && !empty($row->last_name)) ? ' '.ucwords($row->last_name):'';
+							
+							$dependentdata =(isset($row->relationship) && !empty($row->relationship)) ? $row->relationship.'':'';
+							$datadependent = explode(' ',$dependentdata); 
+							if(count($datadependent) > 1){ 
+								$dependent_datas=$datadependent[1];
+							}else{
+								$dependent_datas = $datadependent[0];
+							}
+							$mystring = strtolower($dependent_datas);  
+							$findme   = 'spouse';
+							$pos = strpos($mystring, $findme);
+							
+							if ($pos === false){
+								/* $dependent_datas = 'D'; */
+								$depcounter=$row->ROW_NUMBER;
+								$value['dependent_'.$depcounter]=$dependent_data2;
+								
+							}else{
+								$value['spouse']=$dependent_data2;
+								 
+							} 
+						}
+					}  
+					$values[]=$value;
+					foreach($coloumnskeys as $keys=>$colkey){
+						$objPHPExcel->getActiveSheet()->setCellValueExplicit($keys.$rowCount, $value[$colkey], PHPExcel_Cell_DataType::TYPE_STRING); 
+					}
+					$rowCount++;
+				}
+			if(!empty($results)){
+				 $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+				$objWriter->save($path.'Contacts.xlsx');   
+				$data=array();
+				$filename=$path.'Contacts.xlsx';
+				 
+				$this->load->helper('download');
+				// read file contents
+				$data = file_get_contents($filename);
+				force_download('Contacts.xlsx', $data);	
+			}
+		  
+	}
 	function card($id=0){ 
 		$data['showname']=$this->model->getDatarow("config","where isVisible=1 AND name='showname'"); 
 		$data['showdependent']=$this->model->getDatarow("config","where isVisible=1 AND name='showdependent'"); 
