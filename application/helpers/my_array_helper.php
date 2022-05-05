@@ -701,6 +701,12 @@ function usadate($date){
 	return date('M d, Y ', strtotime($date));
 }
 
+function usadateformat($date){
+	return date('m/d/Y', strtotime($date));
+}
+function usatimeformat($date){
+	return date('h:i a', strtotime($date));
+}
 function isUser(){
 	$CI =& get_instance();
 	return $CI->session->userdata('userId')==''?false:true;

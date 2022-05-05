@@ -41,7 +41,8 @@ class Dashboard extends CI_Controller {
 					"P"=>"Dependent_8", 
 					"Q"=>"Dependent_9", 
 					"R"=>"Dependent_10", 
-					"R"=>"Time Stamp"   
+					"S"=>"Date Stamp", 
+					"T"=>"Time Stamp"   
 				);
 		$coloumnskeys=array( 
 				"A"=>"last_name",
@@ -62,7 +63,8 @@ class Dashboard extends CI_Controller {
 				"P"=>"dependent_9",
 				"Q"=>"dependent_10",
 				"R"=>"dependent_11",
-				"R"=>"date" 
+				"S"=>"dated",
+				"T"=>"dttime" 
 				); 
 				
 		 $coloumns=array(
@@ -80,7 +82,8 @@ class Dashboard extends CI_Controller {
 				"contacts.cardemail",
 				"contacts.image",
 				"contacts.ebupdated",
-				"contacts.date"
+				"contacts.date as dated",
+				"contacts.date as dttime"
 				 
 				);
 				$searchFields=array(
@@ -124,7 +127,9 @@ class Dashboard extends CI_Controller {
 					$contract_number= $key->contract_number;
 					  
 					$contract_number = $key->contract_number;
-					 $key->dob = usadate($key->dob); 
+					 $key->dob = usadateformat($key->dob); 
+					 $key->dated = usadateformat($key->dated);
+					 $key->dttime = usatimeformat($key->dttime); 
 					$filename=$key->image;
 					$vcard_name=getvcardname($id);
 					
