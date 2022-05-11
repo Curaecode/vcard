@@ -1427,7 +1427,7 @@ class Dashboard extends CI_Controller {
 						}
 						
 					}
-					$key->subscriptions='<span class="badge bg-light-danger text-danger fw-normal">New</span>';
+					$key->subscriptions='<span class="badge bg-light-danger text-danger fw-normal">Pending</span>';
 					if(!empty($key->contactid)){
 						$key->subscriptions='<span class="badge bg-light-info text-info fw-normal">Already Exist</span>';
 					}elseif(!empty($key->depid)){
