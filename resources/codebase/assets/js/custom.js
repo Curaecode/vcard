@@ -484,7 +484,7 @@ $(document).ready(function(){
 		e.preventDefault();
 		swal({
 		  title: "Are you sure?",
-		  text: "You will not be able to recover Record Again!",
+		  text: "You want to perform this action!",
 		  type: "warning",
 		  showCancelButton: true,
 		  confirmButtonColor: "#DD6B55",
@@ -498,11 +498,11 @@ $(document).ready(function(){
 					dataType:'json',
 					success:function(data){
 						if(data.success){
-							swal("Complete!", data.success, "success");
+							swal("Success!", data.success, "success");
 							 table.ajax.reload();
 						}
 						else{
-							swal("Not Complete!", data.error, "error");
+							swal("Error!", data.error, "error");
 						}
 					  
 					}

@@ -771,7 +771,6 @@ class Dashboard extends CI_Controller {
 			$data['groups']=count($this->model->getData("groups"));
 			$data['contacts']=count($this->model->getData("contacts"));
 			$data['companies']=count($this->model->getData("companies"));
-			
 			$dependents=$this->db->query("select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number")->result();
 			$data['dependents']=count($dependents);
 			
@@ -1310,7 +1309,6 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	
-	
 	function contactebupdated($id){
 		$recdata=array();
 		$recdata['ebupdated']=1;
@@ -1324,6 +1322,14 @@ class Dashboard extends CI_Controller {
 		$recdata['completed']=1;
 		$this->model-> updateData("subscription_access",$id,$recdata); 
 		$msg['success']="Mark completed successfully."; 
+		$msg['return']=true; 	
+		echo json_encode($msg);
+	}
+	function pendingsubscriptionaccess($id){
+		$recdata=array();
+		$recdata['completed']=0;
+		$this->model-> updateData("subscription_access",$id,$recdata); 
+		$msg['success']="Mark Pending successfully."; 
 		$msg['return']=true; 	
 		echo json_encode($msg);
 	}
@@ -1353,6 +1359,7 @@ class Dashboard extends CI_Controller {
 			}
 			$coloumns[]='IP / Access Date Time';
 			$coloumns[]='Subscription';
+			$coloumns[]='Status';
 			/* $coloumns[]='Access Date Time';
 			$coloumns[]='Address'; */
 			$coloumns[]='Action';
@@ -1382,10 +1389,11 @@ class Dashboard extends CI_Controller {
 				$coloumns[]='sa.addeddate';
 				$coloumns[]='sa.latitude';
 				/* $coloumns[]='longitude'; */
-				$coloumns[]='sa.completed';
-				$coloumns[]='sa.completed';
+				
 				$coloumns[]='c.id AS contactid';
 				$coloumns[]='cd.id AS depid';
+				$coloumns[]='0 AS subscriptions';
+				$coloumns[]='sa.completed'; 
 				
 				$searchFields=array(
 			    "sa.id",
@@ -1427,15 +1435,21 @@ class Dashboard extends CI_Controller {
 						}
 						
 					}
-					$key->subscriptions='<span class="badge bg-light-danger text-danger fw-normal">Pending</span>';
+					$key->subscriptions='<span class="badge bg-light-danger text-danger fw-normal">New</span>';
 					if(!empty($key->contactid)){
 						$key->subscriptions='<span class="badge bg-light-info text-info fw-normal">Already Exist</span>';
 					}elseif(!empty($key->depid)){
 						$key->subscriptions='<span class="badge bg-light-info text-info fw-normal">Already Exist</span>';
 					}
 					$key->ipaddress=$key->ipaddress.''.$key->addeddate;
+					
 					$completed = $key->completed;
-					unset($key->completed);
+					if($key->completed==0){
+						$key->completed ='<span class="badge bg-light-danger text-danger fw-normal">Pending</span>';
+					}else{
+						$key->completed ='<span class="badge bg-light-info text-info fw-normal">Already Exists</span>';
+					}
+					/* unset($key->completed); */
 					unset($key->latitude);
 					unset($key->longitude);
 					unset($key->addeddate);
@@ -1445,7 +1459,8 @@ class Dashboard extends CI_Controller {
 					if($completed==0){
 						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					}else{
-						$down="Completed";
+						/* $down="Completed"; */
+						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Pending' class='btn btn-danger completedrec swal'  title='Mark Pending' href='".base_url()."admin/dashboard/pendingsubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					} 
 					     
 					$value=array_values((array)$key);
@@ -2819,11 +2834,10 @@ class Dashboard extends CI_Controller {
 					}
 					$key->first_name = '<span style="white-space: nowrap;">'.$key->first_name.' '.$key->last_name.' <br />'.$key->account_code.'</span>';
 					/*
-					cdate 
+					cdate
 					*/
 					$completed = $key->ebupdated;
 					unset($key->ebupdated);
-					
 					
 					unset($key->id);
 					unset($key->last_name);
@@ -2853,29 +2867,31 @@ class Dashboard extends CI_Controller {
 					<a data-toggle='View Send vCard Email Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
 				 
 					";  
-					 
 					 if($completed==0){
 						$down .="<a data-toggle='Mark E/B Updated' class='btn btn-default completedrec swal'  title='Mark E/B Updated' href='".base_url()."admin/dashboard/contactebupdated/".$id."' class='' target='_blank'><i class='fa fa-check'></i></a>";
 					}else{
 						$down .="<a data-toggle='Mark E/B Updated' class='btn btn-default'  title='Mark E/B Updated' href='javascript:void(0);' class=''><i class='fa fa-check'></i> E/B Updated</a>";
 					}
-					
 					$up="<div class='form-check'><input class='form-check-input checkbox' value='".$id."' type='checkbox'></div>";
 					array_unshift($value,$up);
 					array_push($value,'<div class="columns columns-right pull-right w300">'.$down.''.addActions_contact("contacts",$id).'</div>');
 					
 					$values[]=$value;
 				}
-				
-				$sql3="select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
+				/* $output = array(
+					"draw" => $formData['draw'],
+					"recordsTotal" => $this->db->query($sql1)->num_rows(),
+					"recordsFiltered" => $sql2['countFiltered'],
+					"data" => isset($values)?$values:array(),
+				); */
+				$sql3="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
 				
 				$sql4=getRecords($sql3,$formData,$coloumns,$searchFields,array(),'group by cd.id');
-				#echo $sql4['sql'];
-				 
-				$totaldependent="select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 group by cd.id";
+				
+				 $totaldependent="select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 group by cd.id";
 				$output = array(
 					"draw" => $formData['draw'],
-					  "Totaldependents" => $this->db->query($totaldependent)->num_rows(),  
+					"Totaldependents" => $this->db->query($totaldependent)->num_rows(),  
 					"Filtereddependents" => $this->db->query($sql4['sql'])->num_rows(), 
 					"recordsTotal" => $this->db->query($sql1)->num_rows(),
 					"Filteredrecords" => $this->db->query($sql2['sql'])->num_rows(),
