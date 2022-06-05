@@ -161,7 +161,7 @@ class crons extends CI_Controller {
 						if(isset($col['monday_id'])){
 							/* $query='Select * from `contacts` WHERE monday_id="'.$col['monday_id'].'"';
 							$getIdRows = $this->db->query($query)->row(); */
-							echo $SQL='Select * from `contacts` WHERE patient_id="'.$col['monday_id'].'"';
+							 $SQL='Select * from `contacts` WHERE patient_id="'.$col['monday_id'].'"';
 							$query = $this->db->query($SQL);
 							$getIdRows = $query->row();
 					
