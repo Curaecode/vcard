@@ -100,6 +100,7 @@ class Dashboard extends CI_Controller {
 				);
 			$fields=implode(",",$coloumns);
 			$searching="";
+			$where ="";
 			if($this->input->post('search')){
 				$where .= " AND ( contacts.account_code LIKE '%".$this->input->post('search')."%' OR contacts.contract_number LIKE '%".$this->input->post('search')."%' OR cd.first_name LIKE '%".$this->input->post('search')."%' OR cd.last_name LIKE '%".$this->input->post('search')."%' OR contacts.first_name LIKE '%".$this->input->post('search')."%' OR contacts.last_name LIKE '%".$this->input->post('search')."%' OR contacts.email LIKE '%".$this->input->post('search')."%' OR contacts.secondaryemail LIKE '%".$this->input->post('search')."%' OR contacts.phone LIKE '%".$this->input->post('search')."%' )"; 
 			}
