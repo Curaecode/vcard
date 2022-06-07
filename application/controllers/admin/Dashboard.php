@@ -100,7 +100,6 @@ class Dashboard extends CI_Controller {
 				);
 			$fields=implode(",",$coloumns);
 			$searching="";
-			$where ="";
 			if($this->input->post('search')){
 				$where .= " AND ( contacts.account_code LIKE '%".$this->input->post('search')."%' OR contacts.contract_number LIKE '%".$this->input->post('search')."%' OR cd.first_name LIKE '%".$this->input->post('search')."%' OR cd.last_name LIKE '%".$this->input->post('search')."%' OR contacts.first_name LIKE '%".$this->input->post('search')."%' OR contacts.last_name LIKE '%".$this->input->post('search')."%' OR contacts.email LIKE '%".$this->input->post('search')."%' OR contacts.secondaryemail LIKE '%".$this->input->post('search')."%' OR contacts.phone LIKE '%".$this->input->post('search')."%' )"; 
 			}
@@ -1360,10 +1359,10 @@ class Dashboard extends CI_Controller {
 			}
 			$coloumns[]='IP / Access Date Time';
 			$coloumns[]='Subscription';
-			$coloumns[]='Status';
+			/* $coloumns[]='Status'; */
 			/* $coloumns[]='Access Date Time';
 			$coloumns[]='Address'; */
-			$coloumns[]='Action';
+			 $coloumns[]='Action';  
 			 
 			$data['id']=$id;
 			$data['title']="Subscriptions";
@@ -1394,7 +1393,7 @@ class Dashboard extends CI_Controller {
 				$coloumns[]='c.id AS contactid';
 				$coloumns[]='cd.id AS depid';
 				$coloumns[]='0 AS subscriptions';
-				$coloumns[]='sa.completed'; 
+				/* $coloumns[]='sa.completed';  */
 				
 				$searchFields=array(
 			    "sa.id",
@@ -1445,11 +1444,11 @@ class Dashboard extends CI_Controller {
 					$key->ipaddress=$key->ipaddress.''.$key->addeddate;
 					
 					$completed = $key->completed;
-					if($key->completed==0){
+					/* if($key->completed==0){
 						$key->completed ='<span class="badge bg-light-danger text-danger fw-normal">Pending</span>';
 					}else{
 						$key->completed ='<span class="badge bg-light-info text-info fw-normal">Already Exists</span>';
-					}
+					} */
 					/* unset($key->completed); */
 					unset($key->latitude);
 					unset($key->longitude);
@@ -1459,8 +1458,7 @@ class Dashboard extends CI_Controller {
 					unset($key->depid);
 					if($completed==0){
 						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
-					}else{
-						/* $down="Completed"; */
+					}else{ 
 						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Pending' class='btn btn-danger completedrec swal'  title='Mark Pending' href='".base_url()."admin/dashboard/pendingsubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					} 
 					     
