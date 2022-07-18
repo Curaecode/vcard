@@ -115,10 +115,19 @@
 						<div class="form-group row less_margin">
 							<div class="col-sm-6">
 								<div class="mb-3 ">
-									<label for="name">Secondary Email</label>
+									<label for="secondaryemail">Secondary Email</label>
 									<input type='email' value='<?php echo isset($edit["secondaryemail"])?$edit["secondaryemail"]:""; ?>' class='form-control' name='secondaryemail'>
 								</div> 
 							</div>
+							<?php /* <div class="col-sm-6">
+								<div class="mb-3 ">
+									<label for="status">Status</label>
+									 <select class="form-select select2 status" name="status">
+											 <option <?php if (isset($edit['status']) && $edit['status']==1) { echo "selected"; } ?> value="1">Active</option>
+											 <option <?php if (isset($edit['status']) && $edit['status']==0) { echo "selected"; } ?> value="0">In-active</option> 
+										</select>
+								</div> 
+							</div> */ ?>
 							<div class="col-sm-12">
 								<div class="mb-3 ">
 									<label for="name">Notes</label>

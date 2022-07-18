@@ -54,7 +54,13 @@
 						<li class="sidebar-item">
 							<a href="#contacts/" class="sidebar-link loadview">
 								<i class="mdi mdi-adjust"></i>
-								<span class="hide-menu"> Contacts </span>
+								<span class="hide-menu"> Active Contacts </span>
+							</a>
+						</li> 
+						<li class="sidebar-item">
+							<a href="#deactivecontacts/" class="sidebar-link loadview">
+								<i class="mdi mdi-adjust"></i>
+								<span class="hide-menu"> Deactive Contacts </span>
 							</a>
 						</li> 
 						<?php if($this->session->userdata('adminType') == 0){?>
@@ -74,12 +80,6 @@
 							<a href="#settings/" class="sidebar-link loadview">
 								<i class="mdi mdi-adjust"></i>
 								<span class="hide-menu"> Settings </span>
-							</a>
-						</li> 
-						<li class="sidebar-item">
-							<a href="#cardsettings/" class="sidebar-link loadview">
-								<i class="mdi mdi-adjust"></i>
-								<span class="hide-menu"> Card Settings </span>
 							</a>
 						</li> 
 						<li class="sidebar-item">
