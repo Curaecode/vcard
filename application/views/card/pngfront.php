@@ -179,18 +179,27 @@
 	</div>
 	<div class="card-body">
 		<div class="card-heading">
-			<?php if($showname->value==1){ ?>
+			<?php /* if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
-			<?php } ?>
+			<?php } */ ?>
 			<?php $account_id=(!empty($contact->account_code)?$contact->account_code:''); ?>
-			<p class="card-text"><?php echo $account_id;?></p>
+			<?php $accountcode=explode('-',$account_id);?>
+			<p class="card-text"><?php if(count($accountcode)>3){unset($accountcode[count($accountcode)-1]);echo implode('-',$accountcode);}else{echo $account_id;}?></p>
 		</div>
 		<div class="user-data">
 			<div class="row" style="width:100%;">
-				<?php if($showdependent->value==1){ ?>
-					<?php if(isset($dependent) && !empty($dependent)){?>
+				<?php if($showdependent->value==1 || $showname->value==1){ ?>
+					
 					<div class="col-sm-7" style="float:left;width: 58%;">	
 						<dl class="row" style="margin-top: 10px;margin-left: 10px;">
+						<?php if($showname->value==1){ ?>
+						<?php $accountcode=explode('-',$account_id);?>
+						<dd class="col-sm-12"><strong>M:</strong> <?php echo ucwords($contact->first_name." ".$contact->last_name);?>
+						<?php if(count($accountcode)>3){echo ' - '.$accountcode[count($accountcode)-1];}?>
+						</dd>
+						<?php } ?>
+						<?php if($showdependent->value==1){ $scount=0; $dcount=0; ?>
+						<?php if(isset($dependent) && !empty($dependent)){ ?>
 							<?php foreach($dependent as $key => $value){ ?>
 										<?php if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){?>
 											<?php 
@@ -207,8 +216,10 @@
 												
 												if ($pos === false){
 													$dependent_datas = 'D';
+													$dcount++;
 												}else{
 													$dependent_datas = 'S';
+													$scount=$scount+1;
 												}
 												$dependent_datas=$dependent_datas.' ';
 												$dependent_data2 = '';
@@ -218,12 +229,22 @@
 											?>
 											<?php /* <dt class="col-sm-2"><?php echo $dependent_datas;?></dt>
 											<dd class="col-sm-9"><?php echo $dependent_data2;?></dd>  */ ?>
-											<dd class="col-sm-12"><strong><?php echo $dependent_datas;?>:</strong> <?php echo $dependent_data2;?></dd>
+											<dd class="col-sm-12"><strong><?php echo $dependent_datas;?>:</strong> <?php echo $dependent_data2;?>
+											<?php if(strtolower(trim($dependent_datas)) == 's'){
+												echo ' - '.$scount.'0';
+											}else{
+												echo ' - '.'0'.$dcount;
+											}
+											
+											?>
+											</dd>
 										<?php } ?>
 							<?php } ?>
+						 <?php } ?>
+						<?php } ?>						 
 						</dl>
 					</div>		
-					<?php } ?> 
+					
 				<?php } ?>
 				<?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){  $col='4'; }else{$col='12'; } ?>
 				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){ ?>style="float:left;width: 33%;" <?php } ?>>

@@ -161,8 +161,8 @@ function generateID($id = null)
 							$dependent_datas = 'S';
 						}
 						
-						if($dependent_datas=='S'){
-							$spouse=1;
+						if(strtolower($dependent_datas)=='s'){
+							$spouse=$spouse+1;
 						}else{
 							$dependent +=1;
 						}	
