@@ -1,5 +1,5 @@
 <?php $this->load->view('qrcode/widgets/header'); ?> 
-	<body class="detail">
+	<body class="detail provider">
 	<style>
 	.nav-tabs>li {
 		float: left;
@@ -24,9 +24,11 @@
 	.nav-tabs>li a.active, .nav-tabs>li>a.active:focus, .nav-tabs>li>a.active:hover {
 		color: #555;
 		cursor: default;
-		background-color: #fff;
+		background-color: #f4f6fc;
 		border: 1px solid #ddd;
 		border-bottom-color: transparent;
+		border-radius: 20px 20px 0px 0px;
+		font-weight: 600;
 	}
 	.provideriframe iframe {
 		min-height: 940px !important;
@@ -35,7 +37,7 @@
 		min-height: 940px !important;
 	}
 	.employeeiframe iframe {
-		min-height: 913px !important;
+		min-height: 800px !important;
 	} 
 	ul.elementor-icon-list-items {
 	  list-style-type: none;
@@ -48,6 +50,89 @@
 	.elementor-icon-list-text a,.elementor-icon-list-text a:focus,.elementor-icon-list-text a:hover{
 		color: #fff;
 	}
+	
+	.detail-left-wrap p.topheading{
+		color: #000;
+		font-size: 17px;
+		font-weight: bold;
+		line-height: 25px;
+	}
+	.detail-wrap .card a.comingsoonbtn {
+		    border-radius: 14px 14px 0px 0px;
+		font-size: 14px;
+		line-height: 19px;
+		font-weight: 600;
+		padding: 4px;
+		color: #777777;
+		display: block;
+		align-items: center; 
+		border-bottom: 0px solid #2BABE3;
+		width: 100%;
+	}
+	.detail-wrap .card.livedesign {
+		border-radius: 14px; 
+		border-bottom: 20px solid #2BABE3; 
+		background:#2BABE3;
+	}
+	.detail-wrap .card.livedesign a {
+		border-radius: 14px;
+		font-size: 14px;
+		line-height: 19px;
+		font-weight: 600;
+		padding: 4px;
+		color: #777777;
+		display: flex;
+		align-items: center;
+		border-bottom: 5px solid #92c4e9;
+		width: 100%;
+		background-color: #fff;
+	}
+	.detail-wrap .card a.comingsoonbtn {
+		border-radius: 14px;
+		font-size: 14px;
+		line-height: 19px;
+		font-weight: 600;
+		padding: 4px;
+		color: #000;
+		display: block;
+		align-items: center; 
+		border-bottom: 5px solid #9d9ea0;
+		width: 100%;
+	}
+	.detail-wrap .card a.comingsoonheading {
+		border-radius: 0px 0px 14px 14px;
+		font-size: 14px;
+		line-height: 19px;
+		font-weight: 600;
+		padding: 4px;
+		color: #000;
+		background: #ecedf3;
+		display: block;
+		align-items: center; 
+		border-bottom: 0px solid #b2b2b2;
+		width: 100%;
+		text-align: center;
+		text-transform: uppercase;
+	}
+	.comingsoon{
+		display:block;
+		width:100%;
+	}
+	.ftco-section { 
+		background: transparent;
+		padding: 0;
+	}
+	.mt-50{
+		margin-top:50px
+	}
+	.cominheading{
+		border-radius: 5px;
+		background: #ecedf3;
+		width:auto;
+		text-align: center;
+		font-weight:600;
+		color:#000;
+	}
 	</style>
 	<section class="ftco-section">
 		<div class="container"> 
@@ -55,19 +140,20 @@
 				<div class="col-md-5 col-lg-5">
 					<div class="detail-wrap ">
 						<div class="detail-left-wrap py-5">
-						<p>Click on any specialty button to view the map of providers</p>
+						<p class="topheading">Click on a specialty button to view providers near you</p>
 						</div>
 						<div class="row"> 
 							<?php  
 								/* $query = $this->db->get( 'care_coordination' ); */
 								$this->db->from('care_coordination' );
 								$this->db->order_by("comingsoon", "asc");
+								$this->db->where("comingsoon", "0");
 								$query = $this->db->get(); 
 								$result = $query->result();
 								foreach( $result as $row ){
 									?>
 									<div class="col-sm-6 col-xs-6">
-										<div class="card">
+										<div class="card livedesign">
 											<a href="javascript:void(0)" <?php if($row->comingsoon==0){ ?> onclick="return openlink(<?php echo $row->id;?>)" target="_blank" <?php } ?>  <?php if($row->comingsoon==1){?>style="background: gray;color:white;"<?php }?>>
 												<img src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>" />
 												<?php echo $row->linkname;?>  <?php if($row->comingsoon==1){echo '(Coming soon)';}?>
@@ -76,19 +162,52 @@
 									</div>
 							<?php   } ?> 
 							<div class="col-sm-6 col-xs-6">
-								<div class="card">
+								<div class="card livedesign">
 									<a href="mailto:support@curaechoice.com" target="">
-										<img src="<?php echo base_url();?>resources/assets/images/customer-support.png" />
-										Customer Service
+										<img src="<?php echo base_url();?>resources/assets/images/EmailIcon.png" />
+										Email Support
 									</a>
 								</div>
+							</div> 
+						</div>
+						<?php 
+						$this->db->from('care_coordination' );
+						$this->db->order_by("comingsoon", "asc");
+						$this->db->where("comingsoon", "1");
+						$query = $this->db->get(); 
+						$result = $query->result();
+						?>
+						<div class="row"> 
+							<div class="col-sm-12 col-xs-12 mt-50">
+								<p class="cominheading">Specialities Coming Soon</p>
 							</div>
+						
+							<?php  
+								/* $query = $this->db->get( 'care_coordination' ); */
+								
+								foreach( $result as $row ){
+									?>
+									<div class="col-sm-6 col-xs-6">
+										<div class="card" style="display:block;background: #b2b2b2;">
+											<div class="comingsoon">
+											<a href="javascript:void(0)" class="comingsoonbtn" <?php if($row->comingsoon==0){ ?> onclick="return openlink(<?php echo $row->id;?>)" target="_blank" <?php } ?>  <?php if($row->comingsoon==1){?>style="background: #ecedf3;"<?php }?>>
+												<img src="<?php echo base_url();?>resources/admin/<?php echo $row->image;?>" />
+												<?php echo $row->linkname;?> 
+											</a>
+											</div>
+											<div class="comingsoon">
+											<a href="javascript:void(0)" class="comingsoonheading" <?php if($row->comingsoon==1){?>style="background:#b2b2b2;"<?php }?>> <?php if($row->comingsoon==1){echo 'Coming soon';}?>
+											</a>
+											</div>
+										</div>
+									</div>
+							<?php   } ?> 
 						</div>
 					</div>
 				</div>
 				<div class="col-md-7 col-lg-7">
 					<div class="detail-left-wrap py-5" style="padding-left: 10px;padding-right: 0px;"> 
-						<div class="elementor-widget-container">
+						<?php /* <div class="elementor-widget-container">
 						  <ul class="elementor-icon-list-items">
 							<li class="elementor-icon-list-item">
 							  <span class="elementor-icon-list-icon">
@@ -103,12 +222,12 @@
 							  <span class="elementor-icon-list-text"><a href="mailto:support@curaechoice.com">support@curaechoice.com</a></span>
 							</li> 
 						  </ul>
-						</div>
+						</div> */ ?>
 						<div class="tg-textwidget">
 							 <div class="panel with-nav-tabs panel-default">
 								<div class="panel-heading">
 										<ul class="nav nav-tabs">
-											<li><a  class="active" href="#tab1default" data-toggle="tab">Contact Us</a></li>
+											<li><a  class="active" href="#tab1default" data-toggle="tab">Submit a Ticket</a></li>
 											<?php /* <li><a href="#tab2default" data-toggle="tab">Employer</a></li>
 											<li><a href="#tab3default" data-toggle="tab">Provider</a></li>  */ ?>
 										</ul>
