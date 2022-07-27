@@ -51,11 +51,12 @@
 		color: #fff;
 	}
 	
-	.detail-left-wrap p.topheading{
+	.detail-left-wrap p.topheading{ 
 		color: #000;
-		font-size: 17px;
+		font-size: 22px;
 		font-weight: bold;
 		line-height: 25px;
+		text-align: center;
 	}
 	.detail-wrap .card a.comingsoonbtn {
 		    border-radius: 14px 14px 0px 0px;
@@ -121,6 +122,7 @@
 	.ftco-section { 
 		background: transparent;
 		padding: 0;
+		background-color: transparent;
 	}
 	.mt-50{
 		margin-top:50px
@@ -164,7 +166,7 @@
 							<div class="col-sm-6 col-xs-6">
 								<div class="card livedesign">
 									<a href="mailto:support@curaechoice.com" target="">
-										<img src="<?php echo base_url();?>resources/assets/images/EmailIcon.png" />
+										<img src="<?php echo base_url();?>resources/assets/images/emailsupport.png" style="width: 46px; height: 46px;" />
 										Email Support
 									</a>
 								</div>
@@ -205,7 +207,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-7 col-lg-7">
+				<div class="col-md-6 col-lg-6">
 					<div class="detail-left-wrap py-5" style="padding-left: 10px;padding-right: 0px;"> 
 						<?php /* <div class="elementor-widget-container">
 						  <ul class="elementor-icon-list-items">

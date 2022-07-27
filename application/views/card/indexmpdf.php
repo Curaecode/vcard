@@ -226,18 +226,27 @@
 	</div> 
 	<div class="card-body" style="flex: 1 1 auto; padding: 0px 25px;height:67.5%">
 		<div class="card-heading"  style="margin-top:25px;"> 
-			<?php if($showname->value==1){ ?>
+			<?php /* if($showname->value==1){ ?>
 			<h5 class="card-title"><?php echo ucwords($contact->first_name." ".$contact->last_name);?></h5> 
-			<?php } ?>
+			<?php } */ ?>
 			<?php $account_id=(!empty($contact->account_code)?$contact->account_code:''); ?>
 			<p class="card-text"><?php echo $account_id;?></p>
 		</div>
 		<div class="user-data">
+		
 			<div class="row">
-				<?php if($showdependent->value==1){ ?>
-					<?php if(isset($dependent) && !empty($dependent)){?>
+				<?php if($showdependent->value==1 || $showname->value==1){ ?>
+					
 					<div class="col-sm-6" style="float:left;padding:0px;margin:25px 0px 0px 0px; ">	
 						<dl class="row" style="margin-top: 5px;">
+						<?php if($showname->value==1){ ?>
+						<?php $accountcode=explode('-',$account_id);?>
+						<dd class="col-sm-12"><strong>M:</strong> <?php echo ucwords($contact->first_name." ".$contact->last_name);?>
+						<?php if(count($accountcode)>3){echo ' - '.$accountcode[count($accountcode)-1];}?>
+						</dd>
+						<?php } ?>
+						<?php if($showdependent->value==1){ $scount=0; $dcount=0; ?>
+						<?php if(isset($dependent) && !empty($dependent)){?>
 							<?php foreach($dependent as $key => $value){ ?>
 										<?php if(!empty($value->relationship) || !empty($value->first_name) || !empty($value->last_name)){?>
 											<?php 
@@ -254,8 +263,10 @@
 												
 												if ($pos === false){
 													$dependent_datas = 'D';
+													$dcount++;
 												}else{
 													$dependent_datas = 'S';
+													$scount=$scount+1;
 												}
 												$dependent_datas=$dependent_datas.' ';
 												$dependent_data2 = '';
@@ -265,18 +276,30 @@
 											?>
 											<?php /* <dt class="col-sm-2"><?php echo $dependent_datas;?></dt>
 											<dd class="col-sm-9"><?php echo $dependent_data2;?></dd>  */ ?>
-											<dd class="col-sm-12"><strong><?php echo $dependent_datas;?>:</strong> <?php echo $dependent_data2;?></dd>
+											<?php /* <dd class="col-sm-12"><strong><?php echo $dependent_datas;?>:</strong> <?php echo $dependent_data2;?></dd> */ ?>
+											
+											<dd class="col-sm-12"><strong><?php echo $dependent_datas;?>:</strong> <?php echo $dependent_data2;?>
+											<?php if(strtolower(trim($dependent_datas)) == 's'){
+												echo ' - '.$scount.'0';
+											}else{
+												echo ' - '.'0'.$dcount;
+											}
+											
+											?>
+											</dd>
 										<?php } ?>
 							<?php } ?>
+							<?php } ?> 
+							<?php } ?> 
 						</dl>
 					</div>		
-					<?php } ?> 
+					
 				<?php } ?>
-				<?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){  $col='5'; }else{$col='12'; } ?>
-				<div class="col-sm-<?php echo $col;?>"  <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="float:right;padding:0px;margin:0px;"<?php }?>>
+				<?php if(($showname->value==1) || ($showdependent->value==1 && isset($dependent) && !empty($dependent))){  $col='5'; }else{$col='12'; } ?>
+				<div class="col-sm-<?php echo $col;?>"  <?php if(($showname->value==1) || ($showdependent->value==1 && isset($dependent) && !empty($dependent))){?>style="float:right;padding:0px;margin:0px;"<?php }?>>
 					<div class="qravatar" <?php if($showdependent->value==1 && isset($dependent) && !empty($dependent)){?>style="width:100%;margin-left:40px;text-align: right;"<?php }else{?>style="width:100%;text-align:center;"<?php }?>>
 						<img src="<?php echo base_url().'resources/qrimage/'.$contact->qrimage;?>" alt="user" />
-					<?php $date=date("M d, Y",strtotime($regdate->value));?>
+					<?php $date=date("M d,Y",strtotime($regdate->value));?>
 					<p style="margin:0px 0px 0px 0px; font-size:24px; text-transform:uppercase; font-weight:600; line-height:23px; color:#ff0000; padding:5px 0px;text-align:center;"><?php echo $date;?></p>
 					</div>
 					
