@@ -11,7 +11,7 @@
 <div class="card card-body">
 	<div class="row">
 			<div class="col-md-4 col-xl-2">
-				<?php if($title == 'Contact'){ ?>
+				<?php if($title == 'Contact' || $title == 'Active Contact' || $title == 'Active Members' || $title == 'Active Member' || $title == 'Members' || $title == 'Member'){ ?>
 				<form method="post" action="<?php echo base_url();?>admin/dashboard/exportcontacts" target="_blank">
 					<div class="row">
 						<div class="col-md-7">
@@ -29,12 +29,9 @@
 				<?php } ?>
 			</div>
 			<div class="col-md-8 col-xl-10 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
-				 <?php if($title == 'Contact'){ ?>
-					
-					
-					<button type="button"  style="margin-right:10px;" onclick='return deletecontacts()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Delete Card">Delete Contacts</button>
-					<button type="button"  style="margin-right:10px;" onclick='return sendpdfmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send PDF Card">Send PDF Email</button>
-					<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Email">Send Email</button>
+				 <?php if($title == 'Contact' || $title == 'Active Contact'){ ?>
+					<button type="button"  style="margin-right:10px;" onclick='return sendpdfmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send PDF Email</button>
+					<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Email</button>
 					<button type="button"  style="margin-right:10px;" onclick='return sendallcard()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Card</button>
 				 <?php } ?>
 				 <?php if($title != 'Subscriptions' && $title != 'Email Logs' && $title != 'URL Access Log' && $title != 'Providers Access Log' && $title != 'Card Access Log' && $title != 'Twillio Access Log'){ ?>

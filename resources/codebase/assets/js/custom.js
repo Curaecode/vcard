@@ -482,34 +482,49 @@ $(document).ready(function(){
 		target=$(this).attr('href');
 		thiss=$(this);
 		e.preventDefault();
-		swal({
-		  title: "Are you sure?",
-		  text: "You want to perform this action!",
-		  type: "warning",
-		  showCancelButton: true,
-		  confirmButtonColor: "#DD6B55",
-		  confirmButtonText: "Yes, Complete it!",
-		  closeOnConfirm: false
-		}).then(result => {
-			// console.log(result);
-			if(result.value==true){
-				$.ajax({
-					url:target,
-					dataType:'json',
-					success:function(data){
-						if(data.success){
-							swal("Success!", data.success, "success");
-							 table.ajax.reload();
-						}
-						else{
-							swal("Error!", data.error, "error");
-						}
-					  
-					}
-				
-				});
+		$.ajax({
+			url:target,
+			dataType:'json',
+			success:function(data){
+				if(data.success){
+					swal("Success!", data.success, "success");
+					 table.ajax.reload();
+				}
+				else{
+					swal("Error!", data.error, "error");
+				}
+			  
 			}
+		
 		});
+		
+		// swal({
+		  // title: "Are you sure?",
+		  // text: "You want to perform this action!",
+		  // type: "warning",
+		  // showCancelButton: true,
+		  // confirmButtonColor: "#DD6B55",
+		  // confirmButtonText: "Yes, Complete it!",
+		  // closeOnConfirm: false
+		// }).then(result => { 
+			// if(result.value==true){
+				// $.ajax({
+					// url:target,
+					// dataType:'json',
+					// success:function(data){
+						// if(data.success){
+							// swal("Success!", data.success, "success");
+							 // table.ajax.reload();
+						// }
+						// else{
+							// swal("Error!", data.error, "error");
+						// }
+					  
+					// }
+				
+				// });
+			// }
+		// });
 	});
 	
 	$(document).on("click",".change", function(e){

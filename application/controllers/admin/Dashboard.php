@@ -1393,7 +1393,7 @@ class Dashboard extends CI_Controller {
 				$coloumns[]='c.id AS contactid';
 				$coloumns[]='cd.id AS depid';
 				$coloumns[]='0 AS subscriptions';
-				/* $coloumns[]='sa.completed';  */
+				$coloumns[]='sa.completed';  
 				
 				$searchFields=array(
 			    "sa.id",
@@ -1407,7 +1407,7 @@ class Dashboard extends CI_Controller {
 				);
 			$fields=implode(",",$coloumns);
 			/* $sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed=0  AND (c.id is null AND  cd.id is null) "; */
-			$sql="select $fields from subscription_access sa LEFT JOIN contacts c ON sa.phone = c.phone LEFT JOIN  contact_dependant cd ON sa.phone = cd.phone where sa.completed >=0 ";
+			$sql="select $fields from subscription_access sa LEFT JOIN contacts c ON (sa.phone = c.phone OR sa.email = c.email OR sa.email = c.secondaryemail) LEFT JOIN  contact_dependant cd ON (sa.phone = cd.phone) where sa.completed >=0 ";
 			
 			if($id!==""){
 			$sql.=" and id=$id";	
@@ -1456,10 +1456,11 @@ class Dashboard extends CI_Controller {
 					unset($key->address);
 					unset($key->contactid);
 					unset($key->depid);
+					unset($key->completed);
 					if($completed==0){
-						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Complete' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
+						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Complete' style='background-color:yellow' class='btn btn-default completedrec swal'  title='Mark Complete' href='".base_url()."admin/dashboard/completesubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					}else{ 
-						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Pending' class='btn btn-danger completedrec swal'  title='Mark Pending' href='".base_url()."admin/dashboard/pendingsubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
+						$down="<div class='columns columns-right  w100 pull-right'> <a data-toggle='Mark Pending' style='background-color:green' class='btn btn-danger completedrec swal'  title='Mark Pending' href='".base_url()."admin/dashboard/pendingsubscriptionaccess/".$key->id."' class='' target='_blank'><i class='fa fa-check'></i></a></div>";
 					} 
 					     
 					$value=array_values((array)$key);
@@ -2724,7 +2725,7 @@ class Dashboard extends CI_Controller {
 					"Actions",
 				);
 				$data['id']=$id;
-				$data['title']="Contact";
+				$data['title']="Members";
 				$data['coloumns']=$coloumns;
 				generatePageView('listview',$data);
 				break;
@@ -2902,7 +2903,7 @@ class Dashboard extends CI_Controller {
 				echo json_encode($output);
 				break;
 				case "add":
-				$data['title']="Add Contact";
+				$data['title']="Add Member";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
 					if(isset($formData['phone'])){	
@@ -3169,7 +3170,7 @@ class Dashboard extends CI_Controller {
 			
 				break;
 			case "edit":
-				$data['title']="Update Contact";
+				$data['title']="Update Member";
 				$data['form']="edit";
 				if(isset($formData['submit'])){
 					unset($formData['submit']);
@@ -3277,7 +3278,7 @@ class Dashboard extends CI_Controller {
 	public function deactivecontacts($action="view",$id=""){
 		 
 		$formData=escapeArray($this->input->post());
-		$data['active']="contacts";
+		$data['active']="deactivecontacts";
 		switch($action){
 			case "view":
 			$data['companies']=($this->model->getData("companies"));
@@ -3300,7 +3301,7 @@ class Dashboard extends CI_Controller {
 					"Actions",
 				);
 				$data['id']=$id;
-				$data['title']="Contact";
+				$data['title']="Deatcive Members";
 				$data['coloumns']=$coloumns;
 				generatePageView('listview',$data);
 				break;
@@ -3855,598 +3856,7 @@ class Dashboard extends CI_Controller {
 		}
 	}
 	
-	 function contacts_deactive($id= "")
-    {
-		if(is_numeric($id) && $id > 0){
-			$query=$this->db->query("update `contacts` set status= 0 where id=".$id."");
-		}
-			
-		$response['status']=1;
-		$response['message']='Deactive successfully';
-		echo json_encode($response);exit();
-	}
-    function contacts_active($id= "")
-    {
-		if(is_numeric($id) && $id > 0){
-			$query=$this->db->query("update `contacts` set status= 1 where id=".$id."");
-		}
-			
-		$response['status']=1;
-		$response['message']='Active successfully';
-		echo json_encode($response);exit();
-	}
-	public function contacts_old($action="view",$id=""){
-		 
-		$formData=escapeArray($this->input->post());
-		$data['active']="contacts";
-		switch($action){
-			case "view":
-			$data['companies']=($this->model->getData("companies"));
-			$data['groups']=($this->model->getData("groups"));
-				$coloumns=array(
-					/* "<label><input type='checkbox' name='showhide' id='select_all' onchange='selectall(this)'> Select All</label>", */
-					"<div class='form-check'><input  onchange='selectall(this)' class='form-check-input' type='checkbox' id='select_all'></div>",
-					/* "ID", */
-					"Name <br />Account code",
-					/* "Last name", */
-					"Email",
-					"Secondary Email",
-					"Phone",  
-					//"country",
-					"Dependent",
-					/* "Account code", */
-					"image",
-					//"Date",
-					"Actions",
-				);
-				$data['id']=$id;
-				$data['title']="Contact";
-				$data['coloumns']=$coloumns;
-				generatePageView('listview',$data);
-				break;
-			case "ajax":
-			$coloumns=array(
-			    "contacts.id",
-				"contacts.first_name",
-				"contacts.last_name",
-				"contacts.email",
-				"contacts.secondaryemail",
-				"contacts.emaildate",
-				"contacts.smsdate",
-				"contacts.phone",     
-				"contacts.dependent",
-				"contacts.contract_number",
-				"contacts.account_code",
-				"contacts.cardsend",
-				"contacts.cardemail",
-				"contacts.image",
-				"contacts.ebupdated"
-				//"contacts.date"
-				);
-				$searchFields=array(
-			    "contacts.id",
-				"contacts.account_code",
-				"contacts.contract_number",
-				"cd.first_name",
-				"cd.last_name",
-				"contacts.first_name",
-				"contacts.last_name",
-				"contacts.email",
-				"contacts.secondaryemail",
-				"contacts.phone"
-				);
-			$fields=implode(",",$coloumns);
-			$sql="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
-			
-			$sql1="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id LEFT JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 group by contacts.id";
-				 
-			if($id!==""){
-				$sql.=" and id=$id";	
-			}
-			  //die($sql);
-				$fields=implode(",",$coloumns);
-				$sql2=getRecords($sql,$formData,$coloumns,$searchFields,array(),'group by contacts.id');
-				$results=$this->db->query($sql2['sql'])->result();
-			 
-				$values=array();
-				foreach($results as &$key){
-					$id=$key->id;
-					$dependent_data = array();
-					 
-					$contract_number= $key->contract_number;
-					$dependant_data=$this->model->getdependents("contact_dependant",$contract_number);
-					if(!empty($dependant_data)){
-						foreach($dependant_data as $value){
-							$dependent_data2=''; 
-							$dependent_data2.=(isset($value->first_name) && !empty($value->first_name)) ? ucwords($value->first_name):'';
-							$dependent_data2.=(isset($value->last_name)  && !empty($value->last_name)) ? ' '.ucwords($value->last_name):'';
-							
-							$dependentdata =(isset($value->relationship) && !empty($value->relationship)) ? $value->relationship.'':'';
-							$datadependent = explode(' ',$dependentdata); 
-							if(count($datadependent) > 1){ 
-								$dependent_datas=$datadependent[1];
-							}else{
-								$dependent_datas = $datadependent[0];
-							}
-							$mystring = strtolower($dependent_datas);  
-							$findme   = 'spouse';
-							$pos = strpos($mystring, $findme);
-							
-							if ($pos === false){
-								$dependent_datas = 'D';
-							}else{
-								$dependent_datas = 'S';
-							}
-							$string = '<div class="d-block nowrap">'.$dependent_datas.': '.$dependent_data2.'</div>';
-							array_push($dependent_data,$string);
-							/* $dependent_data .= $dependent_datas.': '.$dependent_data2.' <br />'; */
-						}
-					}
-					$key->dependent = implode('',$dependent_data);
-					
-					$contract_number = $key->contract_number;
-					 unset($key->contract_number);  
-					$filename=$key->image;
-					$vcard_name=getvcardname($id);
-					
-					$key->image="<a data-toggle='View Card' title='View Card' data-title='View Card' class='btn  waves-effect waves-light loadview modalview' data-bs-toggle='tooltip'  title='View Card' href='#contacts/cardview/".$id."'><img src='".base_url()."curaechoice/views/".$key->image."' width='80' height='100' class=' img-responsive rounded-circle' ></a>";
-					
-					
-					if($key->cardsend>=1){
-						$key->image ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->image;
-					}
-					if($key->cardemail>=1){
-						$key->email ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->email;
-						if($key->emaildate!='0000-00-00 00:00:00' && !empty($key->emaildate)){
-							$key->email .='<div class="d-block nowrap">'.cdate($key->emaildate).'</div>';
-						}
-					}
-					if($key->cardsend>=1){
-						$key->phone ='<i class="fa fa-check" aria-hidden="true" style="color: green;"></i>'.$key->phone;
-						if($key->smsdate!='0000-00-00 00:00:00' && !empty($key->smsdate)){
-							$key->phone .='<div class="d-block nowrap">'.cdate($key->smsdate).'</div>';
-						}
-					}
-					$key->first_name = '<span style="white-space: nowrap;">'.$key->first_name.' '.$key->last_name.' <br />'.$key->account_code.'</span>';
-					/*
-					cdate
-					*/
-					$completed = $key->ebupdated;
-					unset($key->ebupdated);
-					
-					unset($key->id);
-					unset($key->last_name);
-					unset($key->cardsend);
-					unset($key->cardemail);
-					unset($key->smsdate);  
-					unset($key->emaildate);  
-					unset($key->account_code);  
-					$value=array_values((array)$key);
-					 
-					 $down="<a data-toggle='View Card' class=' btn btn-default waves-effect waves-light download' data-bs-toggle='tooltip'  title='View Card' href='".base_url().'admin/dashboard/card/'.$id."'  target='_blank'><i class='fas fa-image'></i></a> <a data-toggle='Download Image' class='download btn btn-default waves-effect waves-light'  title='Download Image' href='".base_url().'admin/dashboard/download/'.$filename."' class='' target='_blank'><i class='fa fa-download'></i></a> 
-					<a data-toggle='Download vCard' class='btn btn-default waves-effect waves-light download-card' data-bs-toggle='tooltip'   title='Download vCard' href='".base_url().'admin/dashboard/download2/'.$vcard_name."'  target='_blank'><i class='fa fa-id-card'></i> </a>
-					<a data-toggle='Send vCard' class='btn btn-default waves-effect waves-light send send_contacts_email_vcard' data-bs-toggle='tooltip'  title='Send vCard' href='".base_url()."admin/dashboard/send_contacts_email_vcard/".$id."'><i class='fa fa-paper-plane'></i> </a> 
-					
-					
-					<a data-toggle='View Dependent' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page dependentsm'  data-bs-toggle='tooltip'  data-title='View Dependent' data-company='".$contract_number."'  title='View Dependent' href='#contacts/dependents/".$contract_number."'><i class='fa fa-users'></i></a> 
-					
-					<a data-toggle='Add Dependent' title='Add Dependent' href='#contacts/adddependent/".$contract_number."'   data-bs-toggle='tooltip'  data-company='".$contract_number."' data-title='Add Dependent' class='btn btn-default waves-effect waves-light loadview modalview edite contact_edit_page dependentsm'><i class='fa fa-user-plus'></i></a>
-					
-					
-					<a data-toggle='Edit Dependent' title='Edit Dependent' href='#contacts/editdependents/".$contract_number."'  data-bs-toggle='tooltip'  data-company='".$contract_number."' data-title='Edit Dependent' class='btn btn-default waves-effect waves-light loadview modalview edite contact_edit_page'><i class='fa fa-edit'></i></a>
-					 
-					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Dependent SMS Logs' data-company='".$id."' title='View Dependent SMS Logs' href='#contacts/viewdependentsmslog/".$id."'><i class='fa fa-user-circle'></i></a>
-					
-					<a data-toggle='View Send vCard SMS Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard SMS Logs' data-company='".$id."' title='View Send vCard SMS Logs' href='#contacts/viewsmslog/".$id."' style='background: #e18c0d;'><i class='fa fa-history'></i></a>
-					
-					<a data-toggle='View Send vCard Email Logs' class='btn btn-default waves-effect waves-light loadview modalview edite dependant_edit_page'  data-bs-toggle='tooltip'  data-title='View Send vCard Email Logs' data-company='".$id."' title='View Send vCard Email Logs' href='#contacts/viewemaaillog/".$id."' style='background: #39a4e3;'><i class='fa fa-envelope'></i></a>
-				 
-					";  
-					 if($completed==0){
-						$down .="<a data-toggle='Mark E/B Updated' class='btn btn-default completedrec swal'  title='Mark E/B Updated' href='".base_url()."admin/dashboard/contactebupdated/".$id."' class='' target='_blank'><i class='fa fa-check'></i></a>";
-					}else{
-						$down .="<a data-toggle='Mark E/B Updated' class='btn btn-default'  title='Mark E/B Updated' href='javascript:void(0);' class=''><i class='fa fa-check'></i> E/B Updated</a>";
-					}
-					$up="<div class='form-check'><input class='form-check-input checkbox' value='".$id."' type='checkbox'></div>";
-					array_unshift($value,$up);
-					array_push($value,'<div class="columns columns-right pull-right w300">'.$down.''.addActions_contact("contacts",$id).'</div>');
-					
-					$values[]=$value;
-				}
-				/* $output = array(
-					"draw" => $formData['draw'],
-					"recordsTotal" => $this->db->query($sql1)->num_rows(),
-					"recordsFiltered" => $sql2['countFiltered'],
-					"data" => isset($values)?$values:array(),
-				); */
-				$sql3="select $fields from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 ";
-				
-				$sql4=getRecords($sql3,$formData,$coloumns,$searchFields,array(),'group by cd.id');
-				
-				 $totaldependent="select cd.* from contacts  left join states on contacts.state_id=states.id left join country on contacts.country_id=country.id INNER JOIN contact_dependant cd ON contacts.contract_number = cd.contract_number where 1=1 group by cd.id";
-				$output = array(
-					"draw" => $formData['draw'],
-					"Totaldependents" => $this->db->query($totaldependent)->num_rows(),  
-					"Filtereddependents" => $this->db->query($sql4['sql'])->num_rows(), 
-					"recordsTotal" => $this->db->query($sql1)->num_rows(),
-					"Filteredrecords" => $this->db->query($sql2['sql'])->num_rows(),
-					"recordsFiltered" => $sql2['countFiltered'],
-					"data" => isset($values)?$values:array(),
-				);
-				echo json_encode($output);
-				break;
-				case "add":
-				$data['title']="Add Contact";
-				if(isset($formData['submit'])){
-					unset($formData['submit']);
-					if(isset($formData['phone'])){	
-						$newvalues=$formData['phone'];
-						$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
-						$mystring = $newvalues; 
-						$findme   = '+1';
-						$pos = strpos($mystring, $findme);
-						$findme2   = '+92';
-						$pos2 = strpos($mystring, $findme2);
-						
-						if ($pos === false) {
-							if($newvalues=='3235696050'){
-								$newvalues = '+92'.$newvalues;
-							}else{
-								 $newvalues = '+1'.$newvalues;
-							}
-						} 
-						$formData['phone']=$newvalues;	
-					}	 
-					 	$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
-						if($this->model->addData("contacts",$formData)){
-							$last_id = $this->db->insert_id();							
-							$account_id = generateID($last_id);
-							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
-							
-							$last_data=$this->model->getLastData2("contacts",$last_id);
-							
-							/* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$last_id).'_'.$last_id.'.vcf');
-							$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$last_id);  */
-							$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
-							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
-							  
-							  
-							$image_new = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
-							
-							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");
-							
-							$this->db->query("update `contacts` set contract_number= '".$last_id."' where id='".$last_id."'");
-							
-							
-							//header("Location: ".$_SERVER['PHP_SELF']);
-        					$data['msg']="contact is added! successfully.";
-							$data['return']=true;
-      					}
-      					else{
-							$data['msg']="contact is not added successfully.";
-							$data['return']=false;
-						}
-					
-					echo json_encode($data);
-					die;
-				}
-				$data['groups']=($this->model->getData("groups"));
-				$data['companies']=($this->model->getData("companies"));
-				$data['locations']=($this->model->getData("locations"));
-				$data['states']=($this->model->getData("states","WHERE country_id=233"));
-				$data['countries']=($this->model->getData("country"));
-				$data['industries']=($this->model->getData("industries"));
-				$data['dependent']=($this->model->getData("dependent"));
-				generatePageView('addcontact',$data);
-				break;
-			case "dependents":
-				$contract_number=$id;  
-				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
-				generatePageView('contactdependant',$data);
-			
-				break;
-			case "cardview":
-				$contract_number=$id;  
-				$data['title']="View Card";
-				$data['contactid']=$contract_number;
-				 generatePageView('viewcard',$data);
-				break;
-			case "editdependents":
-				$contract_number=$id;  
-				if(isset($formData['submit'])){
-					$dependent = isset($formData['dependent']) ? $formData['dependent']:'';
-					
-					$added = false;
-					if(!empty($dependent)){
-						foreach($dependent as $row){
-							if(!empty($row['dependent']) || !empty($row['dependant_name']) || !empty($row['dep_f_name'])){
-								$recdata=array();
-								$recdata['relationship']=$row['dependent'];
-								$recdata['first_name']=$row['dependant_name'];
-								$recdata['last_name']=$row['dep_f_name'];
-								$did=$row['id'];
-								$recdata['dob']=$row['dob'];
-								if(isset($row['phone'])){	
-									$newvalues=$row['phone'];
-									$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
-									$mystring = $newvalues; 
-									$findme   = '+1';
-									$pos = strpos($mystring, $findme);
-									$findme2   = '+92';
-									$pos2 = strpos($mystring, $findme2);
-									
-									if ($pos === false) {
-										if ($pos === false) {
-												if($newvalues=='3235696050'){
-													$newvalues = '+92'.$newvalues;
-												}else{
-													 $newvalues = '+1'.$newvalues;
-												}
-											}
-									}
-									 
-									$recdata['phone']=$newvalues;
-								}	 
-								$recdata['contract_number']=$contract_number;
-								$this->model-> updateData("contact_dependant",$did,$recdata);  
-								$added=true;
-							}
-						} 
-						$last_id=0;
-						if($added){
-							$result = $this->model->getLastData4("contacts",$contract_number);
-							if(!empty($result)){
-								$last_id = $result->id;
-							}
-						}
-						if($last_id > 0){
-							$last_data=$this->model->getLastData2("contacts",$last_id);
-							$this->load->library('phpqrcode/qrlib');
-							
-							$account_id = generateID($last_id);
-							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
-								
-								
-							$last_data=$this->model->getLastData2("contacts",$last_id);
-							  
-							$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
-							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
-							  
-							  
-							$image_new = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
-							
-							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");  
-						} 
-					}
-					
-					$data['msg']="Dependent Add successfully.";
-					$data['dependent']='Child';
-					$data['return']=true; 
-					echo json_encode($data);
-					die;
-				}
-				
-				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
-				generatePageView('editdependant',$data);
-			
-				break;
-			case "viewsmslog":
-				$contract_number=$id;  
-				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
-				
-				 
-				generatePageView('contactsmslogs',$data);
-			
-				break;
-			case "viewemaaillog":
-				$contract_number=$id;  
-				$data['smslogs']=$this->db->query("Select sl.*,c.first_name,c.last_name,c.phone as phonenumber,c.email from sms_logs sl INNER JOIN contacts c ON sl.user_id = c.id where sl.user_id = ".$contract_number)->result();
-				
-				 
-				generatePageView('contactemaillogs',$data);
-			
-				break;
-			case "viewdependentsmslog":
-				$contract_number=$id;  
-				 
-				$data['smslogs']=$this->db->query("Select sl.*,c.relationship,c.first_name,c.last_name,c.phone as phonenumber from dependent_sms_logs sl INNER JOIN contact_dependant c ON sl.user_id = c.id  INNER JOIN contacts cn ON c.contract_number = cn.contract_number where cn.id = ".$contract_number)->result(); 
-				 
-				generatePageView('contactdependentsmslogs',$data);
-			
-				break;
-			 
-			case "adddependent":  
-				$contract_number=$id;
-				if(isset($formData['submit'])){
-					$dependent = isset($formData['dependent']) ? $formData['dependent']:'';
-					$added = false;
-					if(!empty($dependent)){
-						foreach($dependent as $row){
-							if(!empty($row['dependent']) || !empty($row['dependant_name']) || !empty($row['dep_f_name'])){
-								$recdata=array();
-								$recdata['relationship']=$row['dependent'];
-								$recdata['first_name']=$row['dependant_name'];
-								$recdata['last_name']=$row['dep_f_name'];
-								$recdata['dob']=$row['dob'];
-								if(isset($row['phone'])){	
-									$newvalues=$row['phone'];
-									$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
-									$mystring = $newvalues; 
-									$findme   = '+1';
-									$pos = strpos($mystring, $findme);
-									$findme2   = '+92';
-									$pos2 = strpos($mystring, $findme2);
-									
-									if ($pos === false) {
-										if ($pos === false) {
-												if($newvalues=='3235696050'){
-													$newvalues = '+92'.$newvalues;
-												}else{
-													 $newvalues = '+1'.$newvalues;
-												}
-											}
-									}
-									 
-									$recdata['phone']=$newvalues;
-								}	 
-								$recdata['contract_number']=$contract_number;
-								$this->model->addData("contact_dependant",$recdata); 
-								
-								$lastrecord = $this->model->getLastData4('contacts',$contract_number);
-								$last_id = $lastrecord->id; 
-								 
-								$added = true;
-							}
-						}
-						$last_id=0;
-						if($added){
-							$result = $this->model->getLastData4("contacts",$contract_number);
-							if(!empty($result)){
-								$last_id = $result->id;
-							}
-						}
-						if($last_id > 0){
-							$last_data=$this->model->getLastData2("contacts",$last_id);
-							$this->load->library('phpqrcode/qrlib');
-							
-							$account_id = generateID($last_id);
-							$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id=".$last_id."");
-								
-								
-							$last_data=$this->model->getLastData2("contacts",$last_id);
-							  
-							$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($last_id),$last_id); 
-							$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$last_id."");
-							  
-							  
-							$image_new = genrate_image($last_id);
-							$query=$this->db->query("update `contacts` set image= '".$image_new."' where id='".$last_id."'");
-							
-							$down = get_contacts_vcard($last_id);
-							$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$last_id."");  
-						}
-					}
-					
-					$data['msg']="Dependent Add successfully.";
-					$data['dependent']='Child';
-					$data['return']=true; 
-					echo json_encode($data);
-					die;
-				}					
-				$data['dependent']=($this->model->getData("dependent"));
-				$data['contactdependent']=$this->model->getdependents("contact_dependant",$contract_number);
-				generatePageView('addcontactdependant',$data);
-			
-				break;
-			case "edit":
-				$data['title']="Update Contact";
-				$data['form']="edit";
-				if(isset($formData['submit'])){
-					unset($formData['submit']);
-					if(isset($formData['phone'])){	
-						$newvalues=$formData['phone'];
-						$newvalues = preg_replace("/[^0-9+]/", "", $newvalues);
-						$mystring = $newvalues; 
-						$findme   = '+1';
-						$pos = strpos($mystring, $findme);
-						$findme2   = '+92';
-						$pos2 = strpos($mystring, $findme2);
-						
-						 
-						if ($pos === false) {
-							if($newvalues=='3235696050'){
-								$newvalues = '+92'.$newvalues;
-							}else{
-								 $newvalues = '+1'.$newvalues;
-							}
-						} 
-						 
-						$formData['phone']=$newvalues;	
-					}
-					/* if(isset($formData['dob']) && !empty($formData['dob'])){ 
-						$dateofbirth = $formData['dob'];
-						$dob= explode('/',$dateofbirth);
-						$formData['dob']=$dob[2].'-'.$dob[0].'-'.$dob[1];
-					} */
-					
-					 // print_r($formData);die;
-				$formData['dependent'] = isset($formData['dependent']) ? json_encode($formData['dependent']):'';
-			//if(validateData("contacts",$formData,$id)){
-				$formData['update_date'] = date('Y-m-d H:i:s');
-			if($this->model->updateData("contacts",$id,$formData)){
-				$last_id=$id;
-				
-				$account_id = generateID($id);
-				$query=$this->db->query("update `contacts` set account_code= '".$account_id."' where id='".$id."'");
-				$last_data=$this->model->getLastData2("contacts",$id);
-				
-				
-				$last_data=$this->model->getLastData2("contacts",$id);
-					
-					
-				/* $down= (md5($last_data->first_name."_".$last_data->last_name.'_'.$id).'_'.$id.'.vcf');
-				$qrimage_new_name = genrate_qrcode(base_url()."vcards/".$down,$id);  */ 
-				$qrimage_new_name = genrate_qrcode(base_url()."qrcode_".md5($id),$id); 
-				$query=$this->db->query("update `contacts` set qrimage= '".$qrimage_new_name."' where id=".$id."");
-				 
-				
-				
-				$image_new_name = genrate_image($id);
-				$query=$this->db->query("update `contacts` set image= '".$image_new_name."' where id='".$id."'");
-				
-				$down = get_contacts_vcard($id);
-				$query=$this->db->query("update `contacts` set vcard_name= '".$down."' where id=".$id."");
-				
-				  
-				
-				if(empty($last_data->contract_number)){
-					$this->db->query("update `contacts` set contract_number= '".$id."' where id='".$id."'");
-				}
-				
-				$data['msg']="contact updated! successfully.";
-				$data['dependent']='Child';
-				$data['return']=true;
-			}else{
-				$data['msg']="contact is not updated successfully.";
-				$data['return']=false;
-			}
-		// }else{
-		// 					$data['msg']="contact is not updated successfully.";
-		// 					$data['return']=false;
-						
-		// 					$data['edit']=$formData;
-		// 			}
-					echo json_encode($data);
-					die;
-		
-				}
-		$data['edit']=(array)$this->model->getById("contacts",$id);
-		$data['groups']=($this->model->getData("groups"));
-		$data['companies']=($this->model->getData("companies"));
-		/* $data['locations']=($this->model->getLocation_byid("locations",$data['edit']['company_id'])); */
-		$data['states']=($this->model->getState_byid("states",$data['edit']['country_id']));
-		
-		$data['countries']=($this->model->getData("country"));
-		$data['industries']=($this->model->getData("industries"));
-		$data['dependent']=($this->model->getData("dependent"));
-		generatePageView('addcontact',$data);
-				break;
-			case "delete":
-					if($this->model->deleteData("contacts",$id)){
-						$msg['success']="contact is deleted! successfully.</div>";
-					}
-					else{
-						$msg['error']="contact is deleted! successfully";
-					}
-					
-				echo json_encode($msg);
-				break;
-		}
-	}
+	
 	function download($filename = NULL) {
     // load download helder
     $this->load->helper('download');
@@ -5106,6 +4516,26 @@ public function cardsettings($action="update",$id=null){
         redirect(base_url().'dashboard#upload_excel_ajax');
     }
    
+    function contacts_deactive($id= "")
+    {
+		if(is_numeric($id) && $id > 0){
+			$query=$this->db->query("update `contacts` set status= 0 where id=".$id."");
+		}
+			
+		$response['status']=1;
+		$response['message']='Deactive successfully';
+		echo json_encode($response);exit();
+	}
+    function contacts_active($id= "")
+    {
+		if(is_numeric($id) && $id > 0){
+			$query=$this->db->query("update `contacts` set status= 1 where id=".$id."");
+		}
+			
+		$response['status']=1;
+		$response['message']='Active successfully';
+		echo json_encode($response);exit();
+	}
     function send_contacts_email_vcard($id= "")
     {
         $this->load->library('vcard');                

@@ -54,13 +54,13 @@
 						<li class="sidebar-item">
 							<a href="#contacts/" class="sidebar-link loadview">
 								<i class="mdi mdi-adjust"></i>
-								<span class="hide-menu"> Active Contacts </span>
+								<span class="hide-menu"> Active Members </span>
 							</a>
 						</li> 
 						<li class="sidebar-item">
 							<a href="#deactivecontacts/" class="sidebar-link loadview">
 								<i class="mdi mdi-adjust"></i>
-								<span class="hide-menu"> Deactive Contacts </span>
+								<span class="hide-menu"> Deactive Members </span>
 							</a>
 						</li> 
 						<?php if($this->session->userdata('adminType') == 0){?>
