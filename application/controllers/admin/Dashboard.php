@@ -2725,7 +2725,7 @@ class Dashboard extends CI_Controller {
 					"Actions",
 				);
 				$data['id']=$id;
-				$data['title']="Members";
+				$data['title']="Member";
 				$data['coloumns']=$coloumns;
 				generatePageView('listview',$data);
 				break;
@@ -2754,8 +2754,10 @@ class Dashboard extends CI_Controller {
 				"contacts.contract_number",
 				"cd.first_name",
 				"cd.last_name",
+				"CONCAT(cd.first_name,' ',cd.last_name)",
 				"contacts.first_name",
 				"contacts.last_name",
+				"CONCAT(contacts.first_name,' ',contacts.last_name)",
 				"contacts.email",
 				"contacts.secondaryemail",
 				"contacts.phone"

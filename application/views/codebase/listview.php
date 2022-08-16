@@ -1,9 +1,9 @@
 <div class="row page-titles">
 	<div class="col-md-5 col-12 align-self-center">
-		<h3 class="text-themecolor mb-0"><?php  echo ucfirst($title); ?></h3>
+		<h3 class="text-themecolor mb-0"><?php if($title == 'Member'){ ?><?php  echo ucfirst($title.'s'); ?><?php }else{ echo ucfirst($title); }?></h3>
 		<ol class="breadcrumb mb-0">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-			<li class="breadcrumb-item active"><?php  echo ucfirst($title); ?></li>
+			<li class="breadcrumb-item active"><?php if($title == 'Member'){ ?><?php  echo ucfirst($title.'s'); ?><?php }else{ echo ucfirst($title); }?></li>
 		</ol>
 	</div> 
 </div>
@@ -29,7 +29,7 @@
 				<?php } ?>
 			</div>
 			<div class="col-md-8 col-xl-10 text-end d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
-				 <?php if($title == 'Contact' || $title == 'Active Contact'){ ?>
+				 <?php if($title == 'Contact' || $title == 'Member' || $title == 'Active Contact'){ ?>
 					<button type="button"  style="margin-right:10px;" onclick='return sendpdfmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send PDF Email</button>
 					<button type="button"  style="margin-right:10px;" onclick='return sendallmail()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Email</button>
 					<button type="button"  style="margin-right:10px;" onclick='return sendallcard()' class="btn btn-sm btn-success js-tooltip-enabled sendcardbtn"  data-original-title="Send Card">Send Card</button>
