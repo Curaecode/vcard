@@ -21,7 +21,7 @@ class Home extends CI_Controller {
 		 
 		$vcard_name='';
 		$vcard_image=''; 
-		$returned = $this->sendmail('haroon@ex3gen.com','Haroon',$vcard_name,$vcard_image); 
+		$returned = $this->sendmail('walkin.logic@gmail.com','Haroon',$vcard_name,$vcard_image); 
 		 
 		print_r($returned);
 	}

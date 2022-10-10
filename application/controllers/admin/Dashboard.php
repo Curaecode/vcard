@@ -4885,11 +4885,8 @@ public function cardsettings($action="update",$id=null){
 	function testmail(){ 
 		$detail = $this->model->getByIdvcard("contacts",1);
 		$vcard_name=$detail[0]->vcard_name;
-		$vcard_image=$detail[0]->image;
-		 /* Muhammad Sufian <sufian@ex3gen.com> */
-		 /* Harsha Hatti <Harsha.Hatti@corelinq.com> */
-		/* $returned = $this->sendmail('phyllisosby@gmail.com','phyllis osby',$vcard_name,$vcard_image);  */  
-		 $returned = $this->sendmail('haroon@ex3gen.com','Haroon Abbas',$vcard_name,$vcard_image); 
+		$vcard_image=$detail[0]->image; 
+		 $returned = $this->sendmail('walkin.logic@gmail.com','Haroon Abbas',$vcard_name,$vcard_image); 
 		if($returned['status']==true){
 			
 		}
@@ -4900,7 +4897,7 @@ public function cardsettings($action="update",$id=null){
 		$detail = $this->model->getByIdvcard("contacts",1); 
 		$pdf_name=createpdfcard($id);
 		$vcard_image=''; 
-		$returned = $this->sendpdfmail('haroon@ex3gen.com','Haroon Abbas',$pdf_name,$vcard_image); 
+		$returned = $this->sendpdfmail('walkin.logic@gmail.com','Haroon Abbas',$pdf_name,$vcard_image); 
 		 
 		print_r($returned);
 	}
@@ -4955,7 +4952,7 @@ public function cardsettings($action="update",$id=null){
 		 $res = "";
 
 		 $data = "username=".urlencode("support@curaechoice.com");
-		 $data .= "&api_key=".urlencode("00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125");
+		 $data .= "&api_key=".urlencode("");
 		 
 
 		$weburl = 'https://api.elasticemail.com/v2/email/send';
@@ -4967,7 +4964,7 @@ public function cardsettings($action="update",$id=null){
 		try{
 			$post = array('from' => 'support@curaechoice.com',
 			'fromName' => 'Curaechoice',
-			'apikey' => '00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125',
+			'apikey' => '',
 			'subject' => $mainsubject,
 			'to' => $tomail,
 			'bodyHtml' => $body,
@@ -4996,45 +4993,7 @@ public function cardsettings($action="update",$id=null){
              $data["status"] = false;
 		}
 	
-
-		 /* print_r( $errno);
-		 print_r($errstr); */
-		/* $this->load->library('My_PHPMailer');
-		 
-		$mail = new PHPMailer(); 
-		$mail->IsSMTP(true); 
-		$mail->SMTPAuth = true;  
-		$mail->SMTPSecure = "ssl";  
-        $mail->Host       = "smtp.elasticemail.com";      // setting GMail as our SMTP server
-        $mail->Port       = 465;                   // SMTP port to connect to GMail
-		$mail->SMTPDebug = 0;
-        $mail->Username   = "support@curaechoice.com";  // user email address
-        $mail->Password   = "AFE78A029B1CC384813FCA963E1296099635";            // password in GMail
-        $mail->SetFrom('support@curaechoice.com', 'Curaechoice');  //Who is sending the email
-        $mail->AddReplyTo("support@curaechoice.com","Curaechoice");  //email address that receives the response
-        $mail->Subject    = $mainsubject;
-        $mail->Body      = $body;
-        $mail->AltBody    = strip_tags($body); 
-        $mail->AddAddress($tomail, $toname);
-        $mail->AddReplyTo('support@curaechoice.com', 'Curaechoice');
-		$mail->AddAttachment('vcards/'.$url,basename($url)); */   
-		
-		 
-		
-		 
-		
-		/* $mail->AddAttachment('resources/cards/'.$cardimage); 
-		$mail->AddAttachment =$_SERVER['DOCUMENT_ROOT'].'/vcards/'.$url;   
-		 $mail->AddAttachment = $_SERVER['DOCUMENT_ROOT'].'/resources/cards/'.$cardimage; */
-		
-		  
-        /* if(!$mail->Send()) {
-             $data["message"] = "Error: " . $mail->ErrorInfo;
-             $data["status"] = false;
-        } else {
-             $data["message"] = "Message sent correctly!";
-			 $data["status"] = true;
-        } */ 	
+ 
 		return $data;
     }
 	
@@ -5088,7 +5047,7 @@ public function cardsettings($action="update",$id=null){
 		 $res = "";
 
 		 $data = "username=".urlencode("support@curaechoice.com");
-		 $data .= "&api_key=".urlencode("00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125");
+		 $data .= "&api_key=".urlencode("");
 		 
 
 		$weburl = 'https://api.elasticemail.com/v2/email/send';
@@ -5100,7 +5059,7 @@ public function cardsettings($action="update",$id=null){
 		try{
 			$post = array('from' => 'support@curaechoice.com',
 			'fromName' => 'Curaechoice',
-			'apikey' => '00D63CA7E118D2617832E4E6A86774A914B69CD7EB79BBF868FBCF3C08AD3003EB192494F7F5679D5E11DFB254DBE125',
+			'apikey' => '',
 			'subject' => $mainsubject,
 			'to' => $tomail,
 			'bodyHtml' => $body,
@@ -5130,44 +5089,7 @@ public function cardsettings($action="update",$id=null){
 		}
 	
 
-		 /* print_r( $errno);
-		 print_r($errstr); */
-		/* $this->load->library('My_PHPMailer');
 		 
-		$mail = new PHPMailer(); 
-		$mail->IsSMTP(true); 
-		$mail->SMTPAuth = true;  
-		$mail->SMTPSecure = "ssl";  
-        $mail->Host       = "smtp.elasticemail.com";      // setting GMail as our SMTP server
-        $mail->Port       = 465;                   // SMTP port to connect to GMail
-		$mail->SMTPDebug = 0;
-        $mail->Username   = "support@curaechoice.com";  // user email address
-        $mail->Password   = "AFE78A029B1CC384813FCA963E1296099635";            // password in GMail
-        $mail->SetFrom('support@curaechoice.com', 'Curaechoice');  //Who is sending the email
-        $mail->AddReplyTo("support@curaechoice.com","Curaechoice");  //email address that receives the response
-        $mail->Subject    = $mainsubject;
-        $mail->Body      = $body;
-        $mail->AltBody    = strip_tags($body); 
-        $mail->AddAddress($tomail, $toname);
-        $mail->AddReplyTo('support@curaechoice.com', 'Curaechoice');
-		$mail->AddAttachment('vcards/'.$url,basename($url)); */   
-		
-		 
-		
-		 
-		
-		/* $mail->AddAttachment('resources/cards/'.$cardimage); 
-		$mail->AddAttachment =$_SERVER['DOCUMENT_ROOT'].'/vcards/'.$url;   
-		 $mail->AddAttachment = $_SERVER['DOCUMENT_ROOT'].'/resources/cards/'.$cardimage; */
-		
-		  
-        /* if(!$mail->Send()) {
-             $data["message"] = "Error: " . $mail->ErrorInfo;
-             $data["status"] = false;
-        } else {
-             $data["message"] = "Message sent correctly!";
-			 $data["status"] = true;
-        } */ 	
 		return $data;
     }
 }
