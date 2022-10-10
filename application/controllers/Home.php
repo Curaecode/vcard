@@ -113,7 +113,7 @@ class Home extends CI_Controller {
         $mail->Port       = 587;                   // SMTP port to connect to GMail
 		$mail->SMTPDebug = 1;
         $mail->Username   = "support@curaechoice.com";  // user email address
-        $mail->Password   = "AFE78A029B1CC384813FCA963E1296099635";            // password in GMail
+        $mail->Password   = "";            // password in GMail
         $mail->SetFrom('support@curaechoice.com', 'Curaechoice');  //Who is sending the email
         $mail->AddReplyTo("support@curaechoice.com","Curaechoice");  //email address that receives the response
         $mail->Subject    = $mainsubject;
